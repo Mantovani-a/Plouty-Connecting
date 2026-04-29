@@ -1,0 +1,160 @@
+/* ==========================================================================
+   1. Variáveis Globais e Identidade Visual (Cores Principais)
+   ========================================================================== */
+:root {
+    /* Cores Principais do Projeto */
+    --cor-primaria-petroleo: #042B3D; /* Da imagem_7.png */
+    --cor-primaria-verde: #253529;    /* Da imagem_8.png */
+
+    /* Cores de Fundo, Texto e Acento */
+    --fundo-principal: #ffffff;        /* Branco puro para clareza */
+    --fundo-claro: #f4f7f6;            /* Um off-white leve para seções secundárias */
+    
+    /* Texto: Usamos o verde escuro como base para texto, menos duro que preto puro */
+    --texto-principal: #1a1a1a;        /* Quase preto para corpo */
+    --texto-titulo: #253529;          /* Verde escuro da marca para títulos */
+    --texto-claro: #ffffff;            /* Texto branco sobre fundo escuro */
+
+    /* Cor de Destaque/Ação (Baseada na sua paleta, mas mais viva para botões) */
+    --acento-botao: #2d5a27;          /* Um verde mais vibrante para ação */
+    --acento-botao-hover: #1e3d1a;    /* Verde ainda mais escuro para hover */
+}
+
+/* ==========================================================================
+   2. Reset Básico (Melhor Prática)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   3. Estilos Gerais do Corpo
+   ========================================================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e profissional */
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--texto-principal);
+    background-color: var(--fundo-principal);
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--texto-titulo);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Parágrafos e Listas */
+p, ul, ol {
+    margin-bottom: 20px;
+}
+
+/* Links em Geral */
+a {
+    color: var(--cor-primaria-petroleo);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--acento-botao);
+}
+
+/* ==========================================================================
+   4. Cabeçalho (Header) e Navegação (Navegabilidade)
+   ========================================================================== */
+header {
+    background-color: var(--fundo-principal);
+    border-bottom: 1px solid #ddd;
+    padding: 15px 40px; /* Mais respiro lateral */
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end; /* Joga tudo para a direita */
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Controle perfeito do espaço entre os links */
+}
+
+nav ul li a {
+    color: var(--texto-titulo);
+    font-weight: 500; /* Um pouco menos negrito */
+    font-size: 0.95em; /* Letra ligeiramente menor como você pediu */
+    text-transform: uppercase; /* Dá um ar de menu de startup */
+    letter-spacing: 0.5px;
+    padding: 5px 0;
+    border-bottom: 2px solid transparent;
+}
+
+nav ul li a:hover,
+nav ul li a.active { /* Página ativa */
+    color: var(--cor-primaria-petroleo); /* Cor da marca no hover */
+    border-bottom: 3px solid var(--cor-primaria-petroleo);
+}
+
+/* ==========================================================================
+   5. Área de Conteúdo Principal (Main)
+   ========================================================================== */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 70vh; /* Para garantir que o rodapé fique no fundo */
+}
+
+/* ==========================================================================
+   6. Rodapé (Footer)
+   ========================================================================== */
+footer {
+    background-color: var(--cor-primaria-verde);
+    color: var(--texto-claro);
+    padding: 15px 0; /* Diminuído de 30px para 15px */
+    text-align: center;
+    font-size: 0.8em; /* Letra um pouco menor */
+    margin-top: auto;
+}
+
+footer p {
+    margin-bottom: 0; /* Remove margin */
+    font-size: 0.9em;
+}
+
+/* ==========================================================================
+   7. Componentes Genéricos (Botões, etc.)
+   ========================================================================== */
+.botao {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--acento-botao);
+    color: var(--texto-claro);
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.botao:hover {
+    background-color: var(--acento-botao-hover);
+    color: var(--texto-claro);
+    transform: translateY(-2px);
+}
+
+/* Botão Secundário (com a cor petróleo) */
+.botao-secundario {
+    background-color: var(--cor-primaria-petroleo);
+}
+
+.botao-secundario:hover {
+    background-color: #031e2a; /* Uma versão mais escura para hover */
+}
