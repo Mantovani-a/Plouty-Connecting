@@ -153,3 +153,252 @@ h1, h2, h3 {
     transform: translateY(-2px); /* Efeito de levante no botão */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
+/* ==========================================================================
+   8. PÁGINA INICIAL (Feed)
+   ========================================================================== */
+
+/* Container Principal - Centralizado e com largura máxima */
+.feed-container {
+    display: grid;
+    grid-template-columns: 260px 1fr 280px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: start;
+}
+
+/* Base para todos os cards (Limpeza Visual) */
+.card-estilizado {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Sidebar Perfil */
+.sidebar-perfil {
+    text-align: center;
+}
+
+.avatar-placeholder {
+    width: 70px;
+    height: 70px;
+    background: #eee;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    border: 2px solid var(--cor-petroleo);
+}
+
+.subtitulo {
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.stats div span {
+    display: block;
+    font-size: 0.7em;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* Feed Central */
+.post-box input {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background: #f4f4f4;
+    outline: none;
+}
+
+.feed-item {
+    margin-top: 15px;
+}
+
+.feed-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.avatar-mini {
+    width: 45px;
+    height: 45px;
+    background: #ddd;
+    border-radius: 8px;
+}
+
+.info-post h5 { margin: 0; font-size: 1em; color: var(--cor-petroleo); }
+.info-post span { font-size: 0.75em; color: #999; }
+
+.tag-alerta {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+.feed-content {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Botões do Feed (Corrigindo o contraste) */
+.feed-actions {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+}
+
+.btn-principal {
+    background: var(--cor-verde-escuro);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-principal:hover {
+    background: var(--cor-petroleo);
+}
+
+.btn-texto {
+    background: transparent;
+    color: var(--cor-petroleo);
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Sidebar Direita (Impacto) */
+.progress-container {
+    background: #eee;
+    height: 8px;
+    border-radius: 4px;
+    margin: 15px 0 5px;
+}
+
+.progress-bar {
+    background: var(--cor-verde-escuro);
+    height: 100%;
+    border-radius: 4px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .feed-container {
+        grid-template-columns: 1fr;
+    }
+    .sidebar-perfil, .sidebar-impacto {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   8. PÁGINA SOLUÇÃO (IDEIA)
+   ========================================================================== */
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 60px;
+    padding-top: 20px;
+}
+
+.hero-texto {
+    flex: 1;
+}
+
+.hero-texto h1 {
+    font-size: 2.5em;
+    line-height: 1.2;
+    color: var(--cor-petroleo);
+    margin-bottom: 20px;
+}
+
+.hero-texto p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.hero-botoes {
+    display: flex;
+    gap: 15px;
+}
+
+/* Botão secundário (Vazado com borda) */
+.botao-secundario {
+    background-color: transparent;
+    color: var(--cor-petroleo);
+    border: 2px solid var(--cor-petroleo);
+}
+
+.botao-secundario:hover {
+    background-color: var(--cor-petroleo);
+    color: var(--texto-claro);
+}
+
+.hero-imagem {
+    flex: 1;
+    text-align: right;
+}
+
+.hero-imagem img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Pilares (Cards) */
+.pilares {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.card {
+    flex: 1;
+    background-color: var(--fundo-site);
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--borda-suave);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    border-color: var(--cor-acao); /* Destaca a borda de verde no hover */
+}
+
+.card h3 {
+    color: var(--cor-acao);
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 0;
+}
