@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plouty | Explorar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="assets/img/logo_P.png" alt="Plouty Logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="explorar.html">Explorar</a></li>
+                    <li><a href="plataforma.html">Solução</a></li>
+                    <li><a href="entrar.html">Entrar</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="explorar-container">
+        <!-- Filtros -->
+        <aside class="explorar-filtros">
+            <div class="filtro-card">
+                <h3>Filtros</h3>
+                <div class="filtro-item">
+                    <label>Tipo de Produtor</label>
+                    <select>
+                        <option>Todos</option>
+                        <option>Verduras e Frutas</option>
+                        <option>Grãos e Cereais</option>
+                        <option>Produtos Orgânicos</option>
+                    </select>
+                </div>
+                <div class="filtro-item">
+                    <label>Localização</label>
+                    <select>
+                        <option>Todas as regiões</option>
+                        <option>Sudeste</option>
+                        <option>Nordeste</option>
+                        <option>Centro-Oeste</option>
+                        <option>Sul</option>
+                    </select>
+                </div>
+                <div class="filtro-item">
+                    <label>Reputação Mínima</label>
+                    <input type="range" min="0" max="100" value="0">
+                    <span class="range-value">0%</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Feed Central -->
+        <section class="explorar-feed">
+            <!-- Card 1 -->
+            <article class="explorar-post">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-info">
+                        <h4>João Carlos Silva</h4>
+                        <span class="post-tipo">Produtor • Verduras Orgânicas</span>
+                        <span class="post-local">🌍 Minas Gerais</span>
+                    </div>
+                    <span class="post-reputacao">⭐ 98%</span>
+                </div>
+                <div class="post-conteudo">
+                    <p><strong>Alfaces hidropônicas premium</strong> - Frescas, colhidas diariamente. Ideais para PNAE e hospitais. Entrego em até 24h.</p>
+                    <div class="post-tags">
+                        <span class="tag">Alface</span>
+                        <span class="tag">Orgânico</span>
+                        <span class="tag">Hidroponia</span>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span>👍 234 curtidas</span>
+                    <span>💬 18 comentários</span>
+                    <span>📞 12 contatos</span>
+                </div>
+                <div class="post-acoes">
+                    <button class="btn-acao">Curtir</button>
+                    <button class="btn-acao">Comentar</button>
+                    <button class="btn-acao btn-contato">Entrar em Contato</button>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="explorar-post">
+                <div class="post-header">
+                    <div class="post-avatar avatar-2"></div>
+                    <div class="post-info">
+                        <h4>Maria dos Santos</h4>
+                        <span class="post-tipo">Produtora • Frutas</span>
+                        <span class="post-local">🌍 São Paulo</span>
+                    </div>
+                    <span class="post-reputacao">⭐ 95%</span>
+                </div>
+                <div class="post-conteudo">
+                    <p><strong>Melancia e melão de estação</strong> - Produção sustentável sem agrotóxicos. Perfeito para escolas e refeitórios institucionais.</p>
+                    <div class="post-tags">
+                        <span class="tag">Melancia</span>
+                        <span class="tag">Sustentável</span>
+                        <span class="tag">Saudável</span>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span>👍 156 curtidas</span>
+                    <span>💬 22 comentários</span>
+                    <span>📞 8 contatos</span>
+                </div>
+                <div class="post-acoes">
+                    <button class="btn-acao">Curtir</button>
+                    <button class="btn-acao">Comentar</button>
+                    <button class="btn-acao btn-contato">Entrar em Contato</button>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="explorar-post">
+                <div class="post-header">
+                    <div class="post-avatar avatar-3"></div>
+                    <div class="post-info">
+                        <h4>Cooperativa Verde</h4>
+                        <span class="post-tipo">Cooperativa • Hortifruti</span>
+                        <span class="post-local">🌍 Paraná</span>
+                    </div>
+                    <span class="post-reputacao">⭐ 92%</span>
+                </div>
+                <div class="post-conteudo">
+                    <p><strong>Cesta de produtos da estação</strong> - Diversificado com 8+ variedades semanais. Fornecimento contínuo para PNAE. Entrega garantida.</p>
+                    <div class="post-tags">
+                        <span class="tag">Diversificado</span>
+                        <span class="tag">Fornecimento</span>
+                        <span class="tag">Garantido</span>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span>👍 423 curtidas</span>
+                    <span>💬 45 comentários</span>
+                    <span>📞 24 contatos</span>
+                </div>
+                <div class="post-acoes">
+                    <button class="btn-acao">Curtir</button>
+                    <button class="btn-acao">Comentar</button>
+                    <button class="btn-acao btn-contato">Entrar em Contato</button>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="explorar-post">
+                <div class="post-header">
+                    <div class="post-avatar avatar-4"></div>
+                    <div class="post-info">
+                        <h4>Pedro Ribeiro</h4>
+                        <span class="post-tipo">Produtor • Grãos</span>
+                        <span class="post-local">🌍 Rio Grande do Sul</span>
+                    </div>
+                    <span class="post-reputacao">⭐ 97%</span>
+                </div>
+                <div class="post-conteudo">
+                    <p><strong>Arroz e feijão integral</strong> - Colheita recente, armazenado adequadamente. Certificado de qualidade. Ideal para merenda escolar.</p>
+                    <div class="post-tags">
+                        <span class="tag">Arroz</span>
+                        <span class="tag">Integral</span>
+                        <span class="tag">Certificado</span>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <span>👍 298 curtidas</span>
+                    <span>💬 32 comentários</span>
+                    <span>📞 15 contatos</span>
+                </div>
+                <div class="post-acoes">
+                    <button class="btn-acao">Curtir</button>
+                    <button class="btn-acao">Comentar</button>
+                    <button class="btn-acao btn-contato">Entrar em Contato</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- Sidebar Destaque -->
+        <aside class="explorar-destaque">
+            <div class="destaque-card">
+                <h3>Destaques</h3>
+                <div class="destaque-item">
+                    <strong>Produtores Verificados</strong>
+                    <p>Conheça os produtores com melhor reputação na plataforma Plouty.</p>
+                </div>
+                <div class="destaque-item">
+                    <strong>Ofertas de Estação</strong>
+                    <p>Produtos frescos disponíveis agora. Qualidade garantida para sua instituição.</p>
+                </div>
+                <div class="destaque-item">
+                    <strong>Como Funciona</strong>
+                    <p>Saiba como conectar com produtores e formalizar suas compras na Plouty.</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Plouty - The Future is Now.</p>
+    </footer>
+</body>
+</html>
