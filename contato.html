@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plouty | Contato</title>
+    <title>Contato | Plouty</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <header>
         <nav>
             <ul>
@@ -19,11 +20,66 @@
         </nav>
     </header>
 
-    <main>
-        </main>
+    <main class="contato-container">
+        <section class="contato-grid">
+            
+            <div class="contato-info card-estilizado">
+                <h2>Como podemos ajudar?</h2>
+                <p>Seja você um produtor buscando expandir suas vendas ou uma instituição querendo otimizar compras, nossa equipe está pronta para auxiliar.</p>
+                
+                <div class="info-item">
+                    <strong>Suporte ao Usuário</strong>
+                    <span>suporte@plouty.com.br</span>
+                </div>
+                
+                <div class="info-item">
+                    <strong>Parcerias Institucionais</strong>
+                    <span>parcerias@plouty.com.br</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>Localização</strong>
+                    <span>Guarapari, Espírito Santo - Brasil</span>
+                </div>
+            </div>
+
+            <div class="contato-form card-estilizado">
+                <form>
+                    <div class="form-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" placeholder="Seu nome ou da sua instituição">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="exemplo@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assunto">Assunto</label>
+                        <select id="assunto">
+                            <option value="suporte">Suporte Técnico</option>
+                            <option value="vendas">Quero vender meus produtos</option>
+                            <option value="compras">Quero comprar para minha instituição</option>
+                            <option value="outros">Outros assuntos</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" rows="5" placeholder="Como podemos te ajudar hoje?"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-principal full-width">Enviar Mensagem</button>
+                </form>
+            </div>
+
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Plouty - The Future is Now.</p>
     </footer>
+
 </body>
 </html>

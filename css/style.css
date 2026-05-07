@@ -34,6 +34,7 @@ body {
     background-color: var(--fundo-site);
     display: flex;
     flex-direction: column;
+    margin-top: 81px;
 }
 
 /* ==========================================================================
@@ -44,6 +45,12 @@ header {
     background-color: var(--fundo-site);
     border-bottom: 1px solid var(--borda-suave);
     padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 81px;
 }
 
 nav {
@@ -155,7 +162,7 @@ h1, h2, h3 {
 }
 
 /* ==========================================================================
-   8. PÁGINA INICIAL (Feed)
+   7. PÁGINA INICIAL (Feed)
    ========================================================================== */
 
 /* Container Principal - Centralizado e com largura máxima */
@@ -401,4 +408,88 @@ h1, h2, h3 {
     font-size: 0.95em;
     color: #666;
     margin-bottom: 0;
+}
+
+/* ==========================================================================
+   5. PÁGINA DE CONTATO
+   ========================================================================== */
+.contato-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    flex: 1 0 auto;
+}
+
+.contato-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.contato-info h2 {
+    color: var(--cor-petroleo);
+    margin-bottom: 20px;
+}
+
+.contato-info p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+.info-item strong {
+    display: block;
+    color: var(--cor-verde-escuro);
+    font-size: 0.9em;
+}
+
+.info-item span {
+    color: #444;
+}
+
+/* Estilo do Formulário */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--cor-verde-escuro);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fdfdfd;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--cor-petroleo);
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Ajuste Responsivo para Contato */
+@media (max-width: 768px) {
+    .contato-grid {
+        grid-template-columns: 1fr;
+    }
 }
