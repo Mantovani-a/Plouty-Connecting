@@ -4,112 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plouty | Conexão Agrícola</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <header>
-        <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="assets/img/logo_P.png" alt="Plouty Logo">
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="explorar.html">Explorar</a></li>
-                    <li><a href="plataforma.html">Solução</a></li>
-                    <li><a href="entrar.html">Entrar</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">
+                    <img src="assets/img/logo_P.png" alt="Plouty Logo" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="explorar.html">Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="plataforma.html">Solução</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entrar.html">Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main class="feed-container">
-        <aside class="sidebar-perfil">
-            <div class="card-estilizado">
-                <div class="avatar-placeholder"></div>
-                <h4>João Carlos</h4>
-                <p class="subtitulo">Agricultor</p>
-                <div class="stats">
-                    <div><strong>10</strong><span>Contratos</span></div>
-                    <div><strong>95%</strong><span>Reputação</span></div>
-                </div>
-            </div>
-        </aside>
-
-        <section class="feed-principal">
-            <div class="post-box card-estilizado">
-                <input type="text" placeholder="O que a Plouty pode te ajudar a encontrar hoje?">
-            </div>
-
-            <article class="feed-item card-estilizado">
-                <div class="feed-header">
-                    <div class="avatar-mini"></div>
-                    <div class="info-post">
-                        <h5>Escola Municipal Sol Nascente</h5>
-                        <span>há 2 horas • <span class="tag-alerta">Demanda Emergencial</span></span>
+    <main class="container my-3">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="perfil-header mb-3">
+                            <div class="avatar-placeholder mb-3"></div>
+                            <h4>João Carlos</h4>
+                            <p class="text-muted">Agricultor</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div><strong>10</strong><br><small>Contratos</small></div>
+                            <div><strong>95%</strong><br><small>Reputação</small></div>
+                        </div>
                     </div>
                 </div>
-                <div class="feed-content">
-                    <p>Precisamos de <strong>50kg de batata-doce</strong> e <strong>20kg de couve</strong> para a merenda da próxima semana em Guarapari.</p>
-                </div>
-                <div class="feed-actions">
-                    <button class="btn-principal">Tenho Interesse</button>
-                    <button class="btn-texto">Ver Detalhes</button>
-                </div>
-            </article>
+            </aside>
 
-            <article class="feed-item card-estilizado">
-                <div class="feed-header">
-                    <div class="avatar-mini"></div>
-                    <div class="info-post">
-                        <h5>Hospital Regional de Guarapari</h5>
-                        <span>há 5 horas • <span class="tag-alerta">Recorrência Semanal</span></span>
+            <section class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <input type="text" class="form-control" placeholder="O que a Plouty pode te ajudar a encontrar hoje?">
                     </div>
                 </div>
-                <div class="feed-content">
-                    <p>Buscamos fornecedores de <strong>frutas da estação</strong> (Laranja e Banana) para dieta hospitalar. Necessário nota fiscal.</p>
-                </div>
-                <div class="feed-actions">
-                    <button class="btn-principal">Tenho Interesse</button>
-                    <button class="btn-texto">Ver Detalhes</button>
-                </div>
-            </article>
 
-            <article class="feed-item card-estilizado">
-                <div class="feed-header">
-                    <div class="avatar-mini"></div>
-                    <div class="info-post">
-                        <h5>Mercado Orgânico Vida Verde</h5>
-                        <span>há 8 horas • <span class="tag-alerta">Parceria Local</span></span>
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="avatar-mini me-2"></div>
+                            <div>
+                                <h5 class="mb-0">Escola Municipal Sol Nascente</h5>
+                                <small class="text-muted">há 2 horas • <span class="badge badge-categoria">Demanda Emergencial</span></small>
+                            </div>
+                        </div>
+                        <p>Precisamos de <strong>50kg de batata-doce</strong> e <strong>20kg de couve</strong> para a merenda da próxima semana em Guarapari.</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary">Tenho Interesse</button>
+                            <button class="btn btn-outline-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="avatar-mini me-2"></div>
+                            <div>
+                                <h5 class="mb-0">Hospital Regional de Guarapari</h5>
+                                <small class="text-muted">há 5 horas • <span class="badge badge-categoria">Recorrência Semanal</span></small>
+                            </div>
+                        </div>
+                        <p>Buscamos fornecedores de <strong>frutas da estação</strong> (Laranja e Banana) para dieta hospitalar. Necessário nota fiscal.</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary">Tenho Interesse</button>
+                            <button class="btn btn-outline-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="avatar-mini me-2"></div>
+                            <div>
+                                <h5 class="mb-0">Mercado Orgânico Vida Verde</h5>
+                                <small class="text-muted">há 8 horas • <span class="badge badge-categoria">Parceria Local</span></small>
+                            </div>
+                        </div>
+                        <p>Buscamos produtores de <strong>folhosas orgânicas</strong> e <strong>mel artesanal</strong> para revenda local.</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary">Tenho Interesse</button>
+                            <button class="btn btn-outline-secondary">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <aside class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Impacto ODS 2</h4>
+                        <p><strong>4.500 crianças</strong> alimentadas este mês via Plouty.</p>
+                        <div class="progress mb-2">
+                            <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted">75% da meta batida</small>
                     </div>
                 </div>
-                <div class="feed-content">
-                    <p>Buscamos produtores de <strong>folhosas orgânicas</strong> e <strong>mel artesanal</strong> para revenda local.</p>
-                </div>
-                <div class="feed-actions">
-                    <button class="btn-principal">Tenho Interesse</button>
-                    <button class="btn-texto">Ver Detalhes</button>
-                </div>
-            </article>
-        </section>
-
-        <aside class="sidebar-impacto">
-            <div class="card-estilizado">
-                <h4>Impacto ODS 2</h4>
-                <p><strong>4.500 crianças</strong> alimentadas este mês via Plouty.</p>
-                <div class="progress-container">
-                    <div class="progress-bar" style="width: 75%;"></div>
-                </div>
-                <small>75% da meta batida</small>
-            </div>
-        </aside>
+            </aside>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Plouty - The Future is Now.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fechar o menu dropdown quando um link é clicado em mobile
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

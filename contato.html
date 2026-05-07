@@ -4,87 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contato | Plouty</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <header>
-        <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="assets/img/logo_P.png" alt="Plouty Logo">
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="explorar.html">Explorar</a></li>
-                    <li><a href="plataforma.html">Solução</a></li>
-                    <li><a href="entrar.html">Entrar</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">
+                    <img src="assets/img/logo_P.png" alt="Plouty Logo" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="explorar.html">Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="plataforma.html">Solução</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entrar.html">Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main class="contato-container">
-        <section class="contato-grid">
-            
-            <div class="contato-info card-estilizado">
-                <h2>Como podemos ajudar?</h2>
-                <p>Seja você um produtor buscando expandir suas vendas ou uma instituição querendo otimizar compras, nossa equipe está pronta para auxiliar.</p>
-                
-                <div class="info-item">
-                    <strong>Suporte ao Usuário</strong>
-                    <span>suporte@plouty.com.br</span>
-                </div>
-                
-                <div class="info-item">
-                    <strong>Parcerias Institucionais</strong>
-                    <span>parcerias@plouty.com.br</span>
-                </div>
+    <main class="container my-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Como podemos ajudar?</h2>
+                        <p>Seja você um produtor buscando expandir suas vendas ou uma instituição querendo otimizar compras, nossa equipe está pronta para auxiliar.</p>
+                        
+                        <div class="mb-3">
+                            <strong>Suporte ao Usuário</strong><br>
+                            <span>suporte@plouty.com.br</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Parcerias Institucionais</strong><br>
+                            <span>parcerias@plouty.com.br</span>
+                        </div>
 
-                <div class="info-item">
-                    <strong>Localização</strong>
-                    <span>Guarapari, Espírito Santo - Brasil</span>
+                        <div class="mb-3">
+                            <strong>Localização</strong><br>
+                            <span>Guarapari, Espírito Santo - Brasil</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="contato-form card-estilizado">
-                <form>
-                    <div class="form-group">
-                        <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" placeholder="Seu nome ou da sua instituição">
-                    </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" id="nome" placeholder="Seu nome ou da sua instituição">
+                            </div>
 
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" placeholder="exemplo@email.com">
-                    </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" placeholder="exemplo@email.com">
+                            </div>
 
-                    <div class="form-group">
-                        <label for="assunto">Assunto</label>
-                        <select id="assunto">
-                            <option value="suporte">Suporte Técnico</option>
-                            <option value="vendas">Quero vender meus produtos</option>
-                            <option value="compras">Quero comprar para minha instituição</option>
-                            <option value="outros">Outros assuntos</option>
-                        </select>
-                    </div>
+                            <div class="mb-3">
+                                <label for="assunto" class="form-label">Assunto</label>
+                                <select class="form-select" id="assunto">
+                                    <option value="suporte">Suporte Técnico</option>
+                                    <option value="vendas">Quero vender meus produtos</option>
+                                    <option value="compras">Quero comprar para minha instituição</option>
+                                    <option value="outros">Outros assuntos</option>
+                                </select>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" rows="5" placeholder="Como podemos te ajudar hoje?"></textarea>
-                    </div>
+                            <div class="mb-3">
+                                <label for="mensagem" class="form-label">Mensagem</label>
+                                <textarea class="form-control" id="mensagem" rows="5" placeholder="Como podemos te ajudar hoje?"></textarea>
+                            </div>
 
-                    <button type="submit" class="btn-principal full-width">Enviar Mensagem</button>
-                </form>
+                            <button type="submit" class="btn btn-primary w-100">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-        </section>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Plouty - The Future is Now.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fechar o menu dropdown quando um link é clicado em mobile
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

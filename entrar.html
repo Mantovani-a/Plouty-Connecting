@@ -4,56 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrar | Plouty</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
-        <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="assets/img/logo_P.png" alt="Plouty Logo">
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="explorar.html">Explorar</a></li>
-                    <li><a href="plataforma.html">Solução</a></li>
-                    <li><a href="entrar.html">Entrar</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">
+                    <img src="assets/img/logo_P.png" alt="Plouty Logo" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="explorar.html">Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="plataforma.html">Solução</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entrar.html">Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main>
-        <section class="entrar-container">
-            <div class="entrar-content">
+    <main class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
                 <h1>Bem-vindo à Plouty</h1>
-                <p class="entrar-subtitulo">Conectando produtores rurais e compradores institucionais</p>
+                <p class="lead">Conectando produtores rurais e compradores institucionais</p>
 
-                <div class="tipos-conta">
-                    <div class="tipo-card">
-                        <h3>Para Produtores</h3>
-                        <p>Acesso a grandes compradores institucionais, garantia de venda antecipada e profissionalização do escoamento agrícola. Venda seus produtos frescos diretamente para escolas, hospitais e instituições públicas.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3>Para Produtores</h3>
+                                <p>Acesso a grandes compradores institucionais, garantia de venda antecipada e profissionalização do escoamento agrícola. Venda seus produtos frescos diretamente para escolas, hospitais e instituições públicas.</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="tipo-card">
-                        <h3>Para Instituições</h3>
-                        <p>Encontre produtores locais de alimentos frescos e de alta qualidade nutricional. Rastreabilidade total, conformidade regulatória e entrega garantida. Garanta segurança alimentar com produtos da região.</p>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3>Para Instituições</h3>
+                                <p>Encontre produtores locais de alimentos frescos e de alta qualidade nutricional. Rastreabilidade total, conformidade regulatória e entrega garantida. Garanta segurança alimentar com produtos da região.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="entrar-buttons">
-                    <a href="#" class="botao botao-criar">Criar Conta</a>
-                    <a href="#" class="botao botao-login">Fazer Login</a>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-primary me-2">Criar Conta</a>
+                    <a href="#" class="btn btn-outline-primary">Fazer Login</a>
                 </div>
 
-                <p class="entrar-info">Já possui conta? <a href="#">Faça login aqui</a> | Primeira vez? <a href="#">Crie sua conta</a></p>
+                <p class="mt-3">Já possui conta? <a href="#">Faça login aqui</a> | Primeira vez? <a href="#">Crie sua conta</a></p>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Plouty - The Future is Now.</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Fechar o menu dropdown quando um link é clicado em mobile
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
