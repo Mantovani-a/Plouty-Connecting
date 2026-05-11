@@ -9,6 +9,7 @@ A Plouty é uma plataforma desenhada para conectar pequenos produtores rurais a 
 - HTML5 (Semântica e Validação)
 - CSS3 (Design Responsivo)
 - Git/GitHub (Versionamento)
+- Bootstrap 5.3
 
 ## 📄 Licença
 Este projeto é para fins acadêmicos.
