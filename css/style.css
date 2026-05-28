@@ -2,19 +2,21 @@
    1. VARIÁVEIS E IDENTIDADE VISUAL
    ========================================================================== */
 :root {
-    --cor-petroleo: #042B3D;    /* Azul da Imagem 1 */
-    --cor-verde-escuro: #253529; /* Verde da Imagem 2 */
+    --cor-petroleo: #042B3D;
+    /* Azul da Imagem 1 */
+    --cor-verde-escuro: #253529;
+    /* Verde da Imagem 2 */
     --cor-verde-claro: #4a7c59;
     --cor-terra: #8b6f47;
-    
+
     --fundo-site: #fafbf8;
     --texto-corpo: #2c3e2c;
     --texto-claro: #ffffff;
     --borda-suave: #e0e6dc;
-    
+
     --cor-acao: #2d5a27;
     --cor-acao-hover: #1e3d1a;
-    
+
     --sombra-leve: 0 4px 12px rgba(4, 43, 61, 0.08);
     --sombra-media: 0 8px 24px rgba(4, 43, 61, 0.12);
     --sombra-forte: 0 12px 36px rgba(4, 43, 61, 0.15);
@@ -29,7 +31,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -40,7 +43,8 @@ body {
     background: linear-gradient(135deg, #fafbf8 0%, #f0f3ed 100%);
     display: flex;
     flex-direction: column;
-    margin-top: 76px; /* Ajustado para navbar do Bootstrap */
+    margin-top: 76px;
+    /* Ajustado para navbar do Bootstrap */
     min-height: 100vh;
 }
 
@@ -67,7 +71,9 @@ footer {
 /* ==========================================================================
    3. TIPOGRAFIA
    ========================================================================== */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     color: var(--cor-petroleo);
     margin-bottom: 20px;
     font-weight: 700;
@@ -81,7 +87,8 @@ h1 {
     background-clip: text;
 }
 
-h4, h5 {
+h4,
+h5 {
     color: var(--cor-petroleo);
     font-weight: 700;
 }
@@ -158,7 +165,7 @@ header {
     .navbar-brand img {
         height: 40px !important;
     }
-    
+
     .navbar {
         position: relative;
     }
@@ -186,7 +193,7 @@ header {
     .navbar-nav .nav-item:first-child {
         border-top: none;
     }
-    
+
     .navbar-light .navbar-nav .nav-link {
         font-size: 0.8em;
         padding: 0.75rem 1rem;
@@ -358,25 +365,47 @@ header {
     border: 2px solid var(--borda-suave);
 }
 
-.avatar-2 { background: linear-gradient(135deg, #e67e22, #d35400); }
-.avatar-3 { background: linear-gradient(135deg, #27ae60, #229954); }
-.avatar-4 { background: linear-gradient(135deg, #3498db, #2980b9); }
+.avatar-2 {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.avatar-3 {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.avatar-4 {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
 
 /* ==========================================================================
    6. ANIMAÇÕES E EFEITOS
    ========================================================================== */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Aplicação das Animações */
-main > section,
+main>section,
 .card {
     animation: fadeInUp 0.6s ease-out;
 }
@@ -458,37 +487,96 @@ header {
    9. RESPONSIVIDADE GERAL
    ========================================================================== */
 @media (max-width: 1200px) {
-    main { padding: 15px 10px; }
+    main {
+        padding: 15px 10px;
+    }
 }
 
 @media (max-width: 768px) {
-    body { margin-top: 70px; }
-    
+    body {
+        margin-top: 70px;
+    }
+
     .navbar {
         height: 70px;
         padding: 0.25rem 0.5rem;
     }
-    
+
     .navbar-brand img {
         height: 35px !important;
     }
-    
+
     .navbar-light .navbar-nav .nav-link {
         font-size: 0.75em;
         padding: 0.25rem 0.5rem;
     }
-    
+
     main {
         padding: 10px 5px;
     }
-    
+
     .card {
         margin-bottom: 1rem;
         padding: 20px;
     }
-    
+
     .btn {
         padding: 0.6rem 1.2rem;
         font-size: 0.85em;
     }
+}
+
+/* ==========================================================================
+   10. VALIDAÇÃO DE FORMULÁRIO E COMPONENTES AUXILIARES
+   ========================================================================== */
+.error-message {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.input-error {
+    border-color: #d9534f !important;
+}
+
+.input-error:focus {
+    border-color: #d9534f !important;
+    box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.15) !important;
+}
+
+.char-counter {
+    font-size: 0.8rem;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.char-counter.limit-reached {
+    color: #d9534f;
+    font-weight: 700;
+}
+
+.success-message-banner {
+    background: linear-gradient(135deg, var(--cor-verde-escuro) 0%, var(--cor-acao) 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra-leve);
+    display: none;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.success-message-banner h4 {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 1.15rem;
+}
+
+.success-message-banner p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
 }
