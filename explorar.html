@@ -47,27 +47,36 @@
                         <h3>Filtros</h3>
                         <div class="mb-3">
                             <label class="form-label">Tipo de Produtor</label>
-                            <select class="form-select">
-                                <option>Todos</option>
-                                <option>Verduras e Frutas</option>
-                                <option>Grãos e Cereais</option>
-                                <option>Produtos Orgânicos</option>
+                            <select class="form-select" id="filtro-tipo">
+                                <option value="Todos">Todos</option>
+                                <option value="Verduras e Frutas">Verduras e Frutas</option>
+                                <option value="Grãos e Cereais">Grãos e Cereais</option>
+                                <option value="Produtos Orgânicos">Produtos Orgânicos</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Localização</label>
-                            <select class="form-select">
-                                <option>Todas as regiões</option>
-                                <option>Sudeste</option>
-                                <option>Nordeste</option>
-                                <option>Centro-Oeste</option>
-                                <option>Sul</option>
+                            <select class="form-select" id="filtro-localizacao">
+                                <option value="Todas as regiões">Todas as regiões</option>
+                                <option value="Sudeste">Sudeste</option>
+                                <option value="Nordeste">Nordeste</option>
+                                <option value="Centro-Oeste">Centro-Oeste</option>
+                                <option value="Sul">Sul</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Reputação Mínima</label>
-                            <input type="range" class="form-range" min="0" max="100" value="0">
-                            <span class="range-value">0%</span>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label class="form-label mb-0">Reputação Mínima</label>
+                                <span class="range-value" id="reputacao-min-valor">0.0</span>
+                            </div>
+                            <input type="range" class="form-range" id="filtro-reputacao-min" min="0" max="5" step="0.1" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label class="form-label mb-0">Reputação Máxima</label>
+                                <span class="range-value" id="reputacao-max-valor">5.0</span>
+                            </div>
+                            <input type="range" class="form-range" id="filtro-reputacao-max" min="0" max="5" step="0.1" value="5.0">
                         </div>
                     </div>
                 </div>
@@ -76,7 +85,7 @@
             <!-- Feed Central -->
             <section class="col-md-6">
                 <!-- Card 1 -->
-                <article class="card mb-3">
+                <article class="card card-produtor mb-3" data-tipo="verduras-frutas produtos-organicos" data-regiao="Sudeste" data-reputacao="4.9">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="post-avatar me-2"></div>
@@ -85,7 +94,7 @@
                                 <small class="text-muted">Produtor • Verduras Orgânicas</small><br>
                                 <small>Minas Gerais</small>
                             </div>
-                            <span class="badge badge-reputacao">98%</span>
+                            <span class="badge badge-reputacao">4.9 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Alfaces hidropônicas premium</strong> - Frescas, colhidas diariamente. Ideais para PNAE e hospitais. Entrego em até 24h.</p>
                         <div class="mb-2">
@@ -94,18 +103,18 @@
                             <span class="badge bg-secondary">Hidroponia</span>
                         </div>
                         <div class="mb-2">
-                            <small>234 curtidas • 18 comentários • 12 contatos</small>
+                            <small class="stats-produtor">234 curtidas • 18 comentários • 12 contatos</small>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary">Curtir</button>
-                            <button class="btn btn-outline-primary">Comentar</button>
-                            <button class="btn btn-primary">Entrar em Contato</button>
+                            <button class="btn btn-outline-primary btn-like" data-likes="234" data-comments="18" data-contatos="12">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="João Carlos Silva">Entrar em Contato</button>
                         </div>
                     </div>
                 </article>
 
                 <!-- Card 2 -->
-                <article class="card mb-3">
+                <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Sudeste" data-reputacao="4.8">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="post-avatar avatar-2 me-2"></div>
@@ -114,7 +123,7 @@
                                 <small class="text-muted">Produtora • Frutas</small><br>
                                 <small>São Paulo</small>
                             </div>
-                            <span class="badge badge-reputacao">95%</span>
+                            <span class="badge badge-reputacao">4.8 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Melancia e melão de estação</strong> - Produção sustentável sem agrotóxicos. Perfeito para escolas e refeitórios institucionais.</p>
                         <div class="mb-2">
@@ -123,18 +132,18 @@
                             <span class="badge bg-secondary">Saudável</span>
                         </div>
                         <div class="mb-2">
-                            <small>156 curtidas • 22 comentários • 8 contatos</small>
+                            <small class="stats-produtor">156 curtidas • 22 comentários • 8 contatos</small>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary">Curtir</button>
-                            <button class="btn btn-outline-primary">Comentar</button>
-                            <button class="btn btn-primary">Entrar em Contato</button>
+                            <button class="btn btn-outline-primary btn-like" data-likes="156" data-comments="22" data-contatos="8">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="Maria dos Santos">Entrar em Contato</button>
                         </div>
                     </div>
                 </article>
 
                 <!-- Card 3 -->
-                <article class="card mb-3">
+                <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Sul" data-reputacao="4.6">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="post-avatar avatar-3 me-2"></div>
@@ -143,7 +152,7 @@
                                 <small class="text-muted">Cooperativa • Hortifruti</small><br>
                                 <small>Paraná</small>
                             </div>
-                            <span class="badge badge-reputacao">92%</span>
+                            <span class="badge badge-reputacao">4.6 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Cesta de produtos da estação</strong> - Diversificado com 8+ variedades semanais. Fornecimento contínuo para PNAE. Entrega garantida.</p>
                         <div class="mb-2">
@@ -152,18 +161,18 @@
                             <span class="badge bg-secondary">Garantido</span>
                         </div>
                         <div class="mb-2">
-                            <small>423 curtidas • 45 comentários • 24 contatos</small>
+                            <small class="stats-produtor">423 curtidas • 45 comentários • 24 contatos</small>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary">Curtir</button>
-                            <button class="btn btn-outline-primary">Comentar</button>
-                            <button class="btn btn-primary">Entrar em Contato</button>
+                            <button class="btn btn-outline-primary btn-like" data-likes="423" data-comments="45" data-contatos="24">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="Cooperativa Verde">Entrar em Contato</button>
                         </div>
                     </div>
                 </article>
 
                 <!-- Card 4 -->
-                <article class="card mb-3">
+                <article class="card card-produtor mb-3" data-tipo="graos-cereais" data-regiao="Sul" data-reputacao="4.9">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
                             <div class="post-avatar avatar-4 me-2"></div>
@@ -172,7 +181,7 @@
                                 <small class="text-muted">Produtor • Grãos</small><br>
                                 <small>Rio Grande do Sul</small>
                             </div>
-                            <span class="badge badge-reputacao">97%</span>
+                            <span class="badge badge-reputacao">4.9 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Arroz e feijão integral</strong> - Colheita recente, armazenado adequadamente. Certificado de qualidade. Ideal para merenda escolar.</p>
                         <div class="mb-2">
@@ -181,12 +190,70 @@
                             <span class="badge bg-secondary">Certificado</span>
                         </div>
                         <div class="mb-2">
-                            <small>298 curtidas • 32 comentários • 15 contatos</small>
+                            <small class="stats-produtor">298 curtidas • 32 comentários • 15 contatos</small>
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-outline-primary">Curtir</button>
-                            <button class="btn btn-outline-primary">Comentar</button>
-                            <button class="btn btn-primary">Entrar em Contato</button>
+                            <button class="btn btn-outline-primary btn-like" data-likes="298" data-comments="32" data-contatos="15">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="Pedro Ribeiro">Entrar em Contato</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5 (Reputação 82%) -->
+                <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Centro-Oeste" data-reputacao="4.1">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="post-avatar avatar-2 me-2"></div>
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0">Marcos Mendes</h4>
+                                <small class="text-muted">Produtor Iniciante • Frutas</small><br>
+                                <small>Goiás</small>
+                            </div>
+                            <span class="badge badge-reputacao bg-warning">4.1 <i class="bi bi-star-fill"></i></span>
+                        </div>
+                        <p><strong>Fornecimento de frutas variadas</strong> (Banana e Maçã) para comércios locais. Começando agora a expandir as vendas na plataforma Plouty!</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">Banana</span>
+                            <span class="badge bg-secondary me-1">Maçã</span>
+                            <span class="badge bg-secondary">Frutas</span>
+                        </div>
+                        <div class="mb-2">
+                            <small class="stats-produtor">45 curtidas • 5 comentários • 2 contatos</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-like" data-likes="45" data-comments="5" data-contatos="2">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="Marcos Mendes">Entrar em Contato</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6 (Reputação 65%) -->
+                <article class="card card-produtor mb-3" data-tipo="verduras-frutas produtos-organicos" data-regiao="Nordeste" data-reputacao="3.3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="post-avatar avatar-3 me-2"></div>
+                            <div class="flex-grow-1">
+                                <h4 class="mb-0">Sítio Recanto Feliz</h4>
+                                <small class="text-muted">Produtor Familiar • Hortaliças</small><br>
+                                <small>Bahia</small>
+                            </div>
+                            <span class="badge badge-reputacao bg-danger">3.3 <i class="bi bi-star-fill"></i></span>
+                        </div>
+                        <p><strong>Tomates e cebolas orgânicas</strong> direto da horta familiar. Algumas dificuldades logísticas recentes, mas prezamos pela alta qualidade dos alimentos.</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">Tomate</span>
+                            <span class="badge bg-secondary me-1">Cebola</span>
+                            <span class="badge bg-secondary">Orgânico</span>
+                        </div>
+                        <div class="mb-2">
+                            <small class="stats-produtor">12 curtidas • 3 comentários • 1 contato</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary btn-like" data-likes="12" data-comments="3" data-contatos="1">Curtir</button>
+                            <button class="btn btn-outline-primary btn-comentar">Comentar</button>
+                            <button class="btn btn-primary btn-contato" data-nome="Sítio Recanto Feliz">Entrar em Contato</button>
                         </div>
                     </div>
                 </article>
@@ -234,5 +301,6 @@
             });
         });
     </script>
+    <script src="src/js/explorar.js"></script>
 </body>
 </html>
