@@ -5,28 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plouty | Plataforma </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="assets/img/logo_P.png" type="image/png">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Fechar o menu dropdown quando um link é clicado em mobile
-            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    const navbarToggler = document.querySelector('.navbar-toggler');
-                    const navbarCollapse = document.querySelector('.navbar-collapse');
-                    if (navbarCollapse.classList.contains('show')) {
-                        navbarToggler.click();
-                    }
-                });
-            });
-        });
-    </script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+            <div class="container">
                 <a href="index.html" class="navbar-brand">
                     <img src="assets/img/logo_P.png" alt="Plouty Logo" height="40">
                 </a>
@@ -34,12 +20,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="explorar.html">Explorar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="plataforma.html">Solução</a></li>
-                        <li class="nav-item"><a class="nav-link" href="entrar.html">Entrar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <div class="navbar-search-container mx-auto my-2 my-lg-0">
+                        <form action="explorar.html" method="GET" class="position-relative">
+                            <input type="text" name="search" class="form-control navbar-search-input" placeholder="O que a Plouty pode te ajudar a encontrar hoje?">
+                            <i class="bi bi-search search-icon-inside"></i>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav ms-auto ms-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="explorar.html"><i class="bi bi-compass-fill"></i> Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="plataforma.html"><i class="bi bi-patch-check-fill"></i> Solução</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entrar.html"><i class="bi bi-person-fill"></i> Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contato.html"><i class="bi bi-envelope-fill"></i> Contato</a></li>
                     </ul>
                 </div>
             </div>
@@ -101,5 +93,20 @@
         <p>&copy; 2026 Plouty - The Future is Now.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fechar o menu dropdown quando um link é clicado em mobile
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    const navbarToggler = document.querySelector('.navbar-toggler');
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarToggler.click();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

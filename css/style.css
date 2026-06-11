@@ -124,11 +124,14 @@ header {
     color: var(--cor-verde-escuro);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 0.85em;
+    letter-spacing: 1px;
+    font-size: 0.8em;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
 }
 
 .navbar-light .navbar-nav .nav-link::after {
@@ -152,12 +155,60 @@ header {
 
 .navbar-light .navbar-brand {
     color: var(--cor-petroleo);
-    margin-right: 2rem;
+    margin-right: 1.5rem;
 }
 
 .navbar-collapse.show {
     background: rgba(250, 251, 248, 0.95);
     box-shadow: 0 12px 30px rgba(4, 43, 61, 0.12);
+}
+
+/* --- Campo de Busca Customizado na Navbar --- */
+.navbar-search-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0.5rem 0;
+}
+
+.navbar-search-input {
+    border-radius: 24px;
+    padding-left: 1.25rem;
+    padding-right: 2.75rem;
+    border: 1.5px solid var(--borda-suave);
+    background-color: #f4f6f2;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.85em;
+    font-weight: 500;
+    height: 40px;
+}
+
+.navbar-search-input:focus {
+    background-color: #ffffff;
+    border-color: var(--cor-verde-claro);
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
+    outline: none;
+}
+
+.search-icon-inside {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-verde-claro);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+/* Espaçamento e Alinhamento no Desktop */
+@media (min-width: 992px) {
+    .navbar-search-container {
+        margin: 0 auto;
+    }
+    
+    .navbar-nav {
+        gap: 0.5rem;
+    }
 }
 
 /* Responsive Bootstrap navbar overrides */
@@ -410,9 +461,6 @@ main>section,
     animation: fadeInUp 0.6s ease-out;
 }
 
-header {
-    animation: slideInDown 0.5s ease-out;
-}
 
 .avatar-placeholder {
     animation: fadeInUp 0.6s ease-out;
