@@ -10,8 +10,19 @@
     --cor-terra: #8b6f47;
 
     --fundo-site: #fafbf8;
+    --fundo-grad-1: #fafbf8;
+    --fundo-grad-2: #f0f3ed;
+    --fundo-header: rgba(250, 251, 248, 0.95);
+    --fundo-card-1: rgba(255, 255, 255, 0.9);
+    --fundo-card-2: rgba(250, 251, 248, 0.7);
+    --fundo-busca: #f4f6f2;
+    --fundo-busca-foco: #ffffff;
+    --fundo-card-filtro-1: rgba(255, 255, 255, 0.95);
+    --fundo-card-filtro-2: rgba(250, 251, 248, 0.8);
+
     --texto-corpo: #2c3e2c;
     --texto-claro: #ffffff;
+    --texto-secundario: #666666;
     --borda-suave: #e0e6dc;
 
     --cor-acao: #2d5a27;
@@ -20,6 +31,36 @@
     --sombra-leve: 0 4px 12px rgba(4, 43, 61, 0.08);
     --sombra-media: 0 8px 24px rgba(4, 43, 61, 0.12);
     --sombra-forte: 0 12px 36px rgba(4, 43, 61, 0.15);
+}
+
+[data-theme="dark"] {
+    --cor-petroleo: #85c2dd; /* Lighter shade of oil blue for contrast */
+    --cor-verde-escuro: #c8e6c9; /* Lighter shade of dark green */
+    --cor-verde-claro: #81c784; /* Soft green */
+    --cor-terra: #d7ccc8; /* Soft earth */
+
+    --fundo-site: #121815; /* Dark forest tone */
+    --fundo-grad-1: #121815;
+    --fundo-grad-2: #1b241f;
+    --fundo-header: rgba(18, 24, 21, 0.95);
+    --fundo-card-1: rgba(27, 36, 31, 0.9);
+    --fundo-card-2: rgba(20, 27, 23, 0.7);
+    --fundo-busca: #232f28;
+    --fundo-busca-foco: #2c3a31;
+    --fundo-card-filtro-1: rgba(27, 36, 31, 0.95);
+    --fundo-card-filtro-2: rgba(20, 27, 23, 0.8);
+
+    --texto-corpo: #e2e8e4; /* Light text on dark background */
+    --texto-claro: #121815; /* Inverted for high-contrast light elements */
+    --texto-secundario: #a8b5ad; /* Soft secondary text */
+    --borda-suave: #2d3b32;
+
+    --cor-acao: #66bb6a;
+    --cor-acao-hover: #81c784;
+
+    --sombra-leve: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --sombra-media: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --sombra-forte: 0 12px 36px rgba(0, 0, 0, 0.6);
 }
 
 /* ==========================================================================
@@ -40,7 +81,7 @@ body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.7;
     color: var(--texto-corpo);
-    background: linear-gradient(135deg, #fafbf8 0%, #f0f3ed 100%);
+    background: linear-gradient(135deg, var(--fundo-grad-1) 0%, var(--fundo-grad-2) 100%);
     display: flex;
     flex-direction: column;
     margin-top: 76px;
@@ -98,7 +139,7 @@ h5 {
    ========================================================================== */
 header {
     width: 100%;
-    background: rgba(250, 251, 248, 0.95);
+    background: var(--fundo-header);
     border-bottom: 2px solid var(--cor-verde-claro);
     padding: 0;
     position: fixed;
@@ -159,8 +200,8 @@ header {
 }
 
 .navbar-collapse.show {
-    background: rgba(250, 251, 248, 0.95);
-    box-shadow: 0 12px 30px rgba(4, 43, 61, 0.12);
+    background: var(--fundo-header);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Campo de Busca Customizado na Navbar --- */
@@ -176,7 +217,8 @@ header {
     padding-left: 1.25rem;
     padding-right: 2.75rem;
     border: 1.5px solid var(--borda-suave);
-    background-color: #f4f6f2;
+    background-color: var(--fundo-busca);
+    color: var(--texto-corpo);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 0.85em;
     font-weight: 500;
@@ -184,7 +226,7 @@ header {
 }
 
 .navbar-search-input:focus {
-    background-color: #ffffff;
+    background-color: var(--fundo-busca-foco);
     border-color: var(--cor-verde-claro);
     box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
     outline: none;
@@ -227,9 +269,9 @@ header {
         left: 0;
         right: 0;
         z-index: 1050;
-        border-bottom: 1px solid rgba(37, 53, 41, 0.1);
-        background: rgba(250, 251, 248, 0.95);
-        box-shadow: 0 12px 30px rgba(4, 43, 61, 0.12);
+        border-bottom: 1px solid var(--borda-suave);
+        background: var(--fundo-header);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     }
 
     .navbar-nav {
@@ -303,7 +345,7 @@ header {
 
 /* --- Cards --- */
 .card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(250, 251, 248, 0.7));
+    background: linear-gradient(135deg, var(--fundo-card-1), var(--fundo-card-2));
     padding: 30px;
     border-radius: 12px;
     border: 1.5px solid var(--borda-suave);
@@ -331,7 +373,7 @@ header {
 
 .filtro-card,
 .destaque-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(250, 251, 248, 0.8));
+    background: linear-gradient(135deg, var(--fundo-card-filtro-1), var(--fundo-card-filtro-2));
     border: 1.5px solid var(--borda-suave);
     border-radius: 12px;
     padding: 20px;
@@ -479,7 +521,7 @@ main>section,
 
 .pilares .card p {
     font-size: 0.95em;
-    color: #666;
+    color: var(--texto-secundario);
     margin-bottom: 0;
 }
 
@@ -511,7 +553,7 @@ main>section,
     padding: 10px;
     border: 1.5px solid var(--borda-suave);
     border-radius: 8px;
-    background: #f4f4f4;
+    background: var(--fundo-busca);
     color: var(--texto-corpo);
     font-size: 0.9em;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -520,7 +562,7 @@ main>section,
 .filtro-item select:focus,
 .filtro-item input:focus {
     border-color: var(--cor-verde-claro);
-    background: white;
+    background: var(--fundo-busca-foco);
     outline: none;
     box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
 }
@@ -676,4 +718,64 @@ main>section,
 
 .form-range:focus::-moz-range-thumb {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(74, 124, 89, 0.25) !important;
+}
+
+/* ==========================================================================
+   12. BOTÃO DO MODO ESCURO FLUTUANTE E AJUSTES DE TEMA
+   ========================================================================== */
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cor-verde-escuro), var(--cor-acao));
+    border: none;
+    color: white;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--sombra-media);
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: var(--sombra-forte);
+    background: linear-gradient(135deg, var(--cor-petroleo), var(--cor-verde-escuro));
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Ajustes específicos para Dark Mode */
+[data-theme="dark"] .navbar {
+    background-color: var(--fundo-header) !important;
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--fundo-site) !important;
+}
+
+[data-theme="dark"] .text-muted {
+    color: var(--texto-secundario) !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: #708578 !important;
+}
+
+[data-theme="dark"] .success-message-banner h4 {
+    color: white !important;
+}
+
+[data-theme="dark"] footer p {
+    color: var(--texto-corpo) !important;
+    opacity: 0.8;
 }
