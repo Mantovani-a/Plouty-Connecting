@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (isLiked) {
                 likes += 1;
-                btn.innerHTML = '<i class="bi bi-heart-fill me-1 text-danger animate__animated animate__heartBeat"></i> Curtido';
+                btn.innerHTML = '<i class="bi bi-heart-fill me-1 text-white animate__animated animate__heartBeat"></i> Curtido';
             } else {
                 likes -= 1;
                 btn.innerHTML = 'Curtir';
