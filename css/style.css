@@ -529,206 +529,6 @@ main>section,
 }
 
 /* ==========================================================================
-   7. RESPONSIVIDADE GERAL
-   ========================================================================== */
-@media (max-width: 1200px) {
-    main {
-        padding: 15px 10px;
-    }
-}
-
-@media (max-width: 991px) {
-    .navbar-brand img {
-        height: 40px !important;
-    }
-
-    .navbar {
-        position: relative;
-    }
-
-    .navbar-collapse {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 1050;
-        border-bottom: 1px solid var(--borda-suave);
-        background: var(--fundo-header);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .navbar-nav {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .navbar-nav .nav-item {
-        border-top: 1px solid rgba(37, 53, 41, 0.08);
-    }
-
-    .navbar-nav .nav-item:first-child {
-        border-top: none;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        font-size: 0.8em;
-        padding: 0.75rem 1rem;
-    }
-
-    .navbar-mobile-layout {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-wrap: nowrap !important;
-    }
-
-    .navbar-search-container {
-        flex-grow: 1;
-        max-width: none;
-        margin: 0 10px !important;
-    }
-
-    .navbar-search-input {
-        height: 38px;
-        padding-left: 1rem;
-        font-size: 0.82em;
-    }
-
-    .search-icon-inside {
-        right: 12px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 767px) {
-    body {
-        margin-top: 70px !important;
-        padding-bottom: 64px !important;
-    }
-
-    header {
-        height: 70px !important;
-    }
-
-    .navbar {
-        min-height: 70px !important;
-        height: 70px !important;
-        padding: 0.5rem 0.75rem !important;
-    }
-
-    .navbar-brand img {
-        height: 35px !important;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        font-size: 0.75em;
-        padding: 0.25rem 0.5rem;
-    }
-
-    main {
-        padding: 10px 5px;
-    }
-
-    .card {
-        margin-bottom: 1rem;
-        padding: 20px;
-    }
-
-    .btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85em;
-        min-height: 48px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .card-produtor .btn-contato,
-    .card-produtor .btn-like,
-    .card-produtor .btn-comentar,
-    .btn-primary,
-    .btn-outline-primary,
-    .btn-outline-secondary {
-        min-height: 48px;
-    }
-
-    .mobile-bottom-nav {
-        display: flex;
-    }
-
-    .navbar-collapse,
-    .navbar-toggler {
-        display: none !important;
-    }
-}
-
-@media (max-width: 576px) {
-    .card-produtor .card-body > .d-flex {
-        flex-wrap: wrap;
-    }
-
-    .card-produtor .btn-like,
-    .card-produtor .btn-comentar {
-        flex: 1 1 auto;
-        padding: 0.6rem 0.5rem !important;
-        text-align: center;
-    }
-
-    .card-produtor .btn-contato {
-        flex: 1 0 100%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar-brand {
-        margin-right: 5px !important;
-    }
-
-    .navbar-brand img {
-        height: 30px !important;
-    }
-
-    .btn-nav-profile {
-        margin-right: 6px;
-    }
-
-    .nav-profile-avatar-thumbnail {
-        width: 32px;
-        height: 32px;
-    }
-
-    .theme-toggle-header-wrapper .theme-toggle-btn {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 1rem !important;
-    }
-
-    .navbar-search-input {
-        padding-left: 0.8rem;
-        font-size: 0.78em;
-    }
-
-    .card {
-        padding: 16px !important;
-    }
-
-    .card-body .d-flex.gap-2,
-    .card-body .d-flex[class*="gap-"] {
-        flex-direction: column !important;
-        gap: 8px !important;
-    }
-
-    .card-body .d-flex.gap-2 > button,
-    .card-body .d-flex.gap-2 > a,
-    .card-body .d-flex.gap-2 > div {
-        width: 100% !important;
-        margin-right: 0 !important;
-    }
-}
-
-/* ==========================================================================
    8. VALIDAÇÃO DE FORMULÁRIO E COMPONENTES AUXILIARES
    ========================================================================== */
 .error-message {
@@ -954,7 +754,7 @@ main>section,
 }
 
 /* ==========================================================================
-   11. ESTILOS DE USABILIDADE MOBILE
+   10. ESTILOS DE USABILIDADE MOBILE
    ========================================================================== */
 .mobile-bottom-nav {
     position: fixed;
@@ -1087,4 +887,204 @@ main>section,
 
 .theme-toggle-header-wrapper .theme-toggle-btn:active {
     transform: scale(0.95) !important;
+}
+
+/* ==========================================================================
+   11. RESPONSIVIDADE GERAL
+   ========================================================================== */
+@media (max-width: 1200px) {
+    main {
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-brand img {
+        height: 40px !important;
+    }
+
+    .navbar {
+        position: relative;
+    }
+
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+        border-bottom: 1px solid var(--borda-suave);
+        background: var(--fundo-header);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .navbar-nav .nav-item {
+        border-top: 1px solid rgba(37, 53, 41, 0.08);
+    }
+
+    .navbar-nav .nav-item:first-child {
+        border-top: none;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        font-size: 0.8em;
+        padding: 0.75rem 1rem;
+    }
+
+    .navbar-mobile-layout {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .navbar-search-container {
+        flex-grow: 1;
+        max-width: none;
+        margin: 0 10px !important;
+    }
+
+    .navbar-search-input {
+        height: 38px;
+        padding-left: 1rem;
+        font-size: 0.82em;
+    }
+
+    .search-icon-inside {
+        right: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        margin-top: 70px !important;
+        padding-bottom: 64px !important;
+    }
+
+    header {
+        height: 70px !important;
+    }
+
+    .navbar {
+        min-height: 70px !important;
+        height: 70px !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    .navbar-brand img {
+        height: 35px !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        font-size: 0.75em;
+        padding: 0.25rem 0.5rem;
+    }
+
+    main {
+        padding: 10px 5px;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+        padding: 20px;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85em;
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-produtor .btn-contato,
+    .card-produtor .btn-like,
+    .card-produtor .btn-comentar,
+    .btn-primary,
+    .btn-outline-primary,
+    .btn-outline-secondary {
+        min-height: 48px;
+    }
+
+    .mobile-bottom-nav {
+        display: flex;
+    }
+
+    .navbar-collapse,
+    .navbar-toggler {
+        display: none !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-produtor .card-body > .d-flex {
+        flex-wrap: wrap;
+    }
+
+    .card-produtor .btn-like,
+    .card-produtor .btn-comentar {
+        flex: 1 1 auto;
+        padding: 0.6rem 0.5rem !important;
+        text-align: center;
+    }
+
+    .card-produtor .btn-contato {
+        flex: 1 0 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand {
+        margin-right: 5px !important;
+    }
+
+    .navbar-brand img {
+        height: 30px !important;
+    }
+
+    .btn-nav-profile {
+        margin-right: 6px;
+    }
+
+    .nav-profile-avatar-thumbnail {
+        width: 32px;
+        height: 32px;
+    }
+
+    .theme-toggle-header-wrapper .theme-toggle-btn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+
+    .navbar-search-input {
+        padding-left: 0.8rem;
+        font-size: 0.78em;
+    }
+
+    .card {
+        padding: 16px !important;
+    }
+
+    .card-body .d-flex.gap-2,
+    .card-body .d-flex[class*="gap-"] {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .card-body .d-flex.gap-2 > button,
+    .card-body .d-flex.gap-2 > a,
+    .card-body .d-flex.gap-2 > div {
+        width: 100% !important;
+        margin-right: 0 !important;
+    }
 }
