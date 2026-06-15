@@ -574,6 +574,24 @@ main>section,
     }
 }
 
+@media (max-width: 576px) {
+    .card-produtor .card-body > .d-flex {
+        flex-wrap: wrap;
+    }
+
+    .card-produtor .btn-like,
+    .card-produtor .btn-comentar {
+        flex: 1 1 auto;
+        padding: 0.6rem 0.5rem !important;
+        text-align: center;
+    }
+
+    .card-produtor .btn-contato {
+        flex: 1 0 100%;
+        text-align: center;
+    }
+}
+
 /* ==========================================================================
    10. VALIDAÇÃO DE FORMULÁRIO E COMPONENTES AUXILIARES
    ========================================================================== */
