@@ -1,5 +1,3 @@
-// Validação e micro-interações do formulário de contato da Plouty
-
 const form = document.getElementById('form-contato');
 const nomeInput = document.getElementById('nome');
 const emailInput = document.getElementById('email');
@@ -49,7 +47,6 @@ function handleInput(inputEl, validationFn) {
     }
 }
 
-// Validação do campo Nome
 function validateNome(isTyping = false) {
     const value = nomeInput.value.trim();
 
@@ -73,7 +70,6 @@ function validateNome(isTyping = false) {
     return true;
 }
 
-// Validação do campo E-mail
 function validateEmail(isTyping = false) {
     const value = emailInput.value.trim();
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -92,7 +88,6 @@ function validateEmail(isTyping = false) {
     return true;
 }
 
-// Validação do campo Mensagem
 function validateMensagem(isTyping = false) {
     const value = mensagemTextarea.value.trim();
 
@@ -159,5 +154,3 @@ if (form) {
         }
     });
 }
-
-

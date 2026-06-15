@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Injeta os estilos do Toast dinamicamente
     const toastStyles = document.createElement('style');
     toastStyles.textContent = `
         .custom-toast {
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(toastStyles);
 
-    // Mapeia elementos do DOM
     const tipoSelect = document.getElementById('filtro-tipo');
     const localizacaoSelect = document.getElementById('filtro-localizacao');
     const reputacaoMinInput = document.getElementById('filtro-reputacao-min');
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.querySelector('.navbar-search-input');
     const searchForm = document.querySelector('.navbar-search-container form');
 
-    // Inicializa valores padrões para evitar o cache de formulários dos navegadores
     if (reputacaoMinInput && reputacaoMinValor) {
         reputacaoMinInput.value = "0.0";
         reputacaoMinValor.textContent = "0.0";
@@ -58,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reputacaoMaxValor.textContent = "5.0";
     }
 
-    // Sincroniza e impede o cruzamento lógico dos sliders de reputação
     if (reputacaoMinInput && reputacaoMinValor) {
         reputacaoMinInput.addEventListener('input', (e) => {
             let minVal = parseFloat(e.target.value);
@@ -84,11 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Registra listeners de alteração nos filtros
     if (tipoSelect) tipoSelect.addEventListener('change', filtrarProdutores);
     if (localizacaoSelect) localizacaoSelect.addEventListener('change', filtrarProdutores);
 
-    // Filtra localmente a barra de busca e previne recarregamento de página
     if (searchForm) {
         searchForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -99,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('input', filtrarProdutores);
     }
 
-    // Carrega busca prévia enviada via parâmetro de URL (?search=...)
     const urlParams = new URLSearchParams(window.location.search);
     const initialSearch = urlParams.get('search');
     if (initialSearch && searchInput) {
@@ -109,10 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    // Executa filtragem inicial
     filtrarProdutores();
 
-    // Filtra e exibe os cards conforme filtros selecionados
     function filtrarProdutores() {
         const tipo = tipoSelect ? tipoSelect.value : 'Todos';
         const localizacao = localizacaoSelect ? localizacaoSelect.value : 'Todas as regiões';
@@ -161,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Mostra feedback se nenhum resultado corresponder
         let feedbackMsg = document.getElementById('sem-resultados');
         const feedSection = document.querySelector('section.col-md-6');
 
@@ -185,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Gerenciador de cliques em "Curtir" (Like)
     document.querySelectorAll('.btn-like').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('btn-outline-primary');
@@ -213,14 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Simulação visual de Comentários
     document.querySelectorAll('.btn-comentar').forEach(btn => {
         btn.addEventListener('click', () => {
             showToast('A seção de comentários estará disponível em breve!');
         });
     });
 
-    // Simulação visual de envio de interesse (Contato)
     document.querySelectorAll('.btn-contato').forEach(btn => {
         btn.addEventListener('click', () => {
             const nomeProdutor = btn.dataset.nome;
@@ -228,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Cria e exibe notificação Toast temporária
     function showToast(message) {
         const oldToast = document.querySelector('.custom-toast');
         if (oldToast) oldToast.remove();
@@ -238,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.innerHTML = `<i class="bi bi-info-circle-fill text-warning me-1"></i> <span>${message}</span>`;
         document.body.appendChild(toast);
 
-        toast.offsetHeight; // Força reflow
+        toast.offsetHeight;
         toast.classList.add('show');
 
         setTimeout(() => {

@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     updateIcon(currentTheme);
-    document.body.appendChild(toggleBtn);
+    const wrapper = document.querySelector('.theme-toggle-header-wrapper') || document.body;
+    wrapper.appendChild(toggleBtn);
     
     toggleBtn.addEventListener('click', () => {
         const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
