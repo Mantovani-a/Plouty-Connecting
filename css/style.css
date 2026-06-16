@@ -14,8 +14,6 @@
     --fundo-card-2: rgba(250, 251, 248, 0.7);
     --fundo-busca: #f4f6f2;
     --fundo-busca-foco: #ffffff;
-    --fundo-card-filtro-1: rgba(255, 255, 255, 0.95);
-    --fundo-card-filtro-2: rgba(250, 251, 248, 0.8);
     --texto-corpo: #2c3e2c;
     --texto-claro: #ffffff;
     --texto-secundario: #666666;
@@ -40,8 +38,6 @@
     --fundo-card-2: #181a19;
     --fundo-busca: #1f2b24;
     --fundo-busca-foco: #26352c;
-    --fundo-card-filtro-1: #18221d;
-    --fundo-card-filtro-2: #18221d;
     --texto-corpo: #e8f0eb;
     --texto-claro: #0b110e;
     --texto-secundario: #fafcfb;
@@ -341,7 +337,7 @@ header {
 
 .filtro-card,
 .destaque-card {
-    background: linear-gradient(135deg, var(--fundo-card-filtro-1), var(--fundo-card-filtro-2));
+    background: linear-gradient(135deg, var(--fundo-card-1), var(--fundo-card-2));
     border: 1.5px solid var(--borda-suave);
     border-radius: 12px;
     padding: 20px;
@@ -351,6 +347,11 @@ header {
 
 .destaque-card {
     border-color: var(--cor-verde-claro);
+}
+
+.filtro-card::before,
+.destaque-card::before {
+    display: none !important;
 }
 
 .filtro-card h3,
@@ -827,11 +828,11 @@ main>section,
 }
 
 [data-theme="dark"] .form-range::-webkit-slider-runnable-track {
-    background-color: var(--borda-suave) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 [data-theme="dark"] .form-range::-moz-range-track {
-    background-color: var(--borda-suave) !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 [data-theme="dark"] .offcanvas .btn-close {
