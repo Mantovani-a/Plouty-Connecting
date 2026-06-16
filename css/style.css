@@ -28,24 +28,24 @@
 }
 
 [data-theme="dark"] {
-    --cor-petroleo: #89a5b5;
+    --cor-petroleo: #FAF8F4;
     --cor-verde-escuro: #a3c3af;
-    --cor-verde-claro: #5fa674;
+    --cor-verde-claro: #599a6c;
     --cor-terra: #c9af9f;
-    --fundo-site: #0b110e;
-    --fundo-grad-1: #0b110e;
-    --fundo-grad-2: #121a15;
+    --fundo-site: #0b120e;
+    --fundo-grad-1: #151615;
+    --fundo-grad-2: #1a1b1a;
     --fundo-header: rgba(11, 17, 14, 0.95);
-    --fundo-card-1: #18221d;
-    --fundo-card-2: #18221d;
+    --fundo-card-1: #161716;
+    --fundo-card-2: #181a19;
     --fundo-busca: #1f2b24;
     --fundo-busca-foco: #26352c;
     --fundo-card-filtro-1: #18221d;
     --fundo-card-filtro-2: #18221d;
     --texto-corpo: #e8f0eb;
     --texto-claro: #0b110e;
-    --texto-secundario: #8ba294;
-    --borda-suave: #223028;
+    --texto-secundario: #fafcfb;
+    --borda-suave: #181918;
     --cor-acao: #5fa674;
     --cor-acao-hover: #72ba87;
     --sombra-leve: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -413,7 +413,7 @@ header {
 }
 
 .badge-categoria {
-    background-color: #FFB8A8 !important;
+    background-color: #599a6c !important;
     color: #A0483C !important;
     font-weight: 700;
 }
