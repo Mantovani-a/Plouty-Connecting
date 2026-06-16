@@ -279,7 +279,6 @@ header {
 .btn-primary:hover {
     background: linear-gradient(135deg, var(--cor-petroleo), var(--cor-verde-escuro));
     box-shadow: var(--sombra-media);
-    transform: translateY(-2px);
     color: white;
 }
 
@@ -295,7 +294,6 @@ header {
     background: var(--cor-verde-claro);
     color: white;
     box-shadow: var(--sombra-leve);
-    transform: translateY(-2px);
     border-color: var(--cor-verde-claro);
 }
 
@@ -318,7 +316,7 @@ header {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--cor-verde-claro), var(--cor-acao));
+    background: var(--cor-verde-claro);
 }
 
 .card:hover {
@@ -566,7 +564,7 @@ main>section,
 }
 
 .theme-toggle-btn:hover {
-    transform: scale(1.1) translateY(-3px);
+    transform: scale(1.1);
     box-shadow: var(--sombra-forte);
     background: linear-gradient(135deg, var(--cor-petroleo), var(--cor-verde-escuro));
 }
@@ -765,13 +763,9 @@ main>section,
     color: var(--texto-secundario);
 }
 
-[data-theme="dark"] .card::before {
-    background: linear-gradient(90deg, var(--cor-verde-claro), #042B3D) !important;
-}
 
 [data-theme="dark"] .avatar-placeholder,
-[data-theme="dark"] .post-avatar,
-[data-theme="dark"] .avatar-mini {
+[data-theme="dark"] .post-avatar {
     background: linear-gradient(135deg, #233028, #06364D) !important;
     border-color: var(--borda-suave) !important;
 }
@@ -827,35 +821,6 @@ main>section,
         position: relative;
     }
 
-    .navbar-collapse {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 1050;
-        border-bottom: 1px solid var(--borda-suave);
-        background: var(--fundo-header);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .navbar-nav {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .navbar-nav .nav-item {
-        border-top: 1px solid rgba(37, 53, 41, 0.08);
-    }
-
-    .navbar-nav .nav-item:first-child {
-        border-top: none;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        font-size: 0.8em;
-        padding: 0.75rem 1rem;
-    }
-
     .navbar-mobile-layout {
         display: flex !important;
         flex-direction: row !important;
@@ -902,10 +867,7 @@ main>section,
         height: 35px !important;
     }
 
-    .navbar-light .navbar-nav .nav-link {
-        font-size: 0.75em;
-        padding: 0.25rem 0.5rem;
-    }
+
 
     main {
         padding: 10px 5px;
@@ -930,10 +892,7 @@ main>section,
         display: flex;
     }
 
-    .navbar-collapse,
-    .navbar-toggler {
-        display: none !important;
-    }
+
 }
 
 @media (max-width: 576px) {
