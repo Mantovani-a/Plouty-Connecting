@@ -335,6 +335,12 @@ header {
     border-color: var(--cor-verde-claro);
 }
 
+.card-destacado {
+    transform: translateY(-15px) !important;
+    box-shadow: var(--sombra-forte) !important;
+    border-color: var(--cor-verde-claro) !important;
+}
+
 .filtro-card,
 .destaque-card {
     background: linear-gradient(135deg, var(--fundo-card-1), var(--fundo-card-2));

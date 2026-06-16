@@ -1,6 +1,10 @@
 (function() {
     const savedTheme = localStorage.getItem('theme');
-    const initialTheme = savedTheme || 'light';
+    let initialTheme = savedTheme;
+    if (!initialTheme) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        initialTheme = prefersDark ? 'dark' : 'light';
+    }
     document.documentElement.setAttribute('data-theme', initialTheme);
 })();
 

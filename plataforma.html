@@ -54,8 +54,8 @@
                     <h1>Cultivo Local. Abundância Sustentável.</h1>
                     <p>A Plouty conecta pequenos produtores rurais a compradores institucionais através de uma plataforma inteligente, garantindo alimento fresco, redução de desperdício e fomento à economia local.</p>
                     <div class="d-flex flex-column flex-sm-row gap-2 mb-4">
-                        <a href="plataforma.html" class="btn btn-primary">Como Funciona</a>
-                        <a href="https://brasil.un.org/pt-br/sdgs/2" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary">Entenda o Problema</a>
+                        <button id="btn-como-funciona" class="btn btn-primary">Como Funciona</button>
+                        <button id="btn-entenda-problema" class="btn btn-outline-primary">Entenda o Problema</button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -66,10 +66,50 @@
     </section>
 
     <main class="container my-3">
+        <section class="problema py-4" id="secao-problema">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">O Problema: Logística Ineficiente e Desperdício</h2>
+                    <p class="lead">O escoamento da agricultura familiar no Brasil enfrenta barreiras que prejudicam o produtor e encarecem o prato do consumidor final.</p>
+                    <p>Pequenos agricultores cultivam alimentos de alta qualidade, mas a falta de conexão direta com grandes compradores institucionais (como escolas e hospitais) gera uma dependência de intermediários. Isso reduz drasticamente a renda de quem produz e aumenta o desperdício de alimentos frescos ao longo da cadeia logística.</p>
+                    <div class="alert border-0 d-flex align-items-center gap-2 mt-4" style="background-color: rgba(89, 154, 108, 0.1); color: var(--cor-verde-claro); border-left: 4px solid var(--cor-verde-claro) !important; border-radius: 4px;">
+                        <i class="bi bi-info-circle-fill fs-4" style="color: var(--cor-verde-claro);"></i>
+                        <span>Cerca de <strong>30% de toda a produção agrícola</strong> nacional é desperdiçada antes de chegar à mesa.</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <div class="card mb-3">
+                        <div class="card-body p-4">
+                            <h4 class="d-flex align-items-center gap-2 mb-2">
+                                <i class="bi bi-recycle" style="color: var(--cor-verde-claro);"></i> Desperdício de Alimentos
+                            </h4>
+                            <p class="mb-0 text-muted">A logística inadequada em trajetos longos faz com que alimentos frescos estraguem no transporte antes de serem consumidos.</p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body p-4">
+                            <h4 class="d-flex align-items-center gap-2 mb-2">
+                                <i class="bi bi-signpost-split" style="color: var(--cor-verde-claro);"></i> Intermediação Excessiva
+                            </h4>
+                            <p class="mb-0 text-muted">A falta de contato direto reduz as margens de lucro dos agricultores familiares, concentrando a receita em intermediários.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="d-flex align-items-center gap-2 mb-2">
+                                <i class="bi bi-x-circle" style="color: var(--cor-verde-claro);"></i> Barreiras de Acesso
+                            </h4>
+                            <p class="mb-0 text-muted">Burocracia e exigências de volume impedem que o produtor atenda editais públicos e chamadas do PNAE de forma individual.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="pilares py-3">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card h-100">
+                    <div id="card-produtor" class="card h-100">
                         <div class="card-body">
                             <h3>Para o Produtor</h3>
                             <p>Acesso direto a grandes compradores institucionais (PNAE), garantia de venda antecipada e profissionalização do escoamento agrícola.</p>
@@ -77,7 +117,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100">
+                    <div id="card-instituicao" class="card h-100">
                         <div class="card-body">
                             <h3>Para a Instituição</h3>
                             <p>Alimentos frescos e de alta qualidade nutricional entregues na porta da escola ou hospital, com rastreabilidade total e conformidade.</p>
@@ -85,7 +125,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100">
+                    <div id="card-fomezero" class="card h-100">
                         <div class="card-body">
                             <h3>Fome Zero (ODS 2)</h3>
                             <p>Reduzimos o desperdício logístico em trajetos longos e promovemos um ciclo de agricultura sustentável e segurança alimentar urbana.</p>
@@ -142,5 +182,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/js/plataforma.js"></script>
 </body>
 </html>

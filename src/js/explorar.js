@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
             position: fixed;
             top: 90px;
             right: 20px;
-            background: var(--cor-petroleo);
+            background: #042B3D;
             color: white;
             padding: 12px 20px;
             border-radius: 6px;
