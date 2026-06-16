@@ -37,7 +37,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto ms-lg-0">
                         <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="explorar.html"><i class="bi bi-compass-fill"></i> Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="explorar.html" aria-current="page"><i class="bi bi-compass-fill"></i> Explorar</a></li>
                         <li class="nav-item"><a class="nav-link" href="plataforma.html"><i class="bi bi-patch-check-fill"></i> Solução</a></li>
                         <li class="nav-item"><a class="nav-link" href="entrar.html"><i class="bi bi-person-fill"></i> Entrar</a></li>
                         <li class="nav-item"><a class="nav-link" href="contato.html"><i class="bi bi-envelope-fill"></i> Contato</a></li>
@@ -132,7 +132,7 @@
                 <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Sudeste" data-reputacao="4.8">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="post-avatar avatar-2 me-2"></div>
+                            <div class="post-avatar me-2"></div>
                             <div class="flex-grow-1">
                                 <h4 class="mb-0">Maria dos Santos</h4>
                                 <small class="text-muted">Produtora • Frutas</small><br>
@@ -160,7 +160,7 @@
                 <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Sul" data-reputacao="4.6">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="post-avatar avatar-3 me-2"></div>
+                            <div class="post-avatar me-2"></div>
                             <div class="flex-grow-1">
                                 <h4 class="mb-0">Cooperativa Verde</h4>
                                 <small class="text-muted">Cooperativa • Hortifruti</small><br>
@@ -188,7 +188,7 @@
                 <article class="card card-produtor mb-3" data-tipo="graos-cereais" data-regiao="Sul" data-reputacao="4.9">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="post-avatar avatar-4 me-2"></div>
+                            <div class="post-avatar me-2"></div>
                             <div class="flex-grow-1">
                                 <h4 class="mb-0">Pedro Ribeiro</h4>
                                 <small class="text-muted">Produtor • Grãos</small><br>
@@ -216,13 +216,13 @@
                 <article class="card card-produtor mb-3" data-tipo="verduras-frutas" data-regiao="Centro-Oeste" data-reputacao="4.1">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="post-avatar avatar-2 me-2"></div>
+                            <div class="post-avatar me-2"></div>
                             <div class="flex-grow-1">
                                 <h4 class="mb-0">Marcos Mendes</h4>
                                 <small class="text-muted">Produtor Iniciante • Frutas</small><br>
                                 <small>Goiás</small>
                             </div>
-                            <span class="badge badge-reputacao bg-warning">4.1 <i class="bi bi-star-fill"></i></span>
+                            <span class="badge badge-reputacao">4.1 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Fornecimento de frutas variadas</strong> (Banana e Maçã) para comércios locais. Começando agora a expandir as vendas na plataforma Plouty!</p>
                         <div class="mb-2">
@@ -244,13 +244,13 @@
                 <article class="card card-produtor mb-3" data-tipo="verduras-frutas produtos-organicos" data-regiao="Nordeste" data-reputacao="3.3">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="post-avatar avatar-3 me-2"></div>
+                            <div class="post-avatar me-2"></div>
                             <div class="flex-grow-1">
                                 <h4 class="mb-0">Sítio Recanto Feliz</h4>
                                 <small class="text-muted">Produtor Familiar • Hortaliças</small><br>
                                 <small>Bahia</small>
                             </div>
-                            <span class="badge badge-reputacao bg-danger">3.3 <i class="bi bi-star-fill"></i></span>
+                            <span class="badge badge-reputacao">3.3 <i class="bi bi-star-fill"></i></span>
                         </div>
                         <p><strong>Tomates e cebolas orgânicas</strong> direto da horta familiar. Algumas dificuldades logísticas recentes, mas prezamos pela alta qualidade dos alimentos.</p>
                         <div class="mb-2">
@@ -303,14 +303,43 @@
         </div>
         <div class="offcanvas-body">
             <div class="perfil-header mb-3">
-                <div class="avatar-placeholder mb-3"></div>
-                <h4>João Carlos</h4>
-                <p class="text-muted">Agricultor</p>
+                <div class="avatar-placeholder mb-3 d-flex align-items-center justify-content-center text-white fs-4 fw-bold">JC</div>
+                <h4 class="mb-1">João Carlos</h4>
+                <p class="text-muted mb-0" style="font-size: 0.85em;"><i class="bi bi-geo-alt-fill text-brand-success"></i> Minas Gerais</p>
+                <small class="text-brand-success fw-bold" style="font-size: 0.78em;">Produtor Familiar</small>
             </div>
-            <div class="d-flex justify-content-between text-center px-4">
-                <div><strong>10</strong><br><small>Contratos</small></div>
-                <div><strong>4.8</strong><br><small>Reputação</small></div>
+            <div class="stats-grid mb-3">
+                <div class="stats-grid-item">
+                    <strong>10</strong>
+                    <small><i class="bi bi-file-earmark-check me-1"></i>Contratos</small>
+                </div>
+                <div class="stats-grid-item">
+                    <strong>4.8</strong>
+                    <small><i class="bi bi-star-fill text-brand-success me-1"></i>Reputação</small>
+                </div>
             </div>
+            <nav class="dashboard-nav">
+                <a href="#" class="dashboard-nav-item">
+                    <i class="bi bi-grid-1x2"></i>
+                    <span>Painel Principal</span>
+                </a>
+                <a href="#" class="dashboard-nav-item">
+                    <i class="bi bi-tree"></i>
+                    <span>Minhas Culturas</span>
+                </a>
+                <a href="#" class="dashboard-nav-item">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Minhas Demandas</span>
+                </a>
+                <a href="#" class="dashboard-nav-item">
+                    <i class="bi bi-chat-left-text"></i>
+                    <span>Mensagens</span>
+                </a>
+                <a href="#" class="dashboard-nav-item">
+                    <i class="bi bi-gear"></i>
+                    <span>Configurações</span>
+                </a>
+            </nav>
         </div>
     </div>
 
@@ -319,7 +348,7 @@
             <i class="bi bi-house-door-fill"></i>
             <span>Home</span>
         </a>
-        <a href="explorar.html" class="mobile-bottom-nav-item active">
+        <a href="explorar.html" class="mobile-bottom-nav-item active" aria-current="page">
             <i class="bi bi-compass-fill"></i>
             <span>Explorar</span>
         </a>

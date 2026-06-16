@@ -1,41 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toastStyles = document.createElement('style');
-    toastStyles.textContent = `
-        .custom-toast {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            background: #042B3D;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            box-shadow: var(--sombra-leve);
-            z-index: 1100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-            max-width: 360px;
-            font-size: 0.9em;
-            font-weight: 500;
-        }
-        .custom-toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .btn-like i {
-            transition: transform 0.2s ease;
-        }
-        .btn-like:active i {
-            transform: scale(1.4);
-        }
-        .card-produtor {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, display 0.3s ease;
-        }
-    `;
-    document.head.appendChild(toastStyles);
 
     const tipoSelect = document.getElementById('filtro-tipo');
     const localizacaoSelect = document.getElementById('filtro-localizacao');
@@ -98,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (initialSearch && searchInput) {
         searchInput.value = initialSearch;
         setTimeout(() => {
+            searchInput.focus();
             searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
     }
@@ -159,10 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!feedbackMsg && feedSection) {
                 feedbackMsg = document.createElement('div');
                 feedbackMsg.id = 'sem-resultados';
-                feedbackMsg.className = 'alert alert-info text-center mt-3';
+                feedbackMsg.className = 'alert border-0 text-center mt-3';
+                feedbackMsg.style.backgroundColor = 'rgba(74, 124, 89, 0.1)';
+                feedbackMsg.style.color = 'var(--cor-verde-claro)';
+                feedbackMsg.style.borderLeft = '4px solid var(--cor-verde-claro)';
+                feedbackMsg.style.borderRadius = '4px';
                 feedbackMsg.style.animation = 'fadeInUp 0.4s ease-out';
                 feedbackMsg.innerHTML = `
-                    <i class="bi bi-info-circle fs-4 d-block mb-2 text-primary"></i>
+                    <i class="bi bi-info-circle fs-4 d-block mb-2 text-brand-success"></i>
                     <strong>Nenhum produtor encontrado</strong><br>
                     Tente ajustar os filtros ou redefinir a busca.
                 `;
@@ -221,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const toast = document.createElement('div');
         toast.className = 'custom-toast';
-        toast.innerHTML = `<i class="bi bi-info-circle-fill text-warning me-1"></i> <span>${message}</span>`;
+        toast.innerHTML = `<i class="bi bi-info-circle-fill text-brand-success me-1"></i> <span>${message}</span>`;
         document.body.appendChild(toast);
 
         toast.offsetHeight;

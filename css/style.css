@@ -1,11 +1,8 @@
-/* ==========================================================================
-   1. VARIÁVEIS E IDENTIDADE VISUAL
-   ========================================================================== */
+/* 1. Variáveis e Identidade Visual */
 :root {
     --cor-petroleo: #042B3D;
     --cor-verde-escuro: #253529;
     --cor-verde-claro: #4a7c59;
-    --cor-terra: #8b6f47;
     --fundo-site: #fafbf8;
     --fundo-grad-1: #fafbf8;
     --fundo-grad-2: #f0f3ed;
@@ -29,7 +26,6 @@
     --cor-petroleo: #FAF8F4;
     --cor-verde-escuro: #a3c3af;
     --cor-verde-claro: #599a6c;
-    --cor-terra: #c9af9f;
     --fundo-site: #0b120e;
     --fundo-grad-1: #151615;
     --fundo-grad-2: #1a1b1a;
@@ -40,7 +36,7 @@
     --fundo-busca-foco: #26352c;
     --texto-corpo: #e8f0eb;
     --texto-claro: #0b110e;
-    --texto-secundario: #fafcfb;
+    --texto-secundario: #9ab4a5;
     --borda-suave: #181918;
     --cor-acao: #5fa674;
     --cor-acao-hover: #72ba87;
@@ -49,9 +45,7 @@
     --sombra-forte: 0 12px 36px rgba(0, 0, 0, 0.7);
 }
 
-/* ==========================================================================
-   2. RESET E ESTILOS BASE
-   ========================================================================== */
+/* 2. Reset e Estilos Base */
 * {
     margin: 0;
     padding: 0;
@@ -94,9 +88,7 @@ footer {
     margin-top: auto;
 }
 
-/* ==========================================================================
-   3. TIPOGRAFIA
-   ========================================================================== */
+/* 3. Tipografia */
 h1,
 h2,
 h3 {
@@ -119,9 +111,7 @@ h5 {
     font-weight: 700;
 }
 
-/* ==========================================================================
-   4. NAVEGAÇÃO (HEADER & NAVBAR)
-   ========================================================================== */
+/* 4. Navegação */
 header {
     width: 100%;
     background: var(--fundo-header);
@@ -175,7 +165,11 @@ header {
     color: var(--cor-petroleo);
 }
 
-.navbar-light .navbar-nav .nav-link:hover::after {
+.navbar-light .navbar-nav .nav-link.active {
+    color: var(--cor-petroleo);
+}
+
+.navbar-light .navbar-nav .nav-link.active::after {
     width: 100%;
 }
 
@@ -259,9 +253,7 @@ header {
     }
 }
 
-/* ==========================================================================
-   5. COMPONENTES UI
-   ========================================================================== */
+/* 5. Componentes UI */
 .btn {
     padding: 0.75rem 1.5rem !important;
     font-size: 0.9em !important;
@@ -326,7 +318,7 @@ header {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--cor-verde-claro), var(--cor-terra));
+    background: linear-gradient(90deg, var(--cor-verde-claro), var(--cor-acao));
 }
 
 .card:hover {
@@ -401,7 +393,7 @@ header {
 .avatar-placeholder {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-terra));
+    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-acao));
     border-radius: 50%;
     margin: 0 auto 15px;
     border: 3px solid var(--borda-suave);
@@ -413,33 +405,13 @@ header {
     border-color: var(--cor-verde-claro);
 }
 
-.avatar-mini {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-petroleo));
-    border-radius: 8px;
-    border: 2px solid var(--borda-suave);
-}
-
 .post-avatar {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-terra));
+    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-acao));
     border-radius: 50%;
     flex-shrink: 0;
     border: 2px solid var(--borda-suave);
-}
-
-.avatar-2 {
-    background: linear-gradient(135deg, #e67e22, #d35400);
-}
-
-.avatar-3 {
-    background: linear-gradient(135deg, #27ae60, #229954);
-}
-
-.avatar-4 {
-    background: linear-gradient(135deg, #3498db, #2980b9);
 }
 
 .perfil-header {
@@ -471,9 +443,7 @@ header {
     margin-bottom: 0;
 }
 
-/* ==========================================================================
-   6. VALIDAÇÃO DE FORMULÁRIO E COMPONENTES AUXILIARES
-   ========================================================================== */
+/* 6. Validação e Auxiliares */
 .error-message {
     color: #d9534f;
     font-size: 0.85rem;
@@ -526,9 +496,7 @@ header {
     opacity: 0.9;
 }
 
-/* ==========================================================================
-   7. CUSTOM RANGE SLIDER STYLING (IDENTIDADE PLOUTY)
-   ========================================================================== */
+/* 7. Custom Range Slider */
 .form-range::-webkit-slider-thumb {
     background-color: var(--cor-verde-claro) !important;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -557,9 +525,7 @@ header {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(74, 124, 89, 0.25) !important;
 }
 
-/* ==========================================================================
-   8. ANIMAÇÕES E EFEITOS
-   ========================================================================== */
+/* 8. Animações e Efeitos */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -578,9 +544,7 @@ main>section,
     animation: fadeInUp 0.6s ease-out;
 }
 
-/* ==========================================================================
-   9. ESTILOS DE USABILIDADE MOBILE
-   ========================================================================== */
+/* 9. Usabilidade Mobile */
 .theme-toggle-btn {
     position: fixed;
     bottom: 25px;
@@ -697,7 +661,7 @@ main>section,
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-terra));
+    background: linear-gradient(135deg, var(--cor-verde-claro), var(--cor-acao));
     border: 2px solid var(--borda-suave);
 }
 
@@ -732,9 +696,7 @@ main>section,
     transform: scale(0.95) !important;
 }
 
-/* ==========================================================================
-   10. AJUSTES DE TEMA E MODO ESCURO
-   ========================================================================== */
+/* 10. Modo Escuro */
 [data-theme="dark"] .navbar {
     background-color: var(--fundo-header) !important;
 }
@@ -849,9 +811,7 @@ main>section,
     background: linear-gradient(135deg, #233028, #06364D);
 }
 
-/* ==========================================================================
-   11. RESPONSIVIDADE GERAL
-   ========================================================================== */
+/* 11. Responsividade Geral */
 @media (max-width: 1200px) {
     main {
         padding: 15px 10px;
@@ -965,14 +925,6 @@ main>section,
         justify-content: center;
     }
 
-    .card-produtor .btn-contato,
-    .card-produtor .btn-like,
-    .card-produtor .btn-comentar,
-    .btn-primary,
-    .btn-outline-primary,
-    .btn-outline-secondary {
-        min-height: 48px;
-    }
 
     .mobile-bottom-nav {
         display: flex;
@@ -1047,4 +999,254 @@ main>section,
         width: 100% !important;
         margin-right: 0 !important;
     }
+}
+
+/* 12. Notificações e Elementos da Home */
+.custom-toast {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background: #042B3D;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: var(--sombra-leve);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    max-width: 360px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.custom-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Dashboard Home - Lista de Atalhos */
+.dashboard-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--borda-suave);
+}
+
+.dashboard-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--texto-corpo);
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.dashboard-nav-item:hover {
+    background-color: var(--fundo-busca);
+    color: var(--cor-verde-claro);
+    text-decoration: none;
+}
+
+.dashboard-nav-item i {
+    font-size: 1.15em;
+    color: var(--cor-verde-claro);
+}
+
+/* Dashboard Home - Grade de Estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--borda-suave);
+}
+
+.stats-grid-item {
+    background: var(--fundo-busca);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--borda-suave);
+    transition: all 0.2s ease;
+}
+
+.stats-grid-item:hover {
+    border-color: var(--cor-verde-claro);
+    background: var(--fundo-busca-foco);
+}
+
+.stats-grid-item strong {
+    font-size: 1.25em;
+    color: var(--cor-petroleo);
+    display: block;
+}
+
+.stats-grid-item small {
+    color: var(--texto-secundario);
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Dashboard Home - Criador de Demandas */
+.post-creator {
+    margin-bottom: 20px;
+}
+
+.post-creator-textarea {
+    border: 1.5px solid var(--borda-suave);
+    background-color: var(--fundo-busca);
+    color: var(--texto-corpo);
+    border-radius: 8px;
+    resize: none;
+    padding: 12px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    width: 100%;
+    height: 80px;
+}
+
+.post-creator-textarea:focus {
+    background-color: var(--fundo-busca-foco);
+    border-color: var(--cor-verde-claro);
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
+    outline: none;
+}
+
+.post-creator-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--borda-suave);
+}
+
+.post-creator-options {
+    display: flex;
+    gap: 8px;
+}
+
+.post-creator-btn-opt {
+    background: transparent;
+    border: none;
+    color: var(--texto-secundario);
+    font-size: 0.85em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.post-creator-btn-opt:hover {
+    background-color: var(--fundo-busca);
+    color: var(--cor-verde-claro);
+}
+
+.post-creator-btn-opt i {
+    font-size: 1.1em;
+    color: var(--cor-verde-claro);
+}
+
+/* Dashboard Home - Tags de Itens da Demanda */
+.demand-products-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 16px;
+}
+
+.demand-product-tag {
+    background: var(--fundo-busca);
+    border: 1px solid var(--borda-suave);
+    color: var(--texto-corpo);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.82em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.demand-product-tag:hover {
+    border-color: var(--cor-verde-claro);
+    background: var(--fundo-busca-foco);
+}
+
+.demand-product-tag i {
+    color: var(--cor-verde-claro);
+}
+
+/* Dashboard Home - Header da Demanda com Círculo de Ícone */
+.demand-icon-container {
+    width: 45px;
+    height: 45px;
+    background: var(--fundo-busca);
+    color: var(--cor-verde-claro);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--borda-suave);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Evitar efeito de elevação (lift hover) em cards estruturais não-clicáveis */
+.post-creator:hover,
+.destaque-card:hover,
+.filtro-card:hover {
+    transform: none !important;
+    box-shadow: var(--sombra-leve) !important;
+    border-color: var(--borda-suave) !important;
+}
+
+/* Helper de Cor Verde da Identidade do Site (para evitar text-success genérico do Bootstrap) */
+.text-brand-success {
+    color: var(--cor-verde-claro) !important;
+}
+
+/* Ajustes e alinhamentos para cards */
+.demand-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.demand-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8em;
+    color: var(--texto-secundario);
+    margin-top: 4px;
+}
+
+/* Transições e animações da página explorar */
+.btn-like i {
+    transition: transform 0.2s ease;
+}
+.btn-like:active i {
+    transform: scale(1.4);
+}
+.card-produtor {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, display 0.3s ease;
 }
