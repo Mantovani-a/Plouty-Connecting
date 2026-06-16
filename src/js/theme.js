@@ -9,10 +9,20 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.createElement('button');
-    toggleBtn.id = 'theme-toggle-floating';
-    toggleBtn.className = 'theme-toggle-btn';
-    toggleBtn.setAttribute('aria-label', 'Alternar modo escuro/claro');
+    let toggleBtn = document.getElementById('theme-toggle-floating');
+    const wrapper = document.querySelector('.theme-toggle-header-wrapper');
+    
+    if (!toggleBtn) {
+        toggleBtn = document.createElement('button');
+        toggleBtn.id = 'theme-toggle-floating';
+        toggleBtn.className = 'theme-toggle-btn';
+        toggleBtn.setAttribute('aria-label', 'Alternar modo escuro/claro');
+        if (wrapper) {
+            wrapper.appendChild(toggleBtn);
+        } else {
+            document.body.appendChild(toggleBtn);
+        }
+    }
     
     const updateIcon = (theme) => {
         toggleBtn.innerHTML = theme === 'dark' 
@@ -22,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     updateIcon(currentTheme);
-    const wrapper = document.querySelector('.theme-toggle-header-wrapper') || document.body;
-    wrapper.appendChild(toggleBtn);
     
     toggleBtn.addEventListener('click', () => {
         const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
