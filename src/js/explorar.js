@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
 
-    const tipoSelect = document.getElementById('filtro-tipo');
-    const localizacaoSelect = document.getElementById('filtro-localizacao');
-    const reputacaoMinInput = document.getElementById('filtro-reputacao-min');
-    const reputacaoMinValor = document.getElementById('reputacao-min-valor');
-    const reputacaoMaxInput = document.getElementById('filtro-reputacao-max');
-    const reputacaoMaxValor = document.getElementById('reputacao-max-valor');
-    const searchInput = document.querySelector('.navbar-search-input');
-    const searchForm = document.querySelector('.navbar-search-container form');
+    var tipoSelect = document.getElementById('filtro-tipo');
+    var localizacaoSelect = document.getElementById('filtro-localizacao');
+    var reputacaoMinInput = document.getElementById('filtro-reputacao-min');
+    var reputacaoMinValor = document.getElementById('reputacao-min-valor');
+    var reputacaoMaxInput = document.getElementById('filtro-reputacao-max');
+    var reputacaoMaxValor = document.getElementById('reputacao-max-valor');
+    var searchInput = document.querySelector('.navbar-search-input');
+    var searchForm = document.querySelector('.navbar-search-container form');
 
     if (reputacaoMinInput && reputacaoMinValor) {
         reputacaoMinInput.value = "0.0";
@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (reputacaoMinInput && reputacaoMinValor) {
-        reputacaoMinInput.addEventListener('input', (e) => {
-            let minVal = parseFloat(e.target.value);
-            let maxVal = reputacaoMaxInput ? parseFloat(reputacaoMaxInput.value) : 5.0;
+        reputacaoMinInput.addEventListener('input', function(e) {
+            var minVal = parseFloat(e.target.value);
+            var maxVal = reputacaoMaxInput ? parseFloat(reputacaoMaxInput.value) : 5.0;
             if (minVal > maxVal && reputacaoMaxInput && reputacaoMaxValor) {
                 reputacaoMaxInput.value = minVal;
                 reputacaoMaxValor.textContent = minVal.toFixed(1);
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if (reputacaoMaxInput && reputacaoMaxValor) {
-        reputacaoMaxInput.addEventListener('input', (e) => {
-            let minVal = reputacaoMinInput ? parseFloat(reputacaoMinInput.value) : 0.0;
-            let maxVal = parseFloat(e.target.value);
+        reputacaoMaxInput.addEventListener('input', function(e) {
+            var minVal = reputacaoMinInput ? parseFloat(reputacaoMinInput.value) : 0.0;
+            var maxVal = parseFloat(e.target.value);
             if (maxVal < minVal && reputacaoMinInput && reputacaoMinValor) {
                 reputacaoMinInput.value = maxVal;
                 reputacaoMinValor.textContent = maxVal.toFixed(1);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localizacaoSelect) localizacaoSelect.addEventListener('change', filtrarProdutores);
 
     if (searchForm) {
-        searchForm.addEventListener('submit', (e) => {
+        searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
             filtrarProdutores();
         });
@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.addEventListener('input', filtrarProdutores);
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialSearch = urlParams.get('search');
+    var urlParams = new URLSearchParams(window.location.search);
+    var initialSearch = urlParams.get('search');
     if (initialSearch && searchInput) {
         searchInput.value = initialSearch;
-        setTimeout(() => {
+        setTimeout(function() {
             searchInput.focus();
             searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
@@ -69,55 +69,62 @@ document.addEventListener('DOMContentLoaded', () => {
     filtrarProdutores();
 
     function filtrarProdutores() {
-        const tipo = tipoSelect ? tipoSelect.value : 'Todos';
-        const localizacao = localizacaoSelect ? localizacaoSelect.value : 'Todas as regiões';
-        const reputacaoMin = reputacaoMinInput ? parseFloat(reputacaoMinInput.value) : 0.0;
-        const reputacaoMax = reputacaoMaxInput ? parseFloat(reputacaoMaxInput.value) : 5.0;
-        const busca = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        var tipo = tipoSelect ? tipoSelect.value : 'Todos';
+        var localizacao = localizacaoSelect ? localizacaoSelect.value : 'Todas as regiões';
+        var reputacaoMin = reputacaoMinInput ? parseFloat(reputacaoMinInput.value) : 0.0;
+        var reputacaoMax = reputacaoMaxInput ? parseFloat(reputacaoMaxInput.value) : 5.0;
+        var busca = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-        const cards = document.querySelectorAll('.card-produtor');
-        let matchesCount = 0;
+        var cards = document.querySelectorAll('.card-produtor');
+        var matchesCount = 0;
 
-        cards.forEach(card => {
-            const cardTipo = card.dataset.tipo || '';
-            const cardRegiao = card.dataset.regiao || '';
-            const cardReputacao = parseFloat(card.dataset.reputacao) || 0;
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var cardTipo = card.getAttribute('data-tipo');
+            if (!cardTipo) cardTipo = '';
+            var cardRegiao = card.getAttribute('data-regiao');
+            if (!cardRegiao) cardRegiao = '';
+            var cardReputacao = parseFloat(card.getAttribute('data-reputacao')) || 0;
             
-            const cardText = card.textContent.toLowerCase();
-            const matchBusca = !busca || cardText.includes(busca);
+            var cardText = card.textContent.toLowerCase();
+            var matchBusca = !busca || cardText.indexOf(busca) > -1;
 
-            let matchTipo = true;
+            var matchTipo = true;
             if (tipo !== 'Todos') {
-                if (tipo === 'Verduras e Frutas') {
-                    matchTipo = cardTipo.includes('verduras-frutas') || cardTipo.includes('hortifruti');
-                } else if (tipo === 'Grãos e Cereais') {
-                    matchTipo = cardTipo.includes('graos-cereais');
-                } else if (tipo === 'Produtos Orgânicos') {
-                    matchTipo = cardTipo.includes('produtos-organicos');
+                var tipoTags = cardTipo.split(' ');
+                var found = false;
+                for (var k = 0; k < tipoTags.length; k++) {
+                    if (tipoTags[k] === tipo) {
+                        found = true;
+                        break;
+                    }
                 }
+                matchTipo = found;
             }
 
-            let matchLocalizacao = true;
+            var matchLocalizacao = true;
             if (localizacao !== 'Todas as regiões') {
                 matchLocalizacao = (cardRegiao === localizacao);
             }
 
-            const matchReputacao = (cardReputacao >= reputacaoMin && cardReputacao <= reputacaoMax);
+            var matchReputacao = (cardReputacao >= reputacaoMin && cardReputacao <= reputacaoMax);
 
             if (matchBusca && matchTipo && matchLocalizacao && matchReputacao) {
                 card.style.display = 'block';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                }, 10);
+                (function(c) {
+                    setTimeout(function() {
+                        c.style.opacity = '1';
+                    }, 10);
+                })(card);
                 matchesCount++;
             } else {
                 card.style.opacity = '0';
                 card.style.display = 'none';
             }
-        });
+        }
 
-        let feedbackMsg = document.getElementById('sem-resultados');
-        const feedSection = document.querySelector('section.col-md-6');
+        var feedbackMsg = document.getElementById('sem-resultados');
+        var feedSection = document.querySelector('section.col-md-6');
 
         if (matchesCount === 0) {
             if (!feedbackMsg && feedSection) {
@@ -129,77 +136,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 feedbackMsg.style.borderLeft = '4px solid var(--cor-verde-claro)';
                 feedbackMsg.style.borderRadius = '4px';
                 feedbackMsg.style.animation = 'fadeInUp 0.4s ease-out';
-                feedbackMsg.innerHTML = `
-                    <i class="bi bi-info-circle fs-4 d-block mb-2 text-brand-success"></i>
-                    <strong>Nenhum produtor encontrado</strong><br>
-                    Tente ajustar os filtros ou redefinir a busca.
-                `;
+                feedbackMsg.innerHTML = '<i class="bi bi-info-circle fs-4 d-block mb-2 text-brand-success"></i><strong>Nenhum produtor encontrado</strong><br>Tente ajustar os filtros ou redefinir a busca.';
                 feedSection.appendChild(feedbackMsg);
             }
         } else {
-            if (feedbackMsg) {
-                feedbackMsg.remove();
+            if (feedbackMsg && feedbackMsg.parentNode) {
+                feedbackMsg.parentNode.removeChild(feedbackMsg);
             }
         }
     }
 
-    document.querySelectorAll('.btn-like').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.classList.toggle('btn-outline-primary');
-            btn.classList.toggle('btn-primary');
+    var likeBtns = document.querySelectorAll('.btn-like');
+    for (var j = 0; j < likeBtns.length; j++) {
+        var btnLike = likeBtns[j];
+        btnLike.addEventListener('click', function(e) {
+            var currentBtn = e.currentTarget;
+            currentBtn.classList.toggle('btn-outline-primary');
+            currentBtn.classList.toggle('btn-primary');
             
-            const isLiked = btn.classList.contains('btn-primary');
-            let likes = parseInt(btn.dataset.likes);
+            var isLiked = currentBtn.classList.contains('btn-primary');
+            var likes = parseInt(currentBtn.getAttribute('data-likes')) || 0;
             
             if (isLiked) {
                 likes += 1;
-                btn.innerHTML = '<i class="bi bi-heart-fill me-1 text-white animate__animated animate__heartBeat"></i> Curtido';
+                currentBtn.innerHTML = '<i class="bi bi-heart-fill me-1 text-white animate__animated animate__heartBeat"></i> Curtido';
             } else {
                 likes -= 1;
-                btn.innerHTML = 'Curtir';
+                currentBtn.innerHTML = 'Curtir';
             }
-            btn.dataset.likes = likes;
+            currentBtn.setAttribute('data-likes', likes);
 
-            const comments = btn.dataset.comments;
-            const contatos = btn.dataset.contatos;
+            var comments = currentBtn.getAttribute('data-comments') || '0';
+            var contatos = currentBtn.getAttribute('data-contatos') || '0';
             
-            const statsElem = btn.closest('.card-body').querySelector('.stats-produtor');
+            var statsElem = currentBtn.closest('.card-body').querySelector('.stats-produtor');
             if (statsElem) {
-                statsElem.textContent = `${likes} curtidas • ${comments} comentários • ${contatos} contatos`;
+                statsElem.textContent = likes + ' curtidas • ' + comments + ' comentários • ' + contatos + ' contatos';
             }
         });
-    });
+    }
 
-    document.querySelectorAll('.btn-comentar').forEach(btn => {
-        btn.addEventListener('click', () => {
+    var comentarBtns = document.querySelectorAll('.btn-comentar');
+    for (var m = 0; m < comentarBtns.length; m++) {
+        comentarBtns[m].addEventListener('click', function() {
             showToast('A seção de comentários estará disponível em breve!');
         });
-    });
+    }
 
-    document.querySelectorAll('.btn-contato').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const nomeProdutor = btn.dataset.nome;
-            showToast(`Notificação enviada para ${nomeProdutor}. Retorno via e-mail!`);
+    var contatoBtns = document.querySelectorAll('.btn-contato');
+    for (var n = 0; n < contatoBtns.length; n++) {
+        contatoBtns[n].addEventListener('click', function(e) {
+            var nomeProdutor = e.currentTarget.getAttribute('data-nome') || 'o produtor';
+            showToast('Notificação enviada para ' + nomeProdutor + '. Retorno via e-mail!');
         });
-    });
-
-    function showToast(message) {
-        const oldToast = document.querySelector('.custom-toast');
-        if (oldToast) oldToast.remove();
-
-        const toast = document.createElement('div');
-        toast.className = 'custom-toast';
-        toast.innerHTML = `<i class="bi bi-info-circle-fill text-brand-success me-1"></i> <span>${message}</span>`;
-        document.body.appendChild(toast);
-
-        toast.offsetHeight;
-        toast.classList.add('show');
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
-        }, 3500);
     }
 });

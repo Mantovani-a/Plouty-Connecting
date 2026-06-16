@@ -58,6 +58,28 @@
 
 html {
     scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-verde-claro) transparent;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cor-verde-claro);
+    border-radius: 6px;
+    border: 2px solid var(--fundo-site);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-acao);
 }
 
 html,

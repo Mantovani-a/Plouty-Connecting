@@ -1,38 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-    function showToast(message) {
-        const oldToast = document.querySelector('.custom-toast');
-        if (oldToast) oldToast.remove();
-
-        const toast = document.createElement('div');
-        toast.className = 'custom-toast';
-        toast.innerHTML = `<i class="bi bi-info-circle-fill text-brand-success me-1"></i> <span>${message}</span>`;
-        document.body.appendChild(toast);
-
-        toast.offsetHeight;
-        toast.classList.add('show');
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
-        }, 3500);
+document.addEventListener('DOMContentLoaded', function() {
+    var interestButtons = document.querySelectorAll('.btn-interesse');
+    
+    for (var i = 0; i < interestButtons.length; i++) {
+        var btn = interestButtons[i];
+        btn.addEventListener('click', function(e) {
+            var currentBtn = e.currentTarget;
+            var orgName = currentBtn.getAttribute('data-org');
+            if (!orgName) {
+                orgName = 'o comprador';
+            }
+            showToast('Interesse registrado! A Plouty conectou você com ' + orgName + '.');
+        });
     }
 
-    const interestButtons = document.querySelectorAll('.btn-interesse');
-    interestButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const orgName = btn.dataset.org || 'o comprador';
-            showToast(`Interesse registrado! A Plouty conectou você com ${orgName}.`);
-        });
-    });
-
-    const btnPublicar = document.getElementById('btn-publicar-demanda');
-    const textareaDemanda = document.getElementById('textarea-demanda');
+    var btnPublicar = document.getElementById('btn-publicar-demanda');
+    var textareaDemanda = document.getElementById('textarea-demanda');
 
     if (btnPublicar && textareaDemanda) {
-        btnPublicar.addEventListener('click', () => {
-            const text = textareaDemanda.value.trim();
+        btnPublicar.addEventListener('click', function() {
+            var text = textareaDemanda.value.trim();
             if (!text) {
                 showToast('Por favor, digite o que você precisa antes de publicar.');
                 textareaDemanda.focus();

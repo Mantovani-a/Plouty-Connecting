@@ -1,16 +1,16 @@
 (function() {
-    const savedTheme = localStorage.getItem('theme');
-    let initialTheme = savedTheme;
+    var savedTheme = localStorage.getItem('theme');
+    var initialTheme = savedTheme;
     if (!initialTheme) {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         initialTheme = prefersDark ? 'dark' : 'light';
     }
     document.documentElement.setAttribute('data-theme', initialTheme);
 })();
 
-document.addEventListener('DOMContentLoaded', () => {
-    let toggleBtn = document.getElementById('theme-toggle-floating');
-    const wrapper = document.querySelector('.theme-toggle-header-wrapper');
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('theme-toggle-floating');
+    var wrapper = document.querySelector('.theme-toggle-header-wrapper');
     
     if (!toggleBtn) {
         toggleBtn = document.createElement('button');
@@ -24,17 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    const updateIcon = (theme) => {
-        toggleBtn.innerHTML = theme === 'dark' 
-            ? '<i class="bi bi-sun-fill"></i>' 
-            : '<i class="bi bi-moon-fill"></i>';
-    };
+    function updateIcon(theme) {
+        if (theme === 'dark') {
+            toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i>';
+        } else {
+            toggleBtn.innerHTML = '<i class="bi bi-moon-fill"></i>';
+        }
+    }
     
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     updateIcon(currentTheme);
     
-    toggleBtn.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var theme = 'light';
+        if (current === 'dark') {
+            theme = 'light';
+        } else {
+            theme = 'dark';
+        }
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
         updateIcon(theme);

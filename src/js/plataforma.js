@@ -1,40 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnComoFunciona = document.getElementById('btn-como-funciona');
-    const btnEntendaProblema = document.getElementById('btn-entenda-problema');
+document.addEventListener('DOMContentLoaded', function() {
+    var btnComoFunciona = document.getElementById('btn-como-funciona');
+    var btnEntendaProblema = document.getElementById('btn-entenda-problema');
     
-    const cardProdutor = document.getElementById('card-produtor');
-    const cardInstituicao = document.getElementById('card-instituicao');
-    const cardFomeZero = document.getElementById('card-fomezero');
+    var cardProdutor = document.getElementById('card-produtor');
+    var cardInstituicao = document.getElementById('card-instituicao');
+    var cardFomeZero = document.getElementById('card-fomezero');
     
-    const secaoProblema = document.getElementById('secao-problema');
-    const cardsProblema = secaoProblema ? secaoProblema.querySelectorAll('.card') : [];
+    var secaoProblema = document.getElementById('secao-problema');
+    var cardsProblema = [];
+    if (secaoProblema) {
+        cardsProblema = secaoProblema.querySelectorAll('.card');
+    }
     
     function highlightCards(cards, scrollToElement) {
-        // Scroll to the specified element smoothly
         scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
-        // Add highlight class
-        cards.forEach(card => {
-            card.classList.add('card-destacado');
-        });
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.add('card-destacado');
+        }
         
-        // Remove highlight class after 1.8 seconds
-        setTimeout(() => {
-            cards.forEach(card => {
-                card.classList.remove('card-destacado');
-            });
+        setTimeout(function() {
+            for (var j = 0; j < cards.length; j++) {
+                cards[j].classList.remove('card-destacado');
+            }
         }, 1800);
     }
     
     if (btnComoFunciona && cardProdutor && cardInstituicao && cardFomeZero) {
-        btnComoFunciona.addEventListener('click', () => {
-            highlightCards([cardProdutor, cardInstituicao, cardFomeZero], cardProdutor);
+        btnComoFunciona.addEventListener('click', function() {
+            var cardsList = [cardProdutor, cardInstituicao, cardFomeZero];
+            highlightCards(cardsList, cardProdutor);
         });
     }
     
     if (btnEntendaProblema && secaoProblema && cardsProblema.length > 0) {
-        btnEntendaProblema.addEventListener('click', () => {
-            highlightCards(Array.from(cardsProblema), secaoProblema);
+        btnEntendaProblema.addEventListener('click', function() {
+            highlightCards(cardsProblema, secaoProblema);
         });
     }
 });
