@@ -175,19 +175,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    var comentarBtns = document.querySelectorAll('.btn-comentar');
-    for (var m = 0; m < comentarBtns.length; m++) {
-        comentarBtns[m].addEventListener('click', function() {
-            showToast('A seção de comentários estará disponível em breve!');
-        });
-    }
-
-    var contatoBtns = document.querySelectorAll('.btn-contato');
-    for (var n = 0; n < contatoBtns.length; n++) {
-        contatoBtns[n].addEventListener('click', function(e) {
-            var nomeProdutor = e.currentTarget.getAttribute('data-nome') || 'o produtor';
-            showToast('Notificação enviada para ' + nomeProdutor + '. Retorno via e-mail!');
-        });
-    }
 });
