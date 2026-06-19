@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +11,14 @@
     <script src="src/js/theme.js"></script>
     <link rel="icon" href="assets/img/logo_P.png" type="image/png">
 </head>
+
 <body>
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container navbar-mobile-layout">
-                <button class="btn-nav-profile d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfile" aria-controls="offcanvasProfile" aria-label="Perfil do Usuário">
+                <button class="btn-nav-profile d-md-none" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasProfile" aria-controls="offcanvasProfile" aria-label="Perfil do Usuário">
                     <div class="nav-profile-avatar-thumbnail"></div>
                 </button>
 
@@ -28,20 +31,27 @@
 
                 <div class="navbar-search-container mx-auto my-0">
                     <form action="explorar.html" method="GET" class="position-relative">
-                        <input type="text" name="search" class="form-control navbar-search-input" placeholder="O que a Plouty pode te ajudar?">
+                        <input type="text" name="search" class="form-control navbar-search-input"
+                            placeholder="O que a Plouty pode te ajudar?">
                         <i class="bi bi-search search-icon-inside"></i>
                     </form>
                 </div>
 
-                <div class="theme-toggle-header-wrapper ms-2"><button id="theme-toggle-floating" class="theme-toggle-btn" aria-label="Alternar modo escuro/claro"></button></div>
+                <div class="theme-toggle-header-wrapper ms-2"><button id="theme-toggle-floating"
+                        class="theme-toggle-btn" aria-label="Alternar modo escuro/claro"></button></div>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto ms-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i> Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="explorar.html"><i class="bi bi-compass-fill"></i> Explorar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="entrar.html"><i class="bi bi-person-fill"></i> Entrar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="sobre.html"><i class="bi bi-info-circle-fill"></i> Sobre Nós</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contato.html"><i class="bi bi-envelope-fill"></i> Contato</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill"></i>
+                                Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="explorar.html"><i class="bi bi-compass-fill"></i>
+                                Explorar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="entrar.html"><i class="bi bi-person-fill"></i>
+                                Entrar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sobre.html"><i
+                                    class="bi bi-info-circle-fill"></i> Sobre Nós</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contato.html"><i class="bi bi-envelope-fill"></i>
+                                Contato</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,32 +60,33 @@
 
     <main class="container my-3">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
                         <h2>Como podemos ajudar?</h2>
-                        <p>Seja você um produtor buscando expandir suas vendas ou uma instituição querendo otimizar compras, nossa equipe está pronta para auxiliar.</p>
-                        
+                        <p>Seja você um produtor buscando expandir suas vendas ou uma instituição querendo otimizar
+                            compras, nossa equipe está pronta para auxiliar.</p>
+
                         <div class="mb-3">
                             <strong>Suporte ao Usuário</strong><br>
                             <span>suporte@plouty.com.br</span>
                         </div>
-                        
+
                         <div class="mb-3">
                             <strong>Parcerias Institucionais</strong><br>
                             <span>parcerias@plouty.com.br</span>
                         </div>
 
-                        <div class="mb-3">
-                            <strong>Localização</strong><br>
-                            <span>Guarapari, Espírito Santo - Brasil</span>
+                        <div class="text-center mt-auto pt-4">
+                            <img src="assets/img/logo-connecting.png" alt="Plouty Connecting Logo" class="img-fluid"
+                                style="max-height: 60px; opacity: 0.95;">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
                     <div class="card-body">
                         <div id="success-banner" class="success-message-banner">
                             <h4>Mensagem Enviada!</h4>
@@ -84,13 +95,16 @@
                         <form id="form-contato">
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome Completo</label>
-                                <input type="text" class="form-control" id="nome" placeholder="Seu nome ou da sua instituição" aria-required="true" aria-describedby="error-nome">
+                                <input type="text" class="form-control" id="nome"
+                                    placeholder="Seu nome ou da sua instituição" aria-required="true"
+                                    aria-describedby="error-nome">
                                 <div class="error-message" id="error-nome" role="alert" aria-live="assertive"></div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">E-mail</label>
-                                <input type="email" class="form-control" id="email" placeholder="exemplo@email.com" aria-required="true" aria-describedby="error-email">
+                                <input type="email" class="form-control" id="email" placeholder="exemplo@email.com"
+                                    aria-required="true" aria-describedby="error-email">
                                 <div class="error-message" id="error-email" role="alert" aria-live="assertive"></div>
                             </div>
 
@@ -106,10 +120,14 @@
 
                             <div class="mb-3">
                                 <label for="mensagem" class="form-label">Mensagem</label>
-                                <textarea class="form-control" id="mensagem" rows="5" placeholder="Como podemos te ajudar hoje?" maxlength="500" aria-required="true" aria-describedby="error-mensagem char-counter"></textarea>
+                                <textarea class="form-control" id="mensagem" rows="5"
+                                    placeholder="Como podemos te ajudar hoje?" maxlength="500" aria-required="true"
+                                    aria-describedby="error-mensagem char-counter"></textarea>
                                 <div class="d-flex justify-content-between align-items-center mt-1">
-                                    <div class="error-message" id="error-mensagem" style="margin-top: 0;" role="alert" aria-live="assertive"></div>
-                                    <div class="char-counter" id="char-counter" aria-live="polite">0 / 500 caracteres</div>
+                                    <div class="error-message" id="error-mensagem" style="margin-top: 0;" role="alert"
+                                        aria-live="assertive"></div>
+                                    <div class="char-counter" id="char-counter" aria-live="polite">0 / 500 caracteres
+                                    </div>
                                 </div>
                             </div>
 
@@ -132,20 +150,27 @@
         </div>
         <div class="offcanvas-body">
             <div class="text-center pb-3 mb-3 border-bottom border-suave">
-                <div class="avatar-placeholder mb-3 d-flex align-items-center justify-content-center text-white fs-4 fw-bold">JC</div>
+                <div
+                    class="avatar-placeholder mb-3 d-flex align-items-center justify-content-center text-white fs-4 fw-bold">
+                    JC</div>
                 <h4 class="mb-1">João Carlos</h4>
-                <p class="text-muted mb-0" style="font-size: 0.85em;"><i class="bi bi-geo-alt-fill text-brand-success"></i> Minas Gerais</p>
+                <p class="text-muted mb-0" style="font-size: 0.85em;"><i
+                        class="bi bi-geo-alt-fill text-brand-success"></i> Minas Gerais</p>
                 <small class="text-brand-success fw-bold" style="font-size: 0.78em;">Produtor Familiar</small>
             </div>
-            <div class="d-flex justify-content-around align-items-center py-2 mt-3 border-top border-bottom border-suave text-center mb-3">
+            <div
+                class="d-flex justify-content-around align-items-center py-2 mt-3 border-top border-bottom border-suave text-center mb-3">
                 <div>
                     <div class="fs-5 fw-bold text-brand-success">10</div>
-                    <div class="text-secondary text-uppercase" style="font-size: 0.7em; letter-spacing: 0.5px;">Contratos</div>
+                    <div class="text-secondary text-uppercase" style="font-size: 0.7em; letter-spacing: 0.5px;">
+                        Contratos</div>
                 </div>
                 <div class="border-end border-suave h-100" style="width: 1px; min-height: 30px;"></div>
                 <div>
-                    <div class="fs-5 fw-bold text-brand-success">4.8 <i class="bi bi-star-fill" style="font-size: 0.85em;"></i></div>
-                    <div class="text-secondary text-uppercase" style="font-size: 0.7em; letter-spacing: 0.5px;">Reputação</div>
+                    <div class="fs-5 fw-bold text-brand-success">4.8 <i class="bi bi-star-fill"
+                            style="font-size: 0.85em;"></i></div>
+                    <div class="text-secondary text-uppercase" style="font-size: 0.7em; letter-spacing: 0.5px;">
+                        Reputação</div>
                 </div>
             </div>
             <nav class="d-flex flex-column gap-2 mt-3 pt-3 border-top border-suave">
@@ -200,4 +225,5 @@
     <script src="src/js/utils.js"></script>
     <script src="src/js/contato.js"></script>
 </body>
+
 </html>
