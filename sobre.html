@@ -14,25 +14,31 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container navbar-mobile-layout">
-                <button class="btn-nav-profile d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfile" aria-controls="offcanvasProfile" aria-label="Perfil do Usuário">
-                    <div class="nav-profile-avatar-thumbnail"></div>
-                </button>
-
-                <a href="index.html" class="navbar-brand d-none d-md-block">
-                    <img src="assets/img/logo_P.png" alt="Plouty Logo" height="40">
-                </a>
-                <a href="index.html" class="navbar-brand d-md-none me-2">
-                    <img src="assets/img/logo_P.png" alt="Plouty Logo" height="35">
+                <a href="index.html" class="navbar-brand me-auto">
+                    <img src="assets/img/logo_P.png" alt="Plouty Logo" class="d-none d-md-block" height="40">
+                    <img src="assets/img/logo_P.png" alt="Plouty Logo" class="d-md-none" height="35">
                 </a>
 
-                <div class="navbar-search-container mx-auto my-0">
+                <div class="navbar-search-container mx-auto my-0 d-none d-lg-block">
                     <form action="explorar.html" method="GET" class="position-relative">
                         <input type="text" name="search" class="form-control navbar-search-input" placeholder="O que a Plouty pode te ajudar?">
                         <i class="bi bi-search search-icon-inside"></i>
                     </form>
                 </div>
 
-                <div class="theme-toggle-header-wrapper ms-2"><button id="theme-toggle-floating" class="theme-toggle-btn" aria-label="Alternar modo escuro/claro"></button></div>
+                <div class="navbar-actions-wrapper">
+                    <button class="btn-mobile-search d-lg-none" type="button" aria-label="Abrir busca" id="btn-mobile-search-toggle">
+                        <i class="bi bi-search"></i>
+                    </button>
+
+                    <div class="theme-toggle-header-wrapper">
+                        <button id="theme-toggle-floating" class="theme-toggle-btn" aria-label="Alternar modo escuro/claro"></button>
+                    </div>
+
+                    <button class="btn-nav-profile d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfile" aria-controls="offcanvasProfile" aria-label="Perfil do Usuário">
+                        <div class="nav-profile-avatar-thumbnail"></div>
+                    </button>
+                </div>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto ms-lg-0">
@@ -45,6 +51,15 @@
                 </div>
             </div>
         </nav>
+
+        <div id="mobile-search-overlay" class="mobile-search-overlay d-lg-none">
+            <div class="container py-2 px-3">
+                <form action="explorar.html" method="GET" class="position-relative">
+                    <input type="text" name="search" class="form-control mobile-search-input" placeholder="O que a Plouty pode te ajudar?">
+                    <i class="bi bi-search search-icon-inside"></i>
+                </form>
+            </div>
+        </div>
     </header>
 
     <section class="hero bg-light py-3">

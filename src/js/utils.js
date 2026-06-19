@@ -47,4 +47,37 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Controle da Busca Deslizante Mobile
+    var searchToggleBtn = document.getElementById('btn-mobile-search-toggle');
+    var searchOverlay = document.getElementById('mobile-search-overlay');
+    if (searchToggleBtn && searchOverlay) {
+        searchToggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchOverlay.classList.toggle('show');
+            var isShown = searchOverlay.classList.contains('show');
+            
+            if (isShown) {
+                var searchInput = searchOverlay.querySelector('input');
+                if (searchInput) {
+                    setTimeout(function() {
+                        searchInput.focus();
+                    }, 100);
+                }
+                searchToggleBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+            } else {
+                searchToggleBtn.innerHTML = '<i class="bi bi-search"></i>';
+            }
+        });
+
+        // Fechar busca ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!searchOverlay.contains(e.target) && e.target !== searchToggleBtn && !searchToggleBtn.contains(e.target)) {
+                if (searchOverlay.classList.contains('show')) {
+                    searchOverlay.classList.remove('show');
+                    searchToggleBtn.innerHTML = '<i class="bi bi-search"></i>';
+                }
+            }
+        });
+    }
 });
