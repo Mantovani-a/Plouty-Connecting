@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showError(inputEl, message) {
+        if (!inputEl) return;
         inputEl.classList.add('input-error');
         inputEl.setAttribute('aria-invalid', 'true');
 
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function clearFieldError(inputEl) {
+        if (!inputEl) return;
         inputEl.classList.remove('input-error');
         inputEl.setAttribute('aria-invalid', 'false');
 
@@ -43,8 +45,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleInput(inputEl, validationFn) {
-        if (inputEl.classList.contains('input-error')) {
+        if (inputEl && inputEl.classList.contains('input-error')) {
             validationFn();
+        }
+    }
+
+    function showSuccess() {
+        if (successBanner) {
+            successBanner.style.display = 'block';
+            successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        if (form) {
+            form.reset();
+        }
+        updateCharCounter();
+
+        var inputs = [nomeInput, emailInput, mensagemTextarea];
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i]) {
+                inputs[i].setAttribute('aria-invalid', 'false');
+            }
         }
     }
 
@@ -52,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isTyping === undefined) {
             isTyping = false;
         }
+        if (!nomeInput) return false;
         var value = nomeInput.value.trim();
 
         if (!value) {
@@ -59,30 +81,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
-        var splitWords = value.split(' ');
-        var words = [];
-        for (var i = 0; i < splitWords.length; i++) {
-            if (splitWords[i].trim() !== '') {
-                words.push(splitWords[i].trim());
-            }
-        }
-
+        var words = value.split(/\s+/);
         if (words.length < 2) {
             if (!isTyping) showError(nomeInput, 'O nome deve conter pelo menos nome e sobrenome (duas palavras).');
             return false;
         }
 
-        var hasShortWord = false;
-        for (var j = 0; j < words.length; j++) {
-            if (words[j].length < 2) {
-                hasShortWord = true;
-                break;
+        for (var i = 0; i < words.length; i++) {
+            if (words[i].length < 2) {
+                if (!isTyping) showError(nomeInput, 'Cada palavra do nome deve conter no mínimo 2 letras.');
+                return false;
             }
-        }
-
-        if (hasShortWord) {
-            if (!isTyping) showError(nomeInput, 'Cada palavra do nome deve conter no mínimo 2 letras.');
-            return false;
         }
 
         clearFieldError(nomeInput);
@@ -93,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isTyping === undefined) {
             isTyping = false;
         }
+        if (!emailInput) return false;
         var value = emailInput.value.trim();
         var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -114,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isTyping === undefined) {
             isTyping = false;
         }
+        if (!mensagemTextarea) return false;
         var value = mensagemTextarea.value.trim();
 
         if (!value) {
@@ -130,40 +141,30 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
-    function showSuccess() {
-        if (successBanner) {
-            successBanner.style.display = 'block';
-            successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        form.reset();
-        updateCharCounter();
-
-        var inputs = [nomeInput, emailInput, mensagemTextarea];
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i]) {
-                inputs[i].setAttribute('aria-invalid', 'false');
-            }
-        }
-    }
-
     if (form) {
         updateCharCounter();
 
-        nomeInput.addEventListener('blur', function() { validateNome(false); });
-        emailInput.addEventListener('blur', function() { validateEmail(false); });
-        mensagemTextarea.addEventListener('blur', function() { validateMensagem(false); });
+        if (nomeInput) {
+            nomeInput.addEventListener('blur', function() { validateNome(false); });
+            nomeInput.addEventListener('input', function() {
+                handleInput(nomeInput, function() { validateNome(true); });
+            });
+        }
 
-        nomeInput.addEventListener('input', function() {
-            handleInput(nomeInput, function() { validateNome(true); });
-        });
-        emailInput.addEventListener('input', function() {
-            handleInput(emailInput, function() { validateEmail(true); });
-        });
-        mensagemTextarea.addEventListener('input', function() {
-            updateCharCounter();
-            handleInput(mensagemTextarea, function() { validateMensagem(true); });
-        });
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() { validateEmail(false); });
+            emailInput.addEventListener('input', function() {
+                handleInput(emailInput, function() { validateEmail(true); });
+            });
+        }
+
+        if (mensagemTextarea) {
+            mensagemTextarea.addEventListener('blur', function() { validateMensagem(false); });
+            mensagemTextarea.addEventListener('input', function() {
+                updateCharCounter();
+                handleInput(mensagemTextarea, function() { validateMensagem(true); });
+            });
+        }
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();

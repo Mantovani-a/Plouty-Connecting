@@ -1,5 +1,10 @@
 (function() {
-    var savedTheme = localStorage.getItem('theme');
+    var savedTheme = null;
+    try {
+        savedTheme = localStorage.getItem('theme');
+    } catch (e) {
+    }
+    
     var initialTheme = savedTheme;
     if (!initialTheme) {
         var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -37,14 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     toggleBtn.addEventListener('click', function() {
         var current = document.documentElement.getAttribute('data-theme');
-        var theme = 'light';
-        if (current === 'dark') {
-            theme = 'light';
-        } else {
-            theme = 'dark';
-        }
+        var theme = current === 'dark' ? 'light' : 'dark';
+        
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (e) {
+        }
         updateIcon(theme);
     });
 });

@@ -13,15 +13,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function highlightCards(cards, scrollToElement) {
-        scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (scrollToElement) {
+            scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         
+        if (!cards) return;
+
         for (var i = 0; i < cards.length; i++) {
-            cards[i].classList.add('card-destacado');
+            if (cards[i]) {
+                cards[i].classList.add('card-destacado');
+            }
         }
         
         setTimeout(function() {
             for (var j = 0; j < cards.length; j++) {
-                cards[j].classList.remove('card-destacado');
+                if (cards[j]) {
+                    cards[j].classList.remove('card-destacado');
+                }
             }
         }, 1800);
     }
