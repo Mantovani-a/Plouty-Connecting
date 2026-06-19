@@ -31,7 +31,9 @@
     --btn-hover-bg-2: var(--cor-verde-escuro);
     --btn-outline-cor-texto: var(--cor-petroleo);
     --avatar-bg-1: var(--cor-verde-claro);
-    --avatar-bg-2: var(--cor-acao)
+    --avatar-bg-2: var(--cor-acao);
+    --tr-suave: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+    --tr-rapida: all .2s ease
 }
 
 [data-theme="dark"] {
@@ -67,7 +69,9 @@
     --btn-hover-bg-2: var(--cor-verde-claro);
     --btn-outline-cor-texto: var(--cor-verde-claro);
     --avatar-bg-1: #233028;
-    --avatar-bg-2: #06364D
+    --avatar-bg-2: #06364D;
+    --tr-suave: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+    --tr-rapida: all .2s ease
 }
 
 .border-suave {
@@ -203,7 +207,7 @@ header {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: .8em;
-    transition: color .3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--tr-suave);
     padding: .5rem .75rem;
     position: relative;
     display: inline-flex;
@@ -219,7 +223,7 @@ header {
     width: 0;
     height: 3px;
     background: var(--cor-verde-claro);
-    transition: width .3s cubic-bezier(0.4, 0, 0.2, 1)
+    transition: var(--tr-suave)
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
@@ -255,7 +259,7 @@ header {
     border: 1.5px solid var(--borda-suave);
     background-color: var(--fundo-busca);
     color: var(--texto-corpo);
-    transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+    transition: var(--tr-suave);
     font-size: .85em;
     font-weight: 500;
     height: 40px
@@ -321,7 +325,8 @@ header {
     gap: 8px
 }
 
-.btn-mobile-search {
+.btn-mobile-search,
+.theme-toggle-btn {
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -333,17 +338,19 @@ header {
     justify-content: center;
     cursor: pointer;
     font-size: 1.1rem;
-    transition: all .2s ease;
+    transition: var(--tr-rapida);
     padding: 0
 }
 
-.btn-mobile-search:hover {
+.btn-mobile-search:hover,
+.theme-toggle-btn:hover {
     transform: scale(1.05);
     background-color: var(--fundo-busca-foco);
     color: var(--cor-acao)
 }
 
-.btn-mobile-search:active {
+.btn-mobile-search:active,
+.theme-toggle-btn:active {
     transform: scale(0.95)
 }
 
@@ -361,7 +368,7 @@ header {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
-    transition: transform .3s ease, opacity .3s ease
+    transition: var(--tr-suave)
 }
 
 .mobile-search-overlay.show {
@@ -377,7 +384,7 @@ header {
     border: 1.5px solid var(--borda-suave);
     background-color: var(--fundo-busca);
     color: var(--texto-corpo);
-    transition: all .3s ease;
+    transition: var(--tr-suave);
     font-size: .85em;
     font-weight: 500;
     height: 40px;
@@ -403,7 +410,7 @@ header {
     text-transform: uppercase;
     font-size: .8em;
     letter-spacing: .5px;
-    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1)
+    transition: var(--tr-suave)
 }
 
 .btn-primary {
@@ -466,7 +473,7 @@ textarea::placeholder {
 
 .card {
     padding: 30px;
-    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    transition: var(--tr-suave);
     position: relative;
     overflow: hidden
 }
@@ -558,7 +565,7 @@ textarea::placeholder {
     height: 70px;
     margin: 0 auto 15px;
     border-width: 3px;
-    transition: all .3s ease
+    transition: var(--tr-suave)
 }
 
 .avatar-placeholder:hover {
@@ -613,7 +620,7 @@ textarea::placeholder {
     margin-top: .25rem;
     font-weight: 500;
     display: none;
-    transition: all .3s ease
+    transition: var(--tr-suave)
 }
 
 .input-error {
@@ -628,7 +635,7 @@ textarea::placeholder {
 .char-counter {
     font-size: .8rem;
     color: #666;
-    transition: color .3s ease
+    transition: var(--tr-suave)
 }
 
 .char-counter.limit-reached {
@@ -707,37 +714,7 @@ textarea::placeholder {
     }
 }
 
-main>section,
-.hero,
-.card,
-.avatar-placeholder {
-    animation: fadeInUp .6s ease-out
-}
 
-.theme-toggle-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 1.15rem;
-    border-radius: 50%;
-    background: var(--fundo-busca);
-    border: 1.5px solid var(--borda-suave);
-    color: var(--cor-verde-claro);
-    box-shadow: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .2s ease;
-    cursor: pointer
-}
-
-.theme-toggle-btn:hover {
-    transform: scale(1.05);
-    background: var(--fundo-busca-foco)
-}
-
-.theme-toggle-btn:active {
-    transform: scale(0.95)
-}
 
 .mobile-bottom-nav {
     position: fixed;
@@ -766,7 +743,7 @@ main>section,
     color: var(--texto-secundario);
     font-size: .68rem;
     font-weight: 700;
-    transition: all .25s ease;
+    transition: var(--tr-suave);
     height: 100%;
     flex: 1;
     padding: 4px 0;
@@ -777,7 +754,7 @@ main>section,
 .mobile-bottom-nav-item i {
     font-size: 1.4rem;
     margin-bottom: 2px;
-    transition: transform .2s ease
+    transition: var(--tr-rapida)
 }
 
 .mobile-bottom-nav-item:hover,
@@ -814,7 +791,7 @@ main>section,
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform .2s ease
+    transition: var(--tr-rapida)
 }
 
 .btn-nav-profile:active {
@@ -854,7 +831,7 @@ main>section,
     align-items: center;
     gap: 8px;
     transform: translateY(-20px);
-    transition: transform .3s ease, opacity .3s ease;
+    transition: var(--tr-suave);
     opacity: 0;
     max-width: 360px;
     font-size: .9em;
@@ -876,7 +853,7 @@ main>section,
     text-decoration: none;
     font-size: .9em;
     font-weight: 600;
-    transition: all .2s ease
+    transition: var(--tr-rapida)
 }
 
 .dashboard-nav-item:hover {
@@ -898,7 +875,7 @@ main>section,
     resize: none;
     padding: 12px;
     font-size: .9em;
-    transition: all .3s ease;
+    transition: var(--tr-suave);
     width: 100%;
     height: 80px
 }
@@ -921,7 +898,7 @@ main>section,
     gap: 6px;
     padding: 6px 12px;
     border-radius: 6px;
-    transition: all .2s ease
+    transition: var(--tr-rapida)
 }
 
 .post-creator-btn-opt:hover {
@@ -945,7 +922,7 @@ main>section,
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: all .2s ease
+    transition: var(--tr-rapida)
 }
 
 .demand-product-tag:hover {
@@ -985,7 +962,7 @@ main>section,
 }
 
 .btn-like i {
-    transition: transform .2s ease
+    transition: var(--tr-rapida)
 }
 
 .btn-like:active i {
@@ -993,7 +970,7 @@ main>section,
 }
 
 .card-produtor {
-    transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease, display .3s ease
+    transition: var(--tr-suave)
 }
 
 @media (max-width: 1200px) {
@@ -1003,10 +980,6 @@ main>section,
 }
 
 @media (max-width: 991px) {
-    .navbar-brand img {
-        height: 40px !important
-    }
-
     .navbar {
         position: relative
     }
@@ -1123,21 +1096,16 @@ main>section,
         margin-right: 6px
     }
 
-    .btn-mobile-search {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: .95rem !important
-    }
-
+    .btn-mobile-search,
+    .theme-toggle-btn,
     .nav-profile-avatar-thumbnail {
-        width: 32px;
-        height: 32px
+        width: 32px !important;
+        height: 32px !important
     }
 
+    .btn-mobile-search,
     .theme-toggle-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem
+        font-size: .95rem !important
     }
 
     .navbar-search-input {
