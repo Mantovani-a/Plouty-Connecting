@@ -415,6 +415,16 @@ textarea::placeholder {
     color: #d9534f;
     font-weight: 700
 }
+.form-range::-webkit-slider-thumb {
+    background-color: var(--cor-verde-claro) !important
+}
+.form-range::-moz-range-thumb {
+    background-color: var(--cor-verde-claro) !important
+}
+.form-range:focus::-webkit-slider-thumb,
+.form-range:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 .25rem #4a7c5940 !important
+}
 .card,
 .filtro-card,
 .destaque-card {
