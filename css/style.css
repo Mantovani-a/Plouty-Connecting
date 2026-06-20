@@ -720,6 +720,12 @@ textarea::placeholder {
     font-size: 1.25rem;
     flex-shrink: 0
 }
+.demand-icon-container .text-white {
+    color: var(--cor-verde-claro) !important
+}
+[data-theme="dark"] .demand-icon-container .text-white {
+    color: #fff !important
+}
 .demand-card-meta {
     display: flex;
     align-items: center;
