@@ -1,19 +1,32 @@
 window.showToast = function(message) {
-    var oldToast = document.querySelector('.custom-toast');
+    var oldToast = document.querySelector('.toast-bootstrap-custom');
     if (oldToast && oldToast.parentNode) {
         oldToast.parentNode.removeChild(oldToast);
     }
 
     var toast = document.createElement('div');
-    toast.className = 'custom-toast';
-    toast.innerHTML = '<i class="bi bi-info-circle-fill text-brand-success me-1"></i> <span>' + message + '</span>';
+    toast.className = 'toast toast-bootstrap-custom align-items-center text-white bg-dark border-0 position-fixed m-3';
+    toast.style.top = '90px';
+    toast.style.right = '20px';
+    toast.style.zIndex = '1100';
+    toast.style.transition = 'opacity .3s ease, transform .3s ease';
+    toast.style.transform = 'translateY(-20px)';
+    toast.style.opacity = '0';
+    toast.style.display = 'flex';
+
+    toast.innerHTML = '<div class="d-flex w-100 align-items-center p-3 gap-2">' +
+                      '<i class="bi bi-info-circle-fill text-success"></i>' +
+                      '<div class="flex-grow-1 text-start" style="font-size: 0.9em; font-weight: 500;">' + message + '</div>' +
+                      '</div>';
     document.body.appendChild(toast);
 
     var reflow = toast.offsetHeight;
-    toast.classList.add('show');
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
 
     setTimeout(function() {
-        toast.classList.remove('show');
+        toast.style.transform = 'translateY(-20px)';
+        toast.style.opacity = '0';
         setTimeout(function() {
             if (toast && toast.parentNode) {
                 toast.parentNode.removeChild(toast);

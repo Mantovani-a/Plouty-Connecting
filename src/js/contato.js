@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showSuccess() {
         if (successBanner) {
-            successBanner.style.display = 'block';
+            successBanner.classList.remove('d-none');
             successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
 
             if (successBanner) {
-                successBanner.style.display = 'none';
+                successBanner.classList.add('d-none');
             }
 
             var isNomeValid = validateNome(false);
