@@ -1,0 +1,72 @@
+export const initialProducers = [
+  {
+    id: 1,
+    name: 'João Carlos Silva',
+    role: 'Produtor • Verduras Orgânicas',
+    location: 'Minas Gerais',
+    region: 'Sudeste',
+    types: ['verduras-frutas', 'produtos-organicos'],
+    reputation: 4.9,
+    description: 'Alfaces hidropônicas premium - Frescas, colhidas diariamente. Ideais para PNAE e hospitais. Entrego em até 24h.',
+    tags: ['Alface', 'Orgânico', 'Hidroponia'],
+    likes: 234,
+    comments: 18,
+    contacts: 12
+  },
+  {
+    id: 2,
+    name: 'Maria dos Santos',
+    role: 'Produtora • Frutas',
+    location: 'São Paulo',
+    region: 'Sudeste',
+    types: ['verduras-frutas'],
+    reputation: 4.8,
+    description: 'Melancia e melão de estação - Produção sustentável sem agrotóxicos. Perfeito para escolas e refeitórios institucionais.',
+    tags: ['Melancia', 'Sustentável', 'Saudável'],
+    likes: 156,
+    comments: 22,
+    contacts: 8
+  },
+  {
+    id: 3,
+    name: 'Cooperativa Verde',
+    role: 'Cooperativa • Hortifruti',
+    location: 'Paraná',
+    region: 'Sul',
+    types: ['verduras-frutas'],
+    reputation: 4.6,
+    description: 'Cesta de produtos da estação - Diversificado com 8+ variedades semanais. Fornecimento contínuo para PNAE. Entrega garantida.',
+    tags: ['Diversificado', 'Fornecimento', 'Garantido'],
+    likes: 423,
+    comments: 45,
+    contacts: 24
+  },
+  {
+    id: 4,
+    name: 'Pedro Ribeiro',
+    role: 'Produtor • Grãos',
+    location: 'Rio Grande do Sul',
+    region: 'Sul',
+    types: ['graos-cereais'],
+    reputation: 4.9,
+    description: 'Arroz e feijão integral - Colheita recente, armazenado adequadamente. Certificado de qualidade. Ideal para merenda escolar.',
+    tags: ['Arroz', 'Integral', 'Certificado'],
+    likes: 298,
+    comments: 32,
+    contacts: 15
+  },
+  {
+    id: 5,
+    name: 'Marcos Mendes',
+    role: 'Produtor Iniciante • Frutas',
+    location: 'Goiás',
+    region: 'Centro-Oeste',
+    types: ['verduras-frutas'],
+    reputation: 4.1,
+    description: 'Fornecimento de frutas variadas (Banana e Maçã) para comércios locais. Começando agora a expandir as vendas na plataforma Plouty!',
+    tags: ['Banana', 'Maçã', 'Frutas'],
+    likes: 45,
+    comments: 5,
+    contacts: 2
+  }
+];
