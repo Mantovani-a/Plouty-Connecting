@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
-import heroImg from '../assets/hero-agricultura.jpg';
+import { problemsData, solutionsData } from '../data/aboutData';
+import ProblemCard from '../components/sobre/ProblemCard';
+import SolutionCard from '../components/sobre/SolutionCard';
 
 export default function Sobre() {
   const problemaRef = useRef(null);
@@ -45,7 +47,7 @@ export default function Sobre() {
             </div>
             <div className="col-md-6 text-center">
               <img
-                src={heroImg}
+                src="/images/hero-agricultura.jpg"
                 alt="Agricultor segurando alimentos frescos"
                 className="img-fluid rounded-4 shadow-sm"
                 style={{ maxHeight: '380px', objectFit: 'cover', width: '100%' }}
@@ -84,38 +86,15 @@ export default function Sobre() {
             </div>
 
             <div className="col-lg-6 mt-4 mt-lg-0">
-              <div className={`card mb-3 ${highlightedGroup === 'problema' ? 'card-destacado' : ''}`}>
-                <div className="card-body p-4">
-                  <h4 className="d-flex align-items-center gap-2 mb-2 fs-5">
-                    <i className="bi bi-recycle text-brand-success"></i> Desperdício de Alimentos
-                  </h4>
-                  <p className="text-secondary small mb-0">
-                    Cadeias longas de distribuição e falta de planejamento na demanda levam à perda de toneladas de hortifrúti em perfeitas condições.
-                  </p>
-                </div>
-              </div>
-
-              <div className={`card mb-3 ${highlightedGroup === 'problema' ? 'card-destacado' : ''}`}>
-                <div className="card-body p-4">
-                  <h4 className="d-flex align-items-center gap-2 mb-2 fs-5">
-                    <i className="bi bi-cash-stack text-brand-success"></i> Intermediação Excessiva
-                  </h4>
-                  <p className="text-secondary small mb-0">
-                    A falta de contato direto reduz as margens de lucro dos agricultores familiares, concentrando a receita em intermediários.
-                  </p>
-                </div>
-              </div>
-
-              <div className={`card ${highlightedGroup === 'problema' ? 'card-destacado' : ''}`}>
-                <div className="card-body p-4">
-                  <h4 className="d-flex align-items-center gap-2 mb-2 fs-5">
-                    <i className="bi bi-x-circle text-brand-success"></i> Barreiras de Acesso
-                  </h4>
-                  <p className="text-secondary small mb-0">
-                    Burocracia e exigências de volume impedem que o produtor atenda editais públicos e chamadas do PNAE de forma individual.
-                  </p>
-                </div>
-              </div>
+              {problemsData.map((item) => (
+                <ProblemCard
+                  key={item.id}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  isHighlighted={highlightedGroup === 'problema'}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -128,65 +107,17 @@ export default function Sobre() {
           </div>
 
           <div className="row g-4">
-            <div className="col-md-4">
-              <div
-                id="card-produtor"
-                className={`card h-100 p-3 text-center ${highlightedGroup === 'solucao' ? 'card-destacado' : ''}`}
-              >
-                <div className="card-body">
-                  <div
-                    className="avatar-placeholder mx-auto mb-3 d-flex align-items-center justify-content-center text-white fs-3"
-                    style={{ background: 'linear-gradient(135deg, var(--cor-verde-claro), var(--cor-acao))' }}
-                  >
-                    <i className="bi bi-person-workspace"></i>
-                  </div>
-                  <h4 className="fs-5 fw-bold mb-2">Produtor Rural</h4>
-                  <p className="text-secondary small">
-                    Cadastra sua colheita, ganha visibilidade, avaliações e garante contratos de fornecimento com preços justos.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div
-                id="card-instituicao"
-                className={`card h-100 p-3 text-center ${highlightedGroup === 'solucao' ? 'card-destacado' : ''}`}
-              >
-                <div className="card-body">
-                  <div
-                    className="avatar-placeholder mx-auto mb-3 d-flex align-items-center justify-content-center text-white fs-3"
-                    style={{ background: 'linear-gradient(135deg, #1a4b5c, #2a5d45)' }}
-                  >
-                    <i className="bi bi-building"></i>
-                  </div>
-                  <h4 className="fs-5 fw-bold mb-2">Compradores Institucionais</h4>
-                  <p className="text-secondary small">
-                    Escolas, hospitais e restaurantes publicam suas demandas e compram alimentos frescos com garantia de procedência.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div
-                id="card-fomezero"
-                className={`card h-100 p-3 text-center ${highlightedGroup === 'solucao' ? 'card-destacado' : ''}`}
-              >
-                <div className="card-body">
-                  <div
-                    className="avatar-placeholder mx-auto mb-3 d-flex align-items-center justify-content-center text-white fs-3"
-                    style={{ background: 'linear-gradient(135deg, var(--cor-acao), var(--cor-verde-claro))' }}
-                  >
-                    <i className="bi bi-heart-pulse-fill"></i>
-                  </div>
-                  <h4 className="fs-5 fw-bold mb-2">ODS 2: Fome Zero</h4>
-                  <p className="text-secondary small">
-                    Fortalecimento da segurança alimentar comunitária e promoção de práticas agrícolas sustentáveis e regenerativas.
-                  </p>
-                </div>
-              </div>
-            </div>
+            {solutionsData.map((item) => (
+              <SolutionCard
+                key={item.id}
+                id={item.id}
+                icon={item.icon}
+                gradient={item.gradient}
+                title={item.title}
+                description={item.description}
+                isHighlighted={highlightedGroup === 'solucao'}
+              />
+            ))}
           </div>
         </section>
       </main>

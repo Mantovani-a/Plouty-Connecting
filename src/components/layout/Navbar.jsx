@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import logoImg from '../../assets/logo_P.png';
+import { MAIN_NAV_ITEMS } from '../../data/navigationData';
 
 export default function Navbar({ onOpenProfile }) {
   const { theme, toggleTheme } = useTheme();
@@ -23,8 +23,8 @@ export default function Navbar({ onOpenProfile }) {
         <div className="container navbar-mobile-layout">
           {/* Brand Logo */}
           <NavLink to="/" className="navbar-brand me-auto">
-            <img src={logoImg} alt="Plouty Logo" className="d-none d-md-block" height="40" />
-            <img src={logoImg} alt="Plouty Logo" className="d-md-none" height="35" />
+            <img src="/images/logo_P.png" alt="Plouty Logo" className="d-none d-md-block" height="40" />
+            <img src="/images/logo_P.png" alt="Plouty Logo" className="d-md-none" height="35" />
           </NavLink>
 
           {/* Desktop Search */}
@@ -85,47 +85,17 @@ export default function Navbar({ onOpenProfile }) {
           {/* Desktop Nav Links */}
           <div className="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
             <ul className="navbar-nav ms-auto ms-lg-0">
-              <li className="nav-item">
-                <NavLink
-                  to="/"
-                  end
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  <i className="bi bi-house-door-fill"></i> Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/explorar"
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  <i className="bi bi-compass-fill"></i> Explorar
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/entrar"
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  <i className="bi bi-person-fill"></i> Entrar
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/sobre"
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  <i className="bi bi-info-circle-fill"></i> Sobre Nós
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/contato"
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                >
-                  <i className="bi bi-envelope-fill"></i> Contato
-                </NavLink>
-              </li>
+              {MAIN_NAV_ITEMS.map((item) => (
+                <li key={item.to} className="nav-item">
+                  <NavLink
+                    to={item.to}
+                    end={item.end}
+                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                  >
+                    <i className={`bi ${item.icon}`}></i> {item.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
