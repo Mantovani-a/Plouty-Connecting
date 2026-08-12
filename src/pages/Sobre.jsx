@@ -98,10 +98,21 @@ export default function Sobre() {
               <div className={`card mb-3 ${highlightedGroup === 'problema' ? 'card-destacado' : ''}`}>
                 <div className="card-body p-4">
                   <h4 className="d-flex align-items-center gap-2 mb-2 fs-5">
-                    <i className="bi bi-cash-stack text-brand-success"></i> Renda Desigual no Campo
+                    <i className="bi bi-cash-stack text-brand-success"></i> Intermediação Excessiva
                   </h4>
                   <p className="text-secondary small mb-0">
-                    Produtores rurais recebem apenas uma fração mínima do valor final de seus produtos devido a intermediários desnecessários.
+                    A falta de contato direto reduz as margens de lucro dos agricultores familiares, concentrando a receita em intermediários.
+                  </p>
+                </div>
+              </div>
+
+              <div className={`card ${highlightedGroup === 'problema' ? 'card-destacado' : ''}`}>
+                <div className="card-body p-4">
+                  <h4 className="d-flex align-items-center gap-2 mb-2 fs-5">
+                    <i className="bi bi-x-circle text-brand-success"></i> Barreiras de Acesso
+                  </h4>
+                  <p className="text-secondary small mb-0">
+                    Burocracia e exigências de volume impedem que o produtor atenda editais públicos e chamadas do PNAE de forma individual.
                   </p>
                 </div>
               </div>

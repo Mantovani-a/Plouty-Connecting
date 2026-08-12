@@ -68,5 +68,19 @@ export const initialProducers = [
     likes: 45,
     comments: 5,
     contacts: 2
+  },
+  {
+    id: 6,
+    name: 'Sítio Recanto Feliz',
+    role: 'Produtor Familiar • Hortaliças',
+    location: 'Bahia',
+    region: 'Nordeste',
+    types: ['verduras-frutas', 'produtos-organicos'],
+    reputation: 3.3,
+    description: 'Tomates e cebolas orgânicas direto da horta familiar. Algumas dificuldades logísticas recentes, mas prezamos pela alta qualidade dos alimentos.',
+    tags: ['Tomate', 'Cebola', 'Orgânico'],
+    likes: 12,
+    comments: 3,
+    contacts: 1
   }
 ];

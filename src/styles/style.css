@@ -842,9 +842,6 @@ textarea::placeholder {
         align-items: center;
         justify-content: center
     }
-    .mobile-bottom-nav {
-        display: flex
-    }
     .mobile-search-overlay {
         top: 70px !important
     }

@@ -103,24 +103,28 @@ export default function Explorar() {
 
         {/* Right side info preview */}
         <aside className="col-md-3 d-none d-md-block">
-          <div className="card">
-            <div className="card-body p-3">
-              <h5 className="fs-6 fw-bold text-brand-success mb-2">
-                <i className="bi bi-patch-check-fill me-1"></i> Garantia Plouty
-              </h5>
-              <p className="small text-secondary mb-3">
-                Todos os produtores listados passam por verificação de procedência e conformidade sanitária para atendimento institucional.
-              </p>
-              <div
-                className="p-3 rounded border border-suave mb-2"
-                style={{ background: 'var(--fundo-busca)' }}
-              >
-                <strong className="d-block mb-1" style={{ color: 'var(--cor-verde-claro)', fontSize: '0.9em' }}>
-                  <i className="bi bi-shield-check me-1"></i> 100% Rastreável
-                </strong>
-                <small className="text-secondary d-block" style={{ fontSize: '0.78em' }}>
-                  Nota Fiscal e certificado de produtor familiar
-                </small>
+          <div className="card destaque-card">
+            <div className="card-body">
+              <h3 className="fs-5 fw-bold mb-3 text-brand-success">
+                <i className="bi bi-stars me-1"></i> Destaques
+              </h3>
+              <div className="mb-3">
+                <strong className="d-block mb-1">Produtores Verificados</strong>
+                <p className="text-secondary small mb-0">
+                  Conheça os produtores com melhor reputação na plataforma Plouty.
+                </p>
+              </div>
+              <div className="mb-3">
+                <strong className="d-block mb-1">Ofertas de Estação</strong>
+                <p className="text-secondary small mb-0">
+                  Produtos frescos disponíveis agora. Qualidade garantida para sua instituição.
+                </p>
+              </div>
+              <div>
+                <strong className="d-block mb-1">Como Funciona</strong>
+                <p className="text-secondary small mb-0">
+                  Saiba como conectar com produtores e formalizar suas compras na Plouty.
+                </p>
               </div>
             </div>
           </div>
