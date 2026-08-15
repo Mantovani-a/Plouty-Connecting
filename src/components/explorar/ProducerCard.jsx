@@ -91,20 +91,12 @@ export default function ProducerCard({ producer }) {
         </footer>
       </blockquote>
 
-      {contacted && (
-        <p className="inline-feedback" role="status">
-          <i className="bi bi-check-circle-fill" /> Contato registrado apenas nesta demonstração.
-        </p>
-      )}
-
       <div className="producer-actions">
         <button
           className="btn btn-primary"
           type="button"
-          onClick={() => setContacted(true)}
-          disabled={contacted}
         >
-          {contacted ? 'Contato registrado' : 'Entrar em contato'}
+          Entrar em contato
         </button>
         <button
           className="btn btn-secondary"

@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import DemandCard from '../components/home/DemandCard';
-import DemandCreator from '../components/home/DemandCreator';
 import ImpactSidebar from '../components/home/ImpactSidebar';
 import { initialDemands } from '../data/demandsData';
-import { buyerSummary, producerSummary, productionAvailability } from '../data/dashboardData';
+import { buyerSummary, producerSummary } from '../data/dashboardData';
 import { initialProducers } from '../data/producersData';
 import { useWorkspace } from '../context/WorkspaceContext';
-import QuantityField from '../components/common/QuantityField';
 import { formatISODateShort } from '../utils/dateUtils';
-import { getQuantityCategoryForUnit, validateQuantityValue } from '../utils/quantityUtils';
 
 export default function Operation({ onOpenMessages }) {
   const { isProducer } = useWorkspace();
@@ -18,54 +15,6 @@ export default function Operation({ onOpenMessages }) {
 }
 
 function ProducerHome({ onOpenMessages }) {
-  const [availabilityOpen, setAvailabilityOpen] = useState(false);
-  const [availabilitySaved, setAvailabilitySaved] = useState(false);
-  const [items, setItems] = useState(productionAvailability);
-  const [availabilityErrors, setAvailabilityErrors] = useState({});
-
-  const updateItem = (id, field, value) => {
-    setItems((current) =>
-      current.map((item) => (item.id === id ? { ...item, [field]: value } : item))
-    );
-    setAvailabilityErrors((current) => ({ ...current, [`${id}-${field}`]: '' }));
-  };
-
-  const updateItemQuantity = (id, { value, unit, validationMessage }) => {
-    setItems((current) =>
-      current.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantityValue: value,
-              quantityUnit: unit || item.quantityUnit,
-              quantityValidation: validationMessage || '',
-              quantity: `${value} ${unit || item.quantityUnit}`.trim()
-            }
-          : item
-      )
-    );
-    setAvailabilityErrors((current) => ({ ...current, [`${id}-quantity`]: '' }));
-  };
-
-  const saveAvailability = (event) => {
-    event.preventDefault();
-    const nextErrors = {};
-    items.forEach((item) => {
-      if (!item.product.trim()) nextErrors[`${item.id}-product`] = 'Informe o produto.';
-      const quantityError =
-        item.quantityValidation ||
-        validateQuantityValue(item.quantityValue, {
-          category: getQuantityCategoryForUnit(item.quantityUnit),
-          required: true
-        });
-      if (quantityError) nextErrors[`${item.id}-quantity`] = quantityError;
-    });
-    setAvailabilityErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
-    setAvailabilitySaved(true);
-    setAvailabilityOpen(false);
-  };
-
   const today = new Intl.DateTimeFormat('pt-BR', {
     weekday: 'long',
     day: '2-digit',
@@ -85,100 +34,11 @@ function ProducerHome({ onOpenMessages }) {
             <p>Há novas compras institucionais perto da sua região e uma proposta aguardando retorno.</p>
           </div>
           <div className="hero-actions">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => setAvailabilityOpen((open) => !open)}
-              aria-expanded={availabilityOpen}
-            >
-              <i className="bi bi-basket2" aria-hidden="true" /> Informar disponibilidade
-            </button>
             <NavLink className="btn btn-primary" to="/oportunidades">
               Encontrar oportunidades <i className="bi bi-arrow-right" aria-hidden="true" />
             </NavLink>
           </div>
         </section>
-
-        {availabilitySaved && (
-          <div className="feedback-banner success" role="status">
-            <i className="bi bi-check-circle-fill" aria-hidden="true" />
-            <span>
-              <strong>Disponibilidade atualizada no protótipo.</strong> Ela fica somente nesta página e ainda não recalcula as recomendações.
-            </span>
-            <button
-              type="button"
-              onClick={() => setAvailabilitySaved(false)}
-              aria-label="Fechar aviso"
-            >
-              <i className="bi bi-x-lg" />
-            </button>
-          </div>
-        )}
-
-        {availabilityOpen && (
-          <form className="availability-editor" onSubmit={saveAvailability} noValidate>
-            <div className="section-title-row">
-              <div>
-                <span className="eyebrow">Planejamento da produção</span>
-                <h2>O que você tem para vender?</h2>
-                <p>Essas informações ajudam a priorizar oportunidades compatíveis.</p>
-              </div>
-              <button
-                type="button"
-                className="icon-button"
-                onClick={() => setAvailabilityOpen(false)}
-                aria-label="Fechar disponibilidade"
-              >
-                <i className="bi bi-x-lg" />
-              </button>
-            </div>
-            <div className="availability-grid">
-              {items.map((item) => (
-                <fieldset key={item.id}>
-                  <legend className="visually-hidden">Disponibilidade do item {item.id}</legend>
-                  <label>
-                    Produto
-                    <input
-                      value={item.product}
-                      onChange={(event) => updateItem(item.id, 'product', event.target.value)}
-                      aria-invalid={Boolean(availabilityErrors[`${item.id}-product`])}
-                    />
-                    {availabilityErrors[`${item.id}-product`] && (
-                      <span className="error-message" role="alert">
-                        {availabilityErrors[`${item.id}-product`]}
-                      </span>
-                    )}
-                  </label>
-                  <QuantityField
-                    id={`availability-quantity-${item.id}`}
-                    label="Quantidade"
-                    value={item.quantityValue}
-                    unit={item.quantityUnit}
-                    category="all"
-                    required
-                    error={availabilityErrors[`${item.id}-quantity`]}
-                    onQuantityChange={(meta) => updateItemQuantity(item.id, meta)}
-                  />
-                  <label>
-                    Período
-                    <input
-                      value={item.period}
-                      onChange={(event) => updateItem(item.id, 'period', event.target.value)}
-                    />
-                  </label>
-                </fieldset>
-              ))}
-            </div>
-            <div className="editor-actions">
-              <small>
-                <i className="bi bi-info-circle" /> Dados demonstrativos, sem persistência em servidor.
-              </small>
-              <button className="btn btn-primary" type="submit">
-                Salvar disponibilidade
-              </button>
-            </div>
-          </form>
-        )}
 
         <section className="summary-strip" aria-label="Resumo operacional">
           {producerSummary.map((item) => (
@@ -222,8 +82,7 @@ function ProducerHome({ onOpenMessages }) {
 }
 
 function BuyerHome({ onOpenMessages }) {
-  const [composerOpen, setComposerOpen] = useState(false);
-  const [ownDemands, setOwnDemands] = useState([
+  const ownDemands = [
     {
       id: 1,
       product: 'Hortaliças para merenda escolar',
@@ -240,12 +99,7 @@ function BuyerHome({ onOpenMessages }) {
       status: 'Em análise',
       proposals: 7
     }
-  ]);
-
-  const addDemand = (demand) => {
-    setOwnDemands((current) => [demand, ...current]);
-    setComposerOpen(false);
-  };
+  ];
 
   return (
     <main id="conteudo-principal" className="workspace-main buyer-home">
@@ -262,19 +116,11 @@ function BuyerHome({ onOpenMessages }) {
             <NavLink className="btn btn-secondary" to="/explorar">
               <i className="bi bi-people" /> Encontrar produtores
             </NavLink>
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={() => setComposerOpen(true)}
-            >
-              <i className="bi bi-plus-lg" /> Publicar demanda
-            </button>
+            <NavLink className="btn btn-primary" to="/negocios">
+              <i className="bi bi-briefcase" /> Ver negócios
+            </NavLink>
           </div>
         </section>
-
-        {composerOpen && (
-          <DemandCreator onAddDemand={addDemand} onCancel={() => setComposerOpen(false)} />
-        )}
 
         <section className="summary-strip" aria-label="Resumo operacional do comprador">
           {buyerSummary.map((item) => (
@@ -299,13 +145,6 @@ function BuyerHome({ onOpenMessages }) {
                 <h2 id="buyer-demands-title">Demandas recentes</h2>
                 <p>Acompanhe propostas e prazos sem perder o próximo passo.</p>
               </div>
-              <button
-                className="text-link"
-                type="button"
-                onClick={() => setComposerOpen(true)}
-              >
-                Nova demanda <i className="bi bi-plus" />
-              </button>
             </div>
             <div className="buyer-demand-list">
               {ownDemands.map((demand) => {

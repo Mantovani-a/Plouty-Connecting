@@ -143,45 +143,31 @@
   display: inline-flex; align-items: center; gap: 5px;
   margin-right: auto;
 }.social-post-actions {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
-  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
   border-top: 1px solid var(--border);
-}.social-post-actions button {
-  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  min-height: 40px;
-  border: 0; border-radius: var(--radius-sm);
-  background: transparent; color: var(--text-muted);
-  font-size: 0.7rem; font-weight: 720;
-  cursor: pointer;
-}.social-post-actions button:hover, .social-post-actions button.is-active { color: var(--action); background: var(--action-soft); }
-
-/* Comments */.social-comments {
-  padding: 16px 20px 20px;
-  border-top: 1px solid var(--border); background: var(--surface-muted);
-}.social-comment-list { display: grid; gap: 10px; }.social-comment {
-  display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 9px;
-}.social-comment-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%; background: var(--surface-accent); color: var(--action);
-  font-size: 0.58rem; font-weight: 800;
-}.social-comment > div {
-  display: flex; flex-direction: column; gap: 3px;
-  padding: 9px 11px;
-  border-radius: 4px var(--radius-sm) var(--radius-sm); background: var(--surface);
-}.social-comment strong { font-size: 0.78rem; color: var(--text); }.social-comment p {
-  margin: 0;
+}
+.social-post-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
   color: var(--text-muted);
-  font-size: 0.74rem; line-height: 1.4;
-}.social-comment-form {
-  display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px;
-  margin-top: 14px; padding-top: 14px;
-  border-top: 1px solid var(--border);
-}.social-comment-form textarea {
-  width: 100%; min-height: 64px; padding: 10px 11px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--surface); color: var(--text);
-  font-size: 0.72rem;
-  resize: vertical;
+  font-size: 0.78rem;
+  font-weight: 720;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.social-post-actions button:hover,
+.social-post-actions button.is-active {
+  color: var(--action);
+  background: var(--action-soft);
 }
 
 /* Community Sidebar */
