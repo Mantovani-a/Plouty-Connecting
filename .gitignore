@@ -30,6 +30,8 @@ build/
 .vite/
 .cache/
 .parcel-cache/
+__pycache__/
+*.pyc
 
 # IDE / Editor Files
 .vscode/

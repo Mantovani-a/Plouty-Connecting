@@ -23,6 +23,7 @@ export default function ImpactSidebar({ onOpenMessages }) {
   const undoButtonRef = useRef(null);
   const alertSectionRef = useRef(null);
   const emptyStateRef = useRef(null);
+
   const visibleAlerts = useMemo(
     () => operationalAlerts.filter((alert) => !completedIds.includes(alert.id)),
     [completedIds]
@@ -79,23 +80,43 @@ export default function ImpactSidebar({ onOpenMessages }) {
     <aside className="operational-sidebar" aria-label="Atividade importante">
       <section ref={alertSectionRef} className="sidebar-section">
         <div className="section-title-row">
-          <div><span className="eyebrow">Para agir agora</span><h2>Próximos passos</h2></div>
-          <span className="counter-pill" aria-label={`${visibleAlerts.length} ${visibleAlerts.length === 1 ? 'próximo passo' : 'próximos passos'}`}>{visibleAlerts.length}</span>
+          <div>
+            <span className="eyebrow">Para agir agora</span>
+            <h2>Próximos passos</h2>
+          </div>
+          <span
+            className="counter-pill"
+            aria-label={`${visibleAlerts.length} ${visibleAlerts.length === 1 ? 'próximo passo' : 'próximos passos'}`}
+          >
+            {visibleAlerts.length}
+          </span>
         </div>
+
         <div className="alert-list">
           {visibleAlerts.map((alert) => {
             const content = (
               <>
-                <span className={`activity-icon tone-${alert.tone}`}><i className={`bi ${alert.icon}`} aria-hidden="true" /></span>
-                <span><strong>{alert.title}</strong><small>{alert.text}</small><em>{alert.action} <i className="bi bi-arrow-right" aria-hidden="true" /></em></span>
+                <span className={`activity-icon tone-${alert.tone}`}>
+                  <i className={`bi ${alert.icon}`} aria-hidden="true" />
+                </span>
+                <span>
+                  <strong>{alert.title}</strong>
+                  <small>{alert.text}</small>
+                  <em>
+                    {alert.action} <i className="bi bi-arrow-right" aria-hidden="true" />
+                  </em>
+                </span>
               </>
             );
+
             return (
               <div className="alert-row" key={alert.id} data-alert-id={alert.id}>
                 {alert.to ? (
                   <NavLink className="alert-item" to={alert.to}>{content}</NavLink>
                 ) : (
-                  <button type="button" className="alert-item" onClick={() => onOpenMessages?.()}>{content}</button>
+                  <button type="button" className="alert-item" onClick={() => onOpenMessages?.()}>
+                    {content}
+                  </button>
                 )}
                 <button
                   type="button"
@@ -109,6 +130,7 @@ export default function ImpactSidebar({ onOpenMessages }) {
               </div>
             );
           })}
+
           {!visibleAlerts.length && (
             <div ref={emptyStateRef} className="next-steps-empty" tabIndex="-1">
               <span><i className="bi bi-check2-circle" aria-hidden="true" /></span>
@@ -117,6 +139,7 @@ export default function ImpactSidebar({ onOpenMessages }) {
             </div>
           )}
         </div>
+
         {undoAlert && (
           <div className="next-step-feedback" role="status">
             <i className="bi bi-check-circle-fill" aria-hidden="true" />
@@ -124,6 +147,7 @@ export default function ImpactSidebar({ onOpenMessages }) {
             <button ref={undoButtonRef} type="button" onClick={undoCompletion}>Desfazer</button>
           </div>
         )}
+
         {completedIds.length > 0 && (
           <button type="button" className="restore-next-steps" onClick={restoreCompletedAlerts}>
             <i className="bi bi-arrow-counterclockwise" aria-hidden="true" />
@@ -135,13 +159,32 @@ export default function ImpactSidebar({ onOpenMessages }) {
 
       <section className="sidebar-section reputation-section">
         <span className="eyebrow">Sua confiança comercial</span>
-        <div className="reputation-score"><strong>4,8</strong><span><i className="bi bi-star-fill" aria-hidden="true" /> 38 avaliações</span></div>
-        <div className="reputation-bars">
-          <div><span>Pontualidade</span><strong>97%</strong><div className="progress-track"><i style={{ width: '97%' }} /></div></div>
-          <div><span>Qualidade</span><strong>95%</strong><div className="progress-track"><i style={{ width: '95%' }} /></div></div>
-          <div><span>Taxa de resposta</span><strong>96%</strong><div className="progress-track"><i style={{ width: '96%' }} /></div></div>
+        <div className="reputation-score">
+          <strong>4,8</strong>
+          <span><i className="bi bi-star-fill" aria-hidden="true" /> 38 avaliações</span>
         </div>
-        <p className="verified-docs"><i className="bi bi-shield-check" aria-hidden="true" /> CAF e identidade validadas</p>
+
+        <div className="reputation-bars">
+          <div>
+            <span>Pontualidade</span>
+            <strong>97%</strong>
+            <div className="progress-track p-97"><i /></div>
+          </div>
+          <div>
+            <span>Qualidade</span>
+            <strong>95%</strong>
+            <div className="progress-track p-95"><i /></div>
+          </div>
+          <div>
+            <span>Taxa de resposta</span>
+            <strong>96%</strong>
+            <div className="progress-track p-96"><i /></div>
+          </div>
+        </div>
+
+        <p className="verified-docs">
+          <i className="bi bi-shield-check" aria-hidden="true" /> CAF e identidade validadas
+        </p>
       </section>
 
       <section className="impact-note">

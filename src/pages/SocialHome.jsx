@@ -5,7 +5,6 @@ import SocialPost from '../components/social/SocialPost';
 import SocialSidebar from '../components/social/SocialSidebar';
 import { useWorkspace } from '../context/WorkspaceContext';
 import { socialFeedPosts } from '../data/socialFeedData';
-import '../styles/social-feed.css';
 
 const LOCAL_SOCIAL_POSTS_KEY = 'plouty.demo.social-posts.v1';
 const MAX_LOCAL_POSTS = 12;

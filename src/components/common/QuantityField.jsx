@@ -19,7 +19,6 @@ import {
   sanitizeQuantityValue,
   validateQuantityValue
 } from '../../utils/quantityUtils';
-import '../../styles/quantity-field.css';
 
 const VIEWPORT_GAP = 12;
 const MENU_GAP = 7;
@@ -357,10 +356,10 @@ export default function QuantityField({
       aria-label={unitLabel}
       aria-activedescendant={activeOptionId}
       style={{
-        left: `${menuPosition.left}px`,
-        top: `${menuPosition.top}px`,
-        width: `${menuPosition.width}px`,
-        maxHeight: `${menuPosition.maxHeight}px`
+        '--menu-left': `${menuPosition.left}px`,
+        '--menu-top': `${menuPosition.top}px`,
+        '--menu-width': `${menuPosition.width}px`,
+        '--menu-max-height': `${menuPosition.maxHeight}px`
       }}
       onKeyDown={handleUnitMenuKeyDown}
     >

@@ -10,8 +10,7 @@ async function copyShareText(value) {
   const temporaryField = document.createElement('textarea');
   temporaryField.value = value;
   temporaryField.setAttribute('readonly', '');
-  temporaryField.style.position = 'fixed';
-  temporaryField.style.opacity = '0';
+  temporaryField.className = 'visually-hidden-focusable';
   document.body.appendChild(temporaryField);
   temporaryField.select();
   const copied = document.execCommand('copy');

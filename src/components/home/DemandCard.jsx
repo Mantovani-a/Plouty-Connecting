@@ -4,7 +4,6 @@ import CurrencyField from '../common/CurrencyField';
 import DateField from '../common/DateField';
 import { formatISODateShort, validateDateInput } from '../../utils/dateUtils';
 import { formatCurrencyBRL, validateCurrencyInput } from '../../utils/currencyUtils';
-import '../../styles/proposal-form.css';
 
 const urgencyTone = {
   Alta: 'danger',

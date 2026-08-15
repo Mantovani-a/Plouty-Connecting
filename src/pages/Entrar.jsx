@@ -13,6 +13,7 @@ const ROLE_CONTENT = {
     destination: 'Você entrará no espaço institucional, com demandas, fornecedores e contratos.'
   }
 };
+
 const INTERNAL_PATHS = ['/inicio', '/operacao', '/oportunidades', '/negocios', '/explorar'];
 const ROLE_INTERNAL_PATHS = {
   producer: ['/inicio', '/operacao', '/oportunidades', '/negocios'],
@@ -22,19 +23,29 @@ const ROLE_INTERNAL_PATHS = {
 function validateLogin(form, role) {
   const errors = {};
   if (!role) errors.role = 'Escolha Produtor ou Instituição para continuar.';
-  if (!form.email.trim()) errors.email = 'Informe o e-mail usado na Plouty.';
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) errors.email = role
-    ? `Digite um e-mail válido, como ${ROLE_CONTENT[role].emailExample}.`
-    : 'Digite um e-mail válido.';
-  if (!form.password) errors.password = 'Informe sua senha.';
-  else if (form.password.length < 8) errors.password = 'A senha precisa ter pelo menos 8 caracteres.';
+  if (!form.email.trim()) {
+    errors.email = 'Informe o e-mail usado na Plouty.';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+    errors.email = role
+      ? `Digite um e-mail válido, como ${ROLE_CONTENT[role].emailExample}.`
+      : 'Digite um e-mail válido.';
+  }
+  if (!form.password) {
+    errors.password = 'Informe sua senha.';
+  } else if (form.password.length < 8) {
+    errors.password = 'A senha precisa ter pelo menos 8 caracteres.';
+  }
   return errors;
 }
 
 function normalizeInternalDestination(candidate, role) {
-  if (typeof candidate !== 'string' || !candidate.startsWith('/') || candidate.startsWith('//')) return null;
+  if (typeof candidate !== 'string' || !candidate.startsWith('/') || candidate.startsWith('//')) {
+    return null;
+  }
   const parsed = new URL(candidate, 'https://plouty.local');
-  if (!INTERNAL_PATHS.includes(parsed.pathname) || !ROLE_INTERNAL_PATHS[role]?.includes(parsed.pathname)) return null;
+  if (!INTERNAL_PATHS.includes(parsed.pathname) || !ROLE_INTERNAL_PATHS[role]?.includes(parsed.pathname)) {
+    return null;
+  }
   return `${parsed.pathname}${parsed.search}${parsed.hash}`;
 }
 
@@ -45,9 +56,14 @@ function getReturnDestination(location, role) {
 
   const locationState = location.state;
   const previousLocation = locationState?.from;
-  return normalizeInternalDestination(previousLocation
-    ? `${previousLocation.pathname}${previousLocation.search || ''}${previousLocation.hash || ''}`
-    : null, role) || '/inicio';
+  return (
+    normalizeInternalDestination(
+      previousLocation
+        ? `${previousLocation.pathname}${previousLocation.search || ''}${previousLocation.hash || ''}`
+        : null,
+      role
+    ) || '/inicio'
+  );
 }
 
 export default function Entrar() {
@@ -103,8 +119,13 @@ export default function Entrar() {
       <div className="shell-container login-page-grid">
         <section className="login-intro" aria-labelledby="login-story-title">
           <span className="eyebrow">Conexões, reputação e negócios agrícolas</span>
-          <h1 id="login-story-title">A rede profissional que conecta quem produz a quem alimenta comunidades.</h1>
-          <p>Na Plouty, produtores rurais e instituições constroem relações de confiança, encontram oportunidades e conduzem propostas, negociações e contratos em um só ambiente.</p>
+          <h1 id="login-story-title">
+            A rede profissional que conecta quem produz a quem alimenta comunidades.
+          </h1>
+          <p>
+            Na Plouty, produtores rurais e instituições constroem relações de confiança, encontram
+            oportunidades e conduzem propostas, negociações e contratos em um só ambiente.
+          </p>
         </section>
 
         <section className="login-panel" aria-labelledby="login-title">
@@ -118,25 +139,61 @@ export default function Entrar() {
             className={`login-role-fieldset ${errors.role ? 'has-error' : ''}`}
             disabled={isLoading}
             aria-invalid={Boolean(errors.role)}
-            aria-describedby={errors.role ? 'login-role-error login-role-destination' : 'login-role-destination'}
+            aria-describedby={
+              errors.role
+                ? 'login-role-error login-role-destination'
+                : 'login-role-destination'
+            }
           >
             <legend>Quero entrar como</legend>
             <div className="login-role-switch">
               <label className={role === 'producer' ? 'active' : ''}>
-                <input type="radio" name="login-role" value="producer" checked={role === 'producer'} onChange={() => handleRoleChange('producer')} aria-describedby="login-role-destination" />
-                <span className="login-role-icon"><i className="bi bi-person-workspace" aria-hidden="true" /></span>
-                <span><strong>Produtor</strong><small>Ofertar e negociar produção</small></span>
+                <input
+                  type="radio"
+                  name="login-role"
+                  value="producer"
+                  checked={role === 'producer'}
+                  onChange={() => handleRoleChange('producer')}
+                  aria-describedby="login-role-destination"
+                />
+                <span className="login-role-icon">
+                  <i className="bi bi-person-workspace" aria-hidden="true" />
+                </span>
+                <span>
+                  <strong>Produtor</strong>
+                  <small>Ofertar e negociar produção</small>
+                </span>
                 <i className="bi bi-check-circle-fill role-selection-check" aria-hidden="true" />
               </label>
               <label className={role === 'buyer' ? 'active' : ''}>
-                <input type="radio" name="login-role" value="buyer" checked={role === 'buyer'} onChange={() => handleRoleChange('buyer')} aria-describedby="login-role-destination" />
-                <span className="login-role-icon"><i className="bi bi-building" aria-hidden="true" /></span>
-                <span><strong>Instituição</strong><small>Comprar e gerir fornecimento</small></span>
+                <input
+                  type="radio"
+                  name="login-role"
+                  value="buyer"
+                  checked={role === 'buyer'}
+                  onChange={() => handleRoleChange('buyer')}
+                  aria-describedby="login-role-destination"
+                />
+                <span className="login-role-icon">
+                  <i className="bi bi-building" aria-hidden="true" />
+                </span>
+                <span>
+                  <strong>Instituição</strong>
+                  <small>Comprar e gerir fornecimento</small>
+                </span>
                 <i className="bi bi-check-circle-fill role-selection-check" aria-hidden="true" />
               </label>
             </div>
-            <p id="login-role-destination" className="login-role-destination" aria-live="polite"><i className="bi bi-arrow-right-circle" aria-hidden="true" /> {roleContent?.destination || 'Selecione o perfil que representa sua participação nesta demonstração.'}</p>
-            {errors.role && <p id="login-role-error" className="field-error" role="alert"><i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.role}</p>}
+            <p id="login-role-destination" className="login-role-destination" aria-live="polite">
+              <i className="bi bi-arrow-right-circle" aria-hidden="true" />{' '}
+              {roleContent?.destination ||
+                'Selecione o perfil que representa sua participação nesta demonstração.'}
+            </p>
+            {errors.role && (
+              <p id="login-role-error" className="field-error" role="alert">
+                <i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.role}
+              </p>
+            )}
           </fieldset>
 
           <form className="login-form" onSubmit={handleSubmit} noValidate>
@@ -157,7 +214,11 @@ export default function Entrar() {
                   disabled={isLoading}
                 />
               </div>
-              {errors.email && <p id="login-email-error" className="field-error" role="alert"><i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.email}</p>}
+              {errors.email && (
+                <p id="login-email-error" className="field-error" role="alert">
+                  <i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.email}
+                </p>
+              )}
             </div>
 
             <div className="login-field">
@@ -176,53 +237,121 @@ export default function Entrar() {
                   aria-describedby={errors.password ? 'login-password-error' : undefined}
                   disabled={isLoading}
                 />
-                <button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} aria-pressed={showPassword} disabled={isLoading}>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  aria-pressed={showPassword}
+                  disabled={isLoading}
+                >
                   <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} aria-hidden="true" />
                 </button>
               </div>
-              {errors.password && <p id="login-password-error" className="field-error" role="alert"><i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.password}</p>}
+              {errors.password && (
+                <p id="login-password-error" className="field-error" role="alert">
+                  <i className="bi bi-exclamation-circle" aria-hidden="true" /> {errors.password}
+                </p>
+              )}
             </div>
 
-            <button className="btn btn-primary login-submit" type="submit" disabled={isLoading || Boolean(successMessage)}>
-              {successMessage ? <><span className="button-spinner" aria-hidden="true" /> Abrindo a Plouty…</> : isLoading ? <><span className="button-spinner" aria-hidden="true" /> Validando acesso…</> : <><span>Entrar na demonstração</span><i className="bi bi-arrow-right" aria-hidden="true" /></>}
+            <button
+              className="btn btn-primary login-submit"
+              type="submit"
+              disabled={isLoading || Boolean(successMessage)}
+            >
+              {successMessage ? (
+                <>
+                  <span className="button-spinner" aria-hidden="true" /> Abrindo a Plouty…
+                </>
+              ) : isLoading ? (
+                <>
+                  <span className="button-spinner" aria-hidden="true" /> Validando acesso…
+                </>
+              ) : (
+                <>
+                  <span>Entrar na demonstração</span>
+                  <i className="bi bi-arrow-right" aria-hidden="true" />
+                </>
+              )}
             </button>
             <div className="login-status" aria-live="polite">
-              {successMessage && <p className="login-success"><i className="bi bi-check-circle-fill" aria-hidden="true" /> {successMessage}</p>}
+              {successMessage && (
+                <p className="login-success">
+                  <i className="bi bi-check-circle-fill" aria-hidden="true" /> {successMessage}
+                </p>
+              )}
             </div>
           </form>
 
           <div className="login-demo-disclaimer">
             <i className="bi bi-info-circle" aria-hidden="true" />
-            <p><strong>Acesso demonstrativo</strong>Não existe autenticação no backend. O perfil escolhido fica apenas nesta aba; a senha não é armazenada.</p>
+            <p>
+              <strong>Acesso demonstrativo</strong>Não existe autenticação no backend. O perfil
+              escolhido fica apenas nesta aba; a senha não é armazenada.
+            </p>
           </div>
-          <p className="login-registration-note">O cadastro de novas contas ainda depende da próxima etapa técnica do projeto.</p>
+          <p className="login-registration-note">
+            O cadastro de novas contas ainda depende da próxima etapa técnica do projeto.
+          </p>
         </section>
 
-        <section className="login-story-details" aria-label="Como uma conexão comercial acontece na Plouty">
+        <section
+          className="login-story-details"
+          aria-label="Como uma conexão comercial acontece na Plouty"
+        >
           <div className="login-connection" aria-label="Exemplo demonstrativo de conexão comercial">
             <div className="connection-party">
               <span className="connection-avatar">JC</span>
-              <div><small>Produtor familiar</small><strong>João Carlos</strong><em><i className="bi bi-patch-check-fill" /> CAF validado</em></div>
+              <div>
+                <small>Produtor familiar</small>
+                <strong>João Carlos</strong>
+                <em><i className="bi bi-patch-check-fill" /> CAF validado</em>
+              </div>
             </div>
-            <div className="connection-path" aria-hidden="true"><i className="bi bi-arrow-right" /></div>
+            <div className="connection-path" aria-hidden="true">
+              <i className="bi bi-arrow-right" />
+            </div>
             <div className="connection-deal">
               <span>OPORTUNIDADE</span>
               <strong>180 kg de frutas</strong>
               <small>fornecimento semanal</small>
             </div>
-            <div className="connection-path" aria-hidden="true"><i className="bi bi-arrow-right" /></div>
+            <div className="connection-path" aria-hidden="true">
+              <i className="bi bi-arrow-right" />
+            </div>
             <div className="connection-party institution">
               <span className="connection-avatar"><i className="bi bi-hospital" /></span>
-              <div><small>Comprador institucional</small><strong>Hospital Regional</strong><em><i className="bi bi-shield-check" /> Instituição verificada</em></div>
+              <div>
+                <small>Comprador institucional</small>
+                <strong>Hospital Regional</strong>
+                <em><i className="bi bi-shield-check" /> Instituição verificada</em>
+              </div>
             </div>
           </div>
 
           <ul className="login-trust-list">
-            <li><i className="bi bi-people" aria-hidden="true" /><span><strong>Relações profissionais</strong>Conexões entre quem produz e quem compra para comunidades.</span></li>
-            <li><i className="bi bi-patch-check" aria-hidden="true" /><span><strong>Reputação em contexto</strong>Avaliações, entregas e documentos apoiam decisões mais seguras.</span></li>
-            <li><i className="bi bi-briefcase" aria-hidden="true" /><span><strong>Negócios acompanhados</strong>Oportunidades, propostas e contratos organizados em cada etapa.</span></li>
+            <li>
+              <i className="bi bi-people" aria-hidden="true" />
+              <span>
+                <strong>Relações profissionais</strong>Conexões entre quem produz e quem compra para comunidades.
+              </span>
+            </li>
+            <li>
+              <i className="bi bi-patch-check" aria-hidden="true" />
+              <span>
+                <strong>Reputação em contexto</strong>Avaliações, entregas e documentos apoiam decisões mais seguras.
+              </span>
+            </li>
+            <li>
+              <i className="bi bi-briefcase" aria-hidden="true" />
+              <span>
+                <strong>Negócios acompanhados</strong>Oportunidades, propostas e contratos organizados em cada etapa.
+              </span>
+            </li>
           </ul>
-          <p className="login-impact-note"><i className="bi bi-globe-americas" aria-hidden="true" /> Projeto acadêmico alinhado à ODS 2 — Fome Zero e Agricultura Sustentável.</p>
+          <p className="login-impact-note">
+            <i className="bi bi-globe-americas" aria-hidden="true" /> Projeto acadêmico alinhado à ODS 2 — Fome Zero e Agricultura Sustentável.
+          </p>
         </section>
       </div>
     </main>
