@@ -1,70 +1,49 @@
 import React, { useState } from 'react';
 
 export default function ProducerCard({ producer }) {
-  const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(producer.likes);
-
-  const handleLike = () => {
-    if (!liked) {
-      setLiked(true);
-      setLikesCount(prev => prev + 1);
-    } else {
-      setLiked(false);
-      setLikesCount(prev => prev - 1);
-    }
-  };
+  const [saved, setSaved] = useState(false);
+  const [contacted, setContacted] = useState(false);
 
   return (
-    <article className="card card-produtor mb-3" style={{ transition: 'all 0.3s ease' }}>
-      <div className="card-body">
-        <div className="d-flex align-items-center mb-2">
-          <div className="post-avatar me-2"></div>
-          <div className="flex-grow-1">
-            <h4 className="mb-0 fs-6 fw-bold">{producer.name}</h4>
-            <small className="text-muted">{producer.role}</small>
-            <br />
-            <small>
-              <i className="bi bi-geo-alt-fill text-brand-success me-1"></i>
-              {producer.location}
-            </small>
-          </div>
-          <span className="badge badge-reputacao">
-            {producer.reputation.toFixed(1)}
-          </span>
+    <article className="producer-card">
+      <div className="producer-head">
+        <span className="producer-avatar" aria-hidden="true">{producer.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}</span>
+        <div className="producer-identity">
+          <div><h2>{producer.name}</h2>{producer.verified && <i className="bi bi-patch-check-fill verified-icon" title="Perfil verificado" aria-label="Perfil verificado" />}</div>
+          <p>{producer.role}</p><span><i className="bi bi-geo-alt" aria-hidden="true" /> {producer.location}</span>
         </div>
+        <button type="button" className={`save-button ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((value) => !value)} aria-pressed={saved} aria-label={saved ? 'Remover produtor dos salvos' : 'Salvar produtor'}><i className={`bi ${saved ? 'bi-bookmark-fill' : 'bi-bookmark'}`} /></button>
+      </div>
 
-        <p className="mt-2 mb-2">{producer.description}</p>
+      <p className="producer-description">{producer.description}</p>
 
-        {producer.tags && producer.tags.length > 0 && (
-          <div className="mb-2">
-            {producer.tags.map((tag, idx) => (
-              <span key={idx} className="badge bg-secondary me-1">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+      <div className="producer-tags">{producer.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
 
-        <div className="mb-2">
-          <small className="stats-produtor text-muted">
-            {likesCount} curtidas • {producer.comments} comentários • {producer.contacts} contatos
-          </small>
-        </div>
+      <dl className="producer-trust-grid">
+        <div><dt>Avaliação</dt><dd><i className="bi bi-star-fill" /> {producer.reputation.toFixed(1)} <small>({producer.reviews})</small></dd></div>
+        <div><dt>Entregas concluídas</dt><dd>{producer.completedDeliveries}</dd></div>
+        <div><dt>Pontualidade</dt><dd>{producer.onTimeRate}%</dd></div>
+        <div><dt>Taxa de resposta</dt><dd>{producer.responseRate}% <small>· {producer.responseTime}</small></dd></div>
+      </dl>
 
-        <div className="d-flex gap-2">
-          <button
-            className={`btn ${liked ? 'btn-primary' : 'btn-outline-primary'} btn-like`}
-            onClick={handleLike}
-          >
-            {liked ? 'Curtido' : 'Curtir'}
-          </button>
-          <button className="btn btn-outline-primary btn-comentar">
-            Comentar
-          </button>
-          <button className="btn btn-primary btn-contato">
-            Entrar em Contato
-          </button>
-        </div>
+      <div className={`availability-line availability-${producer.availability.status}`}>
+        <span><i className="bi bi-circle-fill" aria-hidden="true" /> {producer.availability.label}</span>
+        <strong>{producer.availability.summary}</strong>
+      </div>
+
+      <div className="verification-tags" aria-label="Verificações">
+        {producer.verifications.map((item) => <span key={item}><i className="bi bi-shield-check" aria-hidden="true" /> {item}</span>)}
+      </div>
+
+      <blockquote className="recent-review">
+        <p>“{producer.recentReview.comment}”</p>
+        <footer>{producer.recentReview.author} · {producer.recentReview.timeAgo}</footer>
+      </blockquote>
+
+      {contacted && <p className="inline-feedback" role="status"><i className="bi bi-check-circle-fill" /> Contato registrado apenas nesta demonstração.</p>}
+      <div className="producer-actions">
+        <button className="btn btn-primary" type="button" onClick={() => setContacted(true)} disabled={contacted}>{contacted ? 'Contato registrado' : 'Entrar em contato'}</button>
+        <button className="btn btn-secondary" type="button" onClick={() => setSaved((value) => !value)}>{saved ? 'Salvo' : 'Salvar perfil'}</button>
       </div>
     </article>
   );

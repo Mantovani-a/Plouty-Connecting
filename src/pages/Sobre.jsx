@@ -1,126 +1,47 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import { problemsData, solutionsData } from '../data/aboutData';
-import ProblemCard from '../components/sobre/ProblemCard';
-import SolutionCard from '../components/sobre/SolutionCard';
 
 export default function Sobre() {
-  const problemaRef = useRef(null);
-  const solucaoRef = useRef(null);
-  const [highlightedGroup, setHighlightedGroup] = useState(null);
-
-  const triggerHighlight = (group, refElement) => {
-    if (refElement && refElement.current) {
-      refElement.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    setHighlightedGroup(group);
-    setTimeout(() => {
-      setHighlightedGroup(null);
-    }, 2000);
+  const solutionRef = useRef(null);
+  const timeoutRef = useRef(null);
+  useEffect(() => () => clearTimeout(timeoutRef.current), []);
+  const showHowItWorks = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    solutionRef.current?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   };
 
   return (
-    <>
-      <section className="hero bg-light py-4 mb-3">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <h1 className="fw-bold mb-3">Cultivo Local. Abundância Sustentável.</h1>
-              <p className="lead fs-6 text-secondary mb-4">
-                A Plouty conecta pequenos produtores rurais a compradores institucionais através de uma plataforma inteligente, garantindo alimento fresco, redução de desperdício e fomento à economia local.
-              </p>
-              <div className="d-flex gap-2 mb-4">
-                <button
-                  id="btn-como-funciona"
-                  className="btn btn-primary flex-grow-1"
-                  onClick={() => triggerHighlight('solucao', solucaoRef)}
-                >
-                  Como Funciona
-                </button>
-                <button
-                  id="btn-entenda-problema"
-                  className="btn btn-outline-primary flex-grow-1"
-                  onClick={() => triggerHighlight('problema', problemaRef)}
-                >
-                  Entenda o Problema
-                </button>
-              </div>
-            </div>
-            <div className="col-md-6 text-center">
-              <img
-                src="/images/hero-agricultura.jpg"
-                alt="Agricultor segurando alimentos frescos"
-                className="img-fluid rounded-4 shadow-sm"
-                style={{ maxHeight: '380px', objectFit: 'cover', width: '100%' }}
-              />
-            </div>
+    <main id="conteudo-principal" className="about-page">
+      <section className="about-hero">
+        <div className="shell-container about-hero-grid">
+          <div className="about-hero-copy">
+            <span className="eyebrow">Da lavoura para quem alimenta pessoas</span>
+            <h1>Mais renda no campo. Mais alimento fresco perto de casa.</h1>
+            <p>A Plouty aproxima pequenos produtores e compradores institucionais com oportunidades claras, reputação verificável e negociação direta.</p>
+            <div className="hero-actions"><button className="btn btn-primary" type="button" onClick={showHowItWorks}>Conheça o caminho <i className="bi bi-arrow-down" /></button><NavLink className="btn btn-secondary" to="/entrar">Participar da Plouty</NavLink></div>
+            <div className="about-principles"><span><i className="bi bi-arrow-left-right" /> Sem intermediários</span><span><i className="bi bi-shield-check" /> Confiança comercial</span><span><i className="bi bi-geo-alt" /> Economia local</span></div>
           </div>
+          <figure className="about-hero-image">
+            <img src="/images/hero-agricultura.webp" width="1600" height="1067" alt="Produtor rural inspecionando uma plantação ao ar livre" loading="eager" />
+            <figcaption><span>Conexões locais</span><strong>Produção com destino antes da colheita.</strong></figcaption>
+          </figure>
         </div>
       </section>
 
-      <main className="container my-3">
-        {/* Seção O Problema */}
-        <section className="problema py-4" id="secao-problema" ref={problemaRef}>
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <h2 className="mb-4 fw-bold">O Problema: Logística Ineficiente e Desperdício</h2>
-              <p className="lead text-secondary">
-                O escoamento da agricultura familiar no Brasil enfrenta barreiras que prejudicam o produtor e encarecem o prato do consumidor final.
-              </p>
-              <p className="text-secondary">
-                Pequenos agricultores cultivam alimentos de alta qualidade, mas a falta de conexão direta com grandes compradores institucionais (como escolas e hospitais) gera uma dependência de intermediários. Isso reduz drasticamente a renda de quem produz e aumenta o desperdício de alimentos frescos ao longo da cadeia logística.
-              </p>
-              <div
-                className="alert border-0 d-flex align-items-center gap-2 mt-4"
-                style={{
-                  backgroundColor: 'rgba(89, 154, 108, 0.1)',
-                  color: 'var(--cor-verde-claro)',
-                  borderLeft: '4px solid var(--cor-verde-claro)',
-                  borderRadius: '4px'
-                }}
-              >
-                <i className="bi bi-info-circle-fill fs-4" style={{ color: 'var(--cor-verde-claro)' }}></i>
-                <span>
-                  Cerca de <strong>30% de toda a produção agrícola</strong> nacional é desperdiçada antes de chegar à mesa.
-                </span>
-              </div>
-            </div>
+      <section className="about-problem shell-container" aria-labelledby="problem-title">
+        <div className="about-section-copy"><span className="eyebrow">O desafio</span><h2 id="problem-title">Produzir bem não deveria significar vender mal.</h2><p>Cadeias longas, pouca previsibilidade e burocracia tiram margem de quem planta e dificultam o acesso de instituições a alimentos frescos da própria região.</p></div>
+        <div className="problem-list">{problemsData.map((item, index) => <article key={item.id}><span>0{index + 1}</span><i className={`bi ${item.icon}`} /><div><h3>{item.title}</h3><p>{item.description}</p></div></article>)}</div>
+      </section>
 
-            <div className="col-lg-6 mt-4 mt-lg-0">
-              {problemsData.map((item) => (
-                <ProblemCard
-                  key={item.id}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  isHighlighted={highlightedGroup === 'problema'}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+      <section className="about-path" ref={solutionRef} aria-labelledby="path-title">
+        <div className="shell-container">
+          <div className="about-section-copy centered"><span className="eyebrow">Como a Plouty aproxima as pontas</span><h2 id="path-title">Um mercado construído ao redor da confiança.</h2><p>A tecnologia organiza a oportunidade; as relações continuam humanas.</p></div>
+          <div className="path-grid">{solutionsData.map((item, index) => <article key={item.id}><span className="path-index">0{index + 1}</span><i className={`bi ${item.icon}`} /><h3>{item.title}</h3><p>{item.description}</p></article>)}</div>
+        </div>
+      </section>
 
-        {/* Seção Solução / Como Funciona */}
-        <section className="solucao py-4 border-top border-suave" ref={solucaoRef}>
-          <div className="text-center mb-5">
-            <h2 className="fw-bold">Como a Plouty Transforma a Cadeia</h2>
-            <p className="text-secondary">Criando uma ponte digital direta, transparente e confiável.</p>
-          </div>
-
-          <div className="row g-4">
-            {solutionsData.map((item) => (
-              <SolutionCard
-                key={item.id}
-                id={item.id}
-                icon={item.icon}
-                gradient={item.gradient}
-                title={item.title}
-                description={item.description}
-                isHighlighted={highlightedGroup === 'solucao'}
-              />
-            ))}
-          </div>
-        </section>
-      </main>
-    </>
+      <section className="about-cta shell-container"><div><span className="eyebrow">ODS 2 na prática</span><h2>Negócios melhores podem alimentar comunidades inteiras.</h2><p>O impacto começa quando produção e demanda deixam de caminhar separadas.</p></div><NavLink to="/entrar" className="btn btn-primary">Conhecer a experiência <i className="bi bi-arrow-right" /></NavLink></section>
+    </main>
   );
 }

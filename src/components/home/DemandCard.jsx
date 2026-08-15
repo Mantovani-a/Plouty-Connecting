@@ -1,59 +1,244 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import CurrencyField from '../common/CurrencyField';
+import DateField from '../common/DateField';
+import { formatISODateShort, validateDateInput } from '../../utils/dateUtils';
+import { formatCurrencyBRL, validateCurrencyInput } from '../../utils/currencyUtils';
+import '../../styles/proposal-form.css';
 
-export default function DemandCard({ demand }) {
-  const [interessado, setInteressado] = useState(false);
+const urgencyTone = {
+  Alta: 'danger',
+  Média: 'warning',
+  Baixa: 'neutral'
+};
+
+function getTodayIsoInSaoPaulo() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+  const part = (type) => parts.find((item) => item.type === type)?.value;
+  return `${part('year')}-${part('month')}-${part('day')}`;
+}
+
+export default function DemandCard({ demand, compact = false, headingLevel = 2 }) {
+  const [saved, setSaved] = useState(false);
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [proposalSent, setProposalSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [proposalFeedback, setProposalFeedback] = useState('');
+  const [proposalForm, setProposalForm] = useState({
+    amountDisplay: '',
+    amountValue: null,
+    amountError: '',
+    deliveryDate: '',
+    deliveryIso: null,
+    deliveryError: '',
+    note: ''
+  });
+  const submitTimerRef = useRef(null);
+  const Heading = headingLevel === 3 ? 'h3' : 'h2';
+  const ProposalHeading = headingLevel === 3 ? 'h4' : 'h3';
+  const proposalMinDate = getTodayIsoInSaoPaulo();
+  const deliveryDateLabel = formatISODateShort(demand.deliveryDate) || demand.delivery?.date;
+  const proposalDeadlineLabel = formatISODateShort(demand.proposalDeadline) || demand.proposalDeadlineLabel;
+  const publishedDateLabel = formatISODateShort(demand.publishedAt);
+  const proposalFormId = `proposal-form-${demand.id}`;
+  const proposalIsValid = Boolean(
+    proposalForm.amountValue > 0
+    && !proposalForm.amountError
+    && proposalForm.deliveryIso
+    && !proposalForm.deliveryError
+  );
+
+  useEffect(() => () => {
+    if (submitTimerRef.current) window.clearTimeout(submitTimerRef.current);
+  }, []);
+
+  const handleCurrencyChange = (event, meta) => {
+    setProposalForm((current) => ({
+      ...current,
+      amountDisplay: meta.displayValue,
+      amountValue: meta.numericValue,
+      amountError: meta.validationMessage || ''
+    }));
+    setProposalFeedback(meta.rejected ? 'O valor não foi alterado. Revise os caracteres informados.' : '');
+  };
+
+  const handleDeliveryChange = (event, meta) => {
+    setProposalForm((current) => ({
+      ...current,
+      deliveryDate: meta.displayValue,
+      deliveryIso: meta.isoValue,
+      deliveryError: meta.isComplete && !meta.isValid ? meta.validationMessage : ''
+    }));
+    setProposalFeedback(meta.isComplete && !meta.isValid ? 'Revise a data prevista para continuar.' : '');
+  };
+
+  const handleDeliveryBlur = (event, meta) => {
+    setProposalForm((current) => ({ ...current, deliveryError: meta.validationMessage || '' }));
+    if (meta.validationMessage) setProposalFeedback('Revise a data prevista para continuar.');
+  };
+
+  const handleSubmitProposal = (event) => {
+    event.preventDefault();
+    if (isSubmitting || proposalSent) return;
+
+    const amountError = proposalForm.amountError || validateCurrencyInput(proposalForm.amountDisplay, { required: true });
+    const deliveryError = validateDateInput(proposalForm.deliveryDate, { required: true, min: proposalMinDate });
+    if (amountError || deliveryError) {
+      setProposalForm((current) => ({ ...current, amountError, deliveryError }));
+      setProposalFeedback('Revise os campos destacados antes de confirmar a proposta.');
+      return;
+    }
+
+    setProposalFeedback('');
+    setIsSubmitting(true);
+    submitTimerRef.current = window.setTimeout(() => {
+      setIsSubmitting(false);
+      setProposalSent(true);
+      setProposalOpen(false);
+      submitTimerRef.current = null;
+    }, 650);
+  };
 
   return (
-    <article className="card mb-3">
-      <div className="card-body">
-        <div className="d-flex align-items-start mb-3">
-          <div className="demand-icon-container me-2">
-            <i className={`bi ${demand.icon || 'bi-mortarboard-fill'} text-white`}></i>
-          </div>
-          <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between w-100 gap-2 flex-grow-1">
+    <article className={`opportunity-card ${compact ? 'opportunity-card-compact' : ''}`}>
+      <div className="opportunity-accent" aria-hidden="true" />
+      <div className="opportunity-main">
+        <div className="opportunity-topline">
+          <div className="institution-line">
+            <span className="institution-mark" aria-hidden="true"><i className={`bi ${demand.icon}`} /></span>
             <div>
-              <h5 className="mb-0 fs-6">{demand.org}</h5>
-              <div className="demand-card-meta">
-                <span>
-                  <i className="bi bi-geo-alt-fill text-brand-success"></i> {demand.location}
-                </span>
-                <span>•</span>
-                <span>{demand.timeAgo}</span>
-              </div>
+              <span>{demand.institutionType}</span>
+              <strong>{demand.institution}</strong>
             </div>
-            <span className="badge badge-categoria px-2 py-1">{demand.category}</span>
+            {demand.verified && <i className="bi bi-patch-check-fill verified-icon" title="Instituição verificada" aria-label="Instituição verificada" />}
+          </div>
+          <div className="opportunity-badges">
+            <span className={`status-chip status-${urgencyTone[demand.urgency]}`}>{demand.urgency === 'Alta' ? 'Urgente' : demand.status}</span>
+            <button type="button" className={`save-button ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((value) => !value)} aria-pressed={saved} aria-label={saved ? 'Remover oportunidade dos salvos' : 'Salvar oportunidade'}>
+              <i className={`bi ${saved ? 'bi-bookmark-fill' : 'bi-bookmark'}`} aria-hidden="true" />
+            </button>
           </div>
         </div>
 
-        <p className="mb-3 text-secondary">{demand.description}</p>
+        <div className="opportunity-heading">
+          <div>
+            <Heading>{demand.title}</Heading>
+            <p>{demand.description}</p>
+          </div>
+          <strong className="price-range">{demand.priceRange}</strong>
+        </div>
 
-        {demand.products && demand.products.length > 0 && (
-          <div className="d-flex flex-wrap gap-2 mt-3 mb-3">
-            {demand.products.map((item, idx) => (
-              <span key={idx} className="demand-product-tag">
-                <i className="bi bi-box-seam"></i> {item}
-              </span>
-            ))}
+        <dl className="opportunity-facts">
+          <div><dt><i className="bi bi-box-seam" aria-hidden="true" /> Quantidade</dt><dd>{demand.quantity}</dd></div>
+          <div><dt><i className="bi bi-geo-alt" aria-hidden="true" /> Localização</dt><dd>{demand.location} <small>· {demand.distance}</small></dd></div>
+          <div><dt><i className="bi bi-calendar2-week" aria-hidden="true" /> Entrega</dt><dd>{deliveryDateLabel} <small>· {demand.delivery.frequency}</small></dd></div>
+          <div><dt><i className="bi bi-hourglass-split" aria-hidden="true" /> Propostas</dt><dd className={demand.urgency === 'Alta' ? 'deadline-urgent' : ''}>Até {proposalDeadlineLabel} <small>· {demand.proposalsCount} enviadas</small></dd></div>
+        </dl>
+
+        {!compact && (
+          <div className="opportunity-details">
+            <p><i className="bi bi-truck" aria-hidden="true" /><span><strong>Logística</strong>{demand.logistics}</span></p>
+            <p><i className="bi bi-clipboard-check" aria-hidden="true" /><span><strong>Requisitos</strong>{demand.requirements.join(' · ')}</span></p>
           </div>
         )}
 
-        <div className="d-flex gap-2">
-          <button
-            className={`btn ${interessado ? 'btn-success' : 'btn-primary'} btn-interesse`}
-            onClick={() => setInteressado(!interessado)}
-          >
-            {interessado ? (
-              <>
-                <i className="bi bi-check2-circle me-1"></i> Interesse Registrado
-              </>
-            ) : (
-              'Tenho Interesse'
-            )}
-          </button>
-          <button className="btn btn-outline-secondary">
-            Ver Detalhes
-          </button>
+        <div className="opportunity-actions">
+          {proposalSent ? (
+            <span className="proposal-submission-feedback" role="status">
+              <i className="bi bi-check-circle-fill" aria-hidden="true" />
+              <span>Proposta registrada na demonstração <small>Somente nesta sessão</small></span>
+            </span>
+          ) : (
+            <button type="button" className="btn btn-primary" onClick={() => setProposalOpen((open) => !open)} aria-expanded={proposalOpen} aria-controls={proposalFormId} disabled={isSubmitting} aria-busy={isSubmitting || undefined}>
+              Enviar proposta <i className="bi bi-arrow-right" aria-hidden="true" />
+            </button>
+          )}
+          <NavLink to={`/oportunidades?search=${encodeURIComponent(demand.product)}`} className="text-link">Ver oportunidade</NavLink>
+          <span className="published-time">Publicada em {publishedDateLabel || demand.timeAgo}</span>
         </div>
+
+        {proposalOpen && (
+          <form id={proposalFormId} className="proposal-form-panel" onSubmit={handleSubmitProposal} noValidate>
+            <div className="proposal-form-header">
+              <div className="proposal-form-title">
+                <i className="bi bi-file-earmark-text" aria-hidden="true" />
+                <div>
+                  <ProposalHeading>Sua proposta</ProposalHeading>
+                  <p>Informe o valor e quando consegue realizar a entrega.</p>
+                </div>
+              </div>
+              <button type="button" className="icon-button" onClick={() => setProposalOpen(false)} aria-label="Fechar formulário de proposta" disabled={isSubmitting}>
+                <i className="bi bi-x-lg" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="proposal-form-grid">
+              <CurrencyField
+                id={`proposal-value-${demand.id}`}
+                label="Valor total"
+                value={proposalForm.amountDisplay}
+                required
+                disabled={isSubmitting}
+                error={proposalForm.amountError}
+                hint="Use vírgula para os centavos."
+                onChange={handleCurrencyChange}
+              />
+              <DateField
+                id={`proposal-delivery-${demand.id}`}
+                label="Previsão de entrega"
+                value={proposalForm.deliveryDate}
+                required
+                min={proposalMinDate}
+                disabled={isSubmitting}
+                error={proposalForm.deliveryError}
+                onChange={handleDeliveryChange}
+                onBlur={handleDeliveryBlur}
+              />
+              <div className="proposal-field proposal-note-field">
+                <label className="form-label" htmlFor={`proposal-note-${demand.id}`}>Observação</label>
+                <textarea
+                  id={`proposal-note-${demand.id}`}
+                  value={proposalForm.note}
+                  maxLength={320}
+                  disabled={isSubmitting}
+                  aria-describedby={`proposal-note-hint-${demand.id}`}
+                  placeholder="Ex.: disponibilidade por lote, condições de transporte ou detalhes da entrega."
+                  onChange={(event) => setProposalForm((current) => ({ ...current, note: event.target.value }))}
+                />
+                <div className="proposal-note-meta" id={`proposal-note-hint-${demand.id}`}>
+                  <span>Opcional — não inclua dados pessoais sensíveis.</span>
+                  <span aria-label={`${proposalForm.note.length} de 320 caracteres`}>{proposalForm.note.length}/320</span>
+                </div>
+              </div>
+            </div>
+
+            {proposalIsValid && (
+              <div className="proposal-ready-summary" aria-live="polite">
+                <i className="bi bi-check2-circle" aria-hidden="true" />
+                <span>Resumo: <strong>{formatCurrencyBRL(proposalForm.amountValue)}</strong>, com entrega prevista para <strong>{proposalForm.deliveryDate}</strong>.</span>
+              </div>
+            )}
+
+            <p className="proposal-form-feedback" role={proposalFeedback ? 'alert' : undefined} aria-live="polite">
+              {proposalFeedback && <><i className="bi bi-exclamation-circle" aria-hidden="true" /> {proposalFeedback}</>}
+            </p>
+
+            <div className="proposal-form-footer">
+              <p className="proposal-form-disclaimer">
+                <i className="bi bi-info-circle" aria-hidden="true" />
+                Esta é uma simulação local. A proposta não será enviada nem salva em servidor.
+              </p>
+              <button className="btn btn-primary proposal-submit" type="submit" disabled={!proposalIsValid || isSubmitting}>
+                {isSubmitting ? <><span className="proposal-submit-spinner" aria-hidden="true" /> Registrando…</> : <>Confirmar proposta <i className="bi bi-arrow-right" aria-hidden="true" /></>}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </article>
   );

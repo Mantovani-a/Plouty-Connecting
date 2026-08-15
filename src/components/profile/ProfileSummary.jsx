@@ -1,92 +1,49 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-const PROFILE_NAV_ITEMS = [
-  { to: '/', label: 'Painel Principal', icon: 'bi-grid-1x2', isRoute: true, end: true },
-  { to: '#culturas', label: 'Minhas Culturas', icon: 'bi-tree', isRoute: false },
-  { to: '/explorar', label: 'Demandas Abertas', icon: 'bi-file-earmark-text', isRoute: true },
-  { to: '#mensagens', label: 'Mensagens', icon: 'bi-chat-left-text', isRoute: false },
-  { to: '#config', label: 'Configurações', icon: 'bi-gear', isRoute: false }
-];
+import { useWorkspace } from '../../context/WorkspaceContext';
+import Avatar from '../common/Avatar';
 
 export default function ProfileSummary({ onNavigate }) {
-  const handleItemClick = (e, isRoute) => {
-    if (!isRoute) {
-      e.preventDefault();
-    }
-    if (onNavigate) {
-      onNavigate();
-    }
-  };
+  const { endDemoSession, isProducer, profile } = useWorkspace();
 
   return (
-    <>
-      <div className="text-center pb-3 mb-3 border-bottom border-suave">
-        <div className="avatar-placeholder mb-3 d-flex align-items-center justify-content-center text-white fs-4 fw-bold mx-auto">
-          JC
-        </div>
-        <h4 className="mb-1">João Carlos</h4>
-        <p className="text-muted mb-0" style={{ fontSize: '0.85em' }}>
-          <i className="bi bi-geo-alt-fill text-brand-success"></i> Minas Gerais
-        </p>
-        <small className="text-brand-success fw-bold" style={{ fontSize: '0.78em' }}>
-          Produtor Familiar
-        </small>
-      </div>
-
-      <div className="d-flex justify-content-around align-items-center py-2 mt-3 border-top border-bottom border-suave text-center mb-3">
+    <div className="profile-summary">
+      <div className="profile-summary-head">
+        <Avatar className="profile-avatar profile-avatar-large" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
         <div>
-          <div className="fs-5 fw-bold text-brand-success">10</div>
-          <div
-            className="text-secondary text-uppercase"
-            style={{ fontSize: '0.7em', letterSpacing: '0.5px' }}
-          >
-            Contratos
-          </div>
-        </div>
-        <div
-          className="border-end border-suave h-100"
-          style={{ width: '1px', minHeight: '30px' }}
-        ></div>
-        <div>
-          <div className="fs-5 fw-bold text-brand-success">
-            4.8 <i className="bi bi-star-fill" style={{ fontSize: '0.85em' }}></i>
-          </div>
-          <div
-            className="text-secondary text-uppercase"
-            style={{ fontSize: '0.7em', letterSpacing: '0.5px' }}
-          >
-            Reputação
-          </div>
+          <h3>{profile.name}</h3>
+          <p>{profile.role}</p>
+          <span><i className="bi bi-geo-alt" aria-hidden="true" /> {profile.location}</span>
         </div>
       </div>
 
-      <nav className="d-flex flex-column gap-2 mt-3 pt-3 border-top border-suave">
-        {PROFILE_NAV_ITEMS.map((item) =>
-          item.isRoute ? (
-            <NavLink
-              key={item.label}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) => `dashboard-nav-item ${isActive ? 'active' : ''}`}
-              onClick={(e) => handleItemClick(e, true)}
-            >
-              <i className={`bi ${item.icon}`}></i>
-              <span>{item.label}</span>
-            </NavLink>
-          ) : (
-            <a
-              key={item.label}
-              href={item.to}
-              className="dashboard-nav-item"
-              onClick={(e) => handleItemClick(e, false)}
-            >
-              <i className={`bi ${item.icon}`}></i>
-              <span>{item.label}</span>
-            </a>
-          )
-        )}
+      <div className="verification-line">
+        <i className="bi bi-patch-check-fill" aria-hidden="true" />
+        <span>{profile.verification}</span>
+      </div>
+
+      <dl className="trust-metrics">
+        <div><dt>Avaliação</dt><dd>{profile.reputation} <small>({profile.reviews})</small></dd></div>
+        <div><dt>Negócios</dt><dd>{profile.completedDeals}</dd></div>
+        <div><dt>Resposta</dt><dd>{profile.responseRate}</dd></div>
+      </dl>
+
+      <nav className="profile-menu" aria-label="Opções do perfil">
+        <NavLink to="/inicio" end onClick={onNavigate}><i className="bi bi-house-door" aria-hidden="true" /> Início</NavLink>
+        <NavLink to="/operacao" end onClick={onNavigate}><i className="bi bi-grid-1x2" aria-hidden="true" /> Minha operação</NavLink>
+        <NavLink to="/negocios" onClick={onNavigate}><i className="bi bi-kanban" aria-hidden="true" /> Meus negócios</NavLink>
+        <NavLink to={isProducer ? '/oportunidades' : '/explorar'} onClick={onNavigate}><i className={`bi ${isProducer ? 'bi-briefcase' : 'bi-people'}`} aria-hidden="true" /> {isProducer ? 'Oportunidades' : 'Produtores'}</NavLink>
       </nav>
-    </>
+
+      <div className="profile-readiness">
+        <div className="d-flex justify-content-between"><strong>Perfil comercial</strong><span>82%</span></div>
+        <div className="progress-track" aria-label="Perfil comercial 82% completo"><span style={{ width: '82%' }} /></div>
+        <small>{isProducer ? 'Adicione sua área de entrega para receber oportunidades mais próximas.' : 'Adicione os critérios de compra para comparar produtores com mais precisão.'}</small>
+      </div>
+
+      <a href="/entrar" onClick={() => { endDemoSession(); onNavigate?.(); }} className="text-link profile-exit">
+        <i className="bi bi-box-arrow-right" aria-hidden="true" /> Sair da demonstração
+      </a>
+    </div>
   );
 }

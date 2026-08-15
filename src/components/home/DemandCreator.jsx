@@ -1,61 +1,82 @@
 import React, { useState } from 'react';
+import DateField from '../common/DateField';
+import QuantityField from '../common/QuantityField';
+import { dateInputToIso, validateDateInput } from '../../utils/dateUtils';
+import { getQuantityCategoryForUnit, validateQuantityValue } from '../../utils/quantityUtils';
 
-export default function DemandCreator({ onAddDemand }) {
-  const [text, setText] = useState('');
+const INITIAL_FORM = { product: '', quantityValue: '', quantityUnit: 'kg', quantityValidation: '', deadline: '', delivery: '', notes: '' };
+let localDemandId = 1000;
 
-  const handlePublish = () => {
-    if (!text.trim()) return;
-
-    const newDemand = {
-      id: Date.now(),
-      org: 'Minha Instituição',
-      icon: 'bi-building',
-      location: 'Brasil',
-      timeAgo: 'Agora mesmo',
-      category: 'Demanda Emergencial',
-      description: text,
-      products: ['Demanda Recente']
+export default function DemandCreator({ onAddDemand, onCancel }) {
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [errors, setErrors] = useState({});
+  const update = (field, value) => {
+    setForm((current) => ({ ...current, [field]: value }));
+    setErrors((current) => ({ ...current, [field]: '' }));
+  };
+  const updateQuantity = ({ value, unit, validationMessage }) => {
+    setForm((current) => ({
+      ...current,
+      quantityValue: value,
+      quantityUnit: unit || current.quantityUnit,
+      quantityValidation: validationMessage || ''
+    }));
+    setErrors((current) => ({ ...current, quantityValue: '' }));
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const quantityCategory = getQuantityCategoryForUnit(form.quantityUnit);
+    const deadlineISO = dateInputToIso(form.deadline);
+    const deliveryISO = dateInputToIso(form.delivery);
+    const nextErrors = {
+      product: form.product.trim() ? '' : 'Informe o produto ou a categoria.',
+      quantityValue: form.quantityValidation || validateQuantityValue(form.quantityValue, { category: quantityCategory, required: true }),
+      deadline: validateDateInput(form.deadline, { required: true }),
+      delivery: validateDateInput(form.delivery, { required: true })
     };
+    if (!nextErrors.delivery && deadlineISO && deliveryISO && deliveryISO < deadlineISO) {
+      nextErrors.delivery = 'A entrega não pode acontecer antes do prazo para propostas.';
+    }
+    setErrors(nextErrors);
+    if (Object.values(nextErrors).some(Boolean)) return;
 
-    onAddDemand(newDemand);
-    setText('');
+    onAddDemand({
+      id: ++localDemandId,
+      product: form.product.trim(),
+      quantity: `${form.quantityValue} ${form.quantityUnit}`,
+      quantityValue: form.quantityValue,
+      quantityUnit: form.quantityUnit,
+      deadline: deadlineISO,
+      delivery: deliveryISO,
+      notes: form.notes.trim(),
+      status: 'Rascunho publicado',
+      proposals: 0,
+      isMock: true
+    });
+    setForm(INITIAL_FORM);
+    setErrors({});
   };
 
   return (
-    <div className="card mb-4">
-      <div className="card-body p-3">
-        <h5 className="card-title fs-6 fw-bold mb-2 text-brand-success">
-          <i className="bi bi-pencil-square me-1"></i> Nova Demanda
-        </h5>
-        <textarea
-          id="textarea-demanda"
-          className="post-creator-textarea form-control"
-          placeholder="O que sua escola, hospital ou negócio precisa hoje? Ex: 50kg de batata-doce..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        ></textarea>
-        <div className="d-flex justify-content-between align-items-center mt-3 pt-3 border-top border-suave">
-          <div className="d-flex gap-2 post-creator-options-wrapper">
-            <button className="post-creator-btn-opt" type="button" title="Inserir Imagem">
-              <i className="bi bi-image"></i> <span>Imagem</span>
-            </button>
-            <button className="post-creator-btn-opt" type="button" title="Definir Localização">
-              <i className="bi bi-geo-alt"></i> <span>Localização</span>
-            </button>
-            <button className="post-creator-btn-opt" type="button" title="Categoria">
-              <i className="bi bi-tag"></i> <span>Categoria</span>
-            </button>
-          </div>
-          <button
-            id="btn-publicar-demanda"
-            className="btn btn-primary btn-sm px-4"
-            type="button"
-            onClick={handlePublish}
-          >
-            Publicar
-          </button>
-        </div>
+    <form className="demand-composer" onSubmit={handleSubmit} noValidate>
+      <div className="section-title-row"><div><span className="eyebrow">Nova compra</span><h2>Publicar demanda</h2><p>Informe o essencial para receber propostas comparáveis.</p></div>{onCancel && <button type="button" className="icon-button" onClick={onCancel} aria-label="Fechar formulário"><i className="bi bi-x-lg" /></button>}</div>
+      <div className="demand-composer-grid">
+        <div className="composer-field"><label htmlFor="demand-product">Produto ou categoria <span aria-hidden="true">*</span></label><input id="demand-product" value={form.product} onChange={(event) => update('product', event.target.value)} placeholder="Ex.: banana-prata" aria-invalid={Boolean(errors.product)} aria-describedby={errors.product ? 'demand-product-error' : undefined} />{errors.product && <div id="demand-product-error" className="error-message" role="alert">{errors.product}</div>}</div>
+        <QuantityField
+          id="demand-quantity"
+          label="Quantidade e unidade"
+          value={form.quantityValue}
+          unit={form.quantityUnit}
+          category="all"
+          required
+          error={errors.quantityValue}
+          onQuantityChange={updateQuantity}
+        />
+        <DateField id="demand-deadline" label="Prazo para propostas" value={form.deadline} required error={errors.deadline} onChange={(event, meta) => update('deadline', meta.displayValue)} />
+        <DateField id="demand-delivery" label="Previsão de entrega" value={form.delivery} required min={dateInputToIso(form.deadline) || undefined} error={errors.delivery} onChange={(event, meta) => update('delivery', meta.displayValue)} />
+        <label className="composer-notes">Observações<textarea rows="3" value={form.notes} onChange={(event) => update('notes', event.target.value)} placeholder="Logística, frequência e requisitos principais" /></label>
       </div>
-    </div>
+      <div className="editor-actions"><small><i className="bi bi-info-circle" /> Publicação local, sem integração com servidor.</small><button className="btn btn-primary" type="submit">Publicar demanda</button></div>
+    </form>
   );
 }

@@ -1,124 +1,119 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import { MAIN_NAV_ITEMS } from '../../data/navigationData';
+import { BUYER_NAV_ITEMS, PRODUCER_NAV_ITEMS, PUBLIC_NAV_ITEMS } from '../../data/navigationData';
+import { useWorkspace } from '../../context/WorkspaceContext';
+import Avatar from '../common/Avatar';
 
-export default function Navbar({ onOpenProfile }) {
+function Brand({ compact = false }) {
+  return (
+    <NavLink to={compact ? '/inicio' : '/'} className="brand" aria-label="Plouty — página inicial">
+      <img src="/images/logo_P.png" alt="" width="42" height="42" />
+      {!compact && (
+        <span className="brand-copy">
+          <strong>Plouty</strong>
+          <small>negócios que alimentam</small>
+        </span>
+      )}
+    </NavLink>
+  );
+}
+
+export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessages, onOpenNotifications, messagesOpen = false, unreadMessages = 0 }) {
   const { theme, toggleTheme } = useTheme();
+  const { hasSession, isProducer, profile } = useWorkspace();
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const navigationItems = isProducer ? PRODUCER_NAV_ITEMS : BUYER_NAV_ITEMS;
+  const isEntryPage = location.pathname === '/' || location.pathname === '/entrar';
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/explorar?search=${encodeURIComponent(searchTerm.trim())}`);
-      setMobileSearchOpen(false);
-    }
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    const term = searchTerm.trim();
+    const target = isProducer ? '/oportunidades' : '/explorar';
+    navigate(term ? `${target}?search=${encodeURIComponent(term)}` : target);
+    setMobileSearchOpen(false);
   };
 
-  return (
-    <header>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container navbar-mobile-layout">
-          {/* Brand Logo */}
-          <NavLink to="/" className="navbar-brand me-auto">
-            <img src="/images/logo_P.png" alt="Plouty Logo" className="d-none d-md-block" height="40" />
-            <img src="/images/logo_P.png" alt="Plouty Logo" className="d-md-none" height="35" />
-          </NavLink>
-
-          {/* Desktop Search */}
-          <div className="navbar-search-container mx-auto my-0 d-none d-lg-block">
-            <form onSubmit={handleSearchSubmit} className="position-relative">
-              <input
-                type="text"
-                className="form-control navbar-search-input"
-                placeholder="O que a Plouty pode te ajudar?"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <i
-                className="bi bi-search search-icon-inside"
-                onClick={handleSearchSubmit}
-                style={{ cursor: 'pointer' }}
-              ></i>
-            </form>
-          </div>
-
-          {/* Actions on Mobile / Desktop */}
-          <div className="navbar-actions-wrapper">
-            <button
-              className="btn-mobile-search d-lg-none"
-              type="button"
-              aria-label="Abrir busca"
-              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-            >
-              <i className={`bi ${mobileSearchOpen ? 'bi-x-lg' : 'bi-search'}`}></i>
+  if (variant === 'public') {
+    return (
+      <header className="site-header site-header-public">
+        <div className="shell-container site-header-inner">
+          <Brand />
+          <nav className="public-navigation" aria-label="Navegação institucional">
+            {PUBLIC_NAV_ITEMS.map((item) => (
+              <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? 'active' : ''}>
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="header-actions">
+            <button className="icon-button" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}>
+              <i className={`bi ${theme === 'dark' ? 'bi-sun' : 'bi-moon-stars'}`} aria-hidden="true" />
             </button>
-
-            <div className="theme-toggle-header-wrapper">
-              <button
-                id="theme-toggle-floating"
-                className="theme-toggle-btn"
-                aria-label="Alternar modo escuro/claro"
-                onClick={toggleTheme}
-                title={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-              >
-                {theme === 'dark' ? (
-                  <i className="bi bi-sun-fill"></i>
-                ) : (
-                  <i className="bi bi-moon-fill"></i>
-                )}
-              </button>
-            </div>
-
-            <button
-              className="btn-nav-profile d-md-none"
-              type="button"
-              onClick={onOpenProfile}
-              aria-label="Perfil do Usuário"
-            >
-              <div className="nav-profile-avatar-thumbnail"></div>
-            </button>
-          </div>
-
-          {/* Desktop Nav Links */}
-          <div className="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
-            <ul className="navbar-nav ms-auto ms-lg-0">
-              {MAIN_NAV_ITEMS.map((item) => (
-                <li key={item.to} className="nav-item">
-                  <NavLink
-                    to={item.to}
-                    end={item.end}
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  >
-                    <i className={`bi ${item.icon}`}></i> {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+            {hasSession ? (
+              <NavLink to="/inicio" className="btn btn-primary btn-compact">Ir ao painel</NavLink>
+            ) : !isEntryPage ? (
+              <NavLink to="/entrar" className="btn btn-primary btn-compact">Entrar</NavLink>
+            ) : null}
           </div>
         </div>
-      </nav>
+      </header>
+    );
+  }
 
-      {/* Mobile Search Overlay */}
-      <div className={`mobile-search-overlay d-lg-none ${mobileSearchOpen ? 'show' : ''}`}>
-        <div className="container py-2 px-3">
-          <form onSubmit={handleSearchSubmit} className="position-relative">
-            <input
-              type="text"
-              className="form-control mobile-search-input"
-              placeholder="O que a Plouty pode te ajudar?"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              autoFocus={mobileSearchOpen}
-            />
-            <i
-              className="bi bi-search search-icon-inside"
-              onClick={handleSearchSubmit}
-              style={{ cursor: 'pointer' }}
-            ></i>
-          </form>
+  return (
+    <header className="site-header product-header">
+      <div className="shell-container product-header-inner">
+        <Brand compact />
+
+        <nav className="product-navigation" aria-label="Navegação principal">
+          {navigationItems.map((item) => (
+            <NavLink key={item.to} to={item.to} end={item.end} aria-label={item.label} className={({ isActive }) => isActive ? 'active' : ''}>
+              <i className={`bi ${item.icon}`} aria-hidden="true" />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <form className={`header-search ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
+          <label className="visually-hidden" htmlFor="busca-oportunidades">{isProducer ? 'Buscar oportunidades' : 'Buscar produtores'}</label>
+          <i className="bi bi-search" aria-hidden="true" />
+          <input
+            id="busca-oportunidades"
+            type="search"
+            placeholder={isProducer ? 'Buscar produto ou instituição' : 'Buscar produtor ou produto'}
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+          <button type="submit" className="visually-hidden-focusable">Buscar</button>
+        </form>
+
+        <div className="header-actions product-actions">
+          <button className="icon-button mobile-search-trigger" type="button" onClick={() => setMobileSearchOpen((open) => !open)} aria-expanded={mobileSearchOpen} aria-controls="busca-oportunidades" aria-label="Abrir busca">
+            <i className={`bi ${mobileSearchOpen ? 'bi-x-lg' : 'bi-search'}`} aria-hidden="true" />
+          </button>
+          <button className="icon-button message-trigger" type="button" onClick={onOpenMessages} aria-label={`Mensagens${unreadMessages ? `, ${unreadMessages} não lidas` : ''}`} aria-expanded={messagesOpen} aria-controls="plouty-messages-panel">
+            <i className="bi bi-chat-left-text" aria-hidden="true" />
+            {unreadMessages > 0 && <span className="notification-dot" aria-hidden="true" />}
+          </button>
+          <button className="icon-button" type="button" onClick={onOpenNotifications} aria-label="Notificações, 2 novas">
+            <i className="bi bi-bell" aria-hidden="true" />
+            <span className="count-badge" aria-hidden="true">2</span>
+          </button>
+          <button className="icon-button" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}>
+            <i className={`bi ${theme === 'dark' ? 'bi-sun' : 'bi-moon-stars'}`} aria-hidden="true" />
+          </button>
+          <button className="profile-button" type="button" onClick={onOpenProfile} aria-label={`Abrir perfil de ${profile.name}`}>
+            <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt="" />
+            <span className="profile-button-copy">
+              <strong>{profile.shortName}</strong>
+              <small>{isProducer ? 'Produtor' : 'Comprador'}</small>
+            </span>
+            <i className="bi bi-chevron-down" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </header>

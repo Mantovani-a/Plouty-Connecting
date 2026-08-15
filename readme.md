@@ -1,32 +1,39 @@
-# Plouty - Conexão e Reputação Agrícola
+# Plouty — negócios que alimentam
 
-Projeto desenvolvido para a **Faculdade**, focado no combate à fome (**ODS 2 - Fome Zero e Agricultura Sustentável**).
+Projeto acadêmico relacionado à **ODS 2 — Fome Zero e Agricultura Sustentável**.
 
-## 🚀 Sobre o Projeto
-A Plouty é uma plataforma desenhada para conectar pequenos produtores rurais a compradores institucionais (escolas, hospitais e restaurantes), eliminando intermediários e garantindo renda no campo e alimento fresco na cidade.
+A Plouty conecta pequenos produtores rurais a compradores institucionais. O protótipo demonstra uma rede profissional agrícola, descoberta de oportunidades, publicação de demandas, propostas, reputação comercial, acompanhamento de negócios e conversas — tudo com dados locais, sem backend.
 
-## 🛠️ Tecnologias Utilizadas
-- **React 18** (SPA com Componentes Funcionais & Hooks)
-- **Vite 5** (Bundler & Build Tooling)
-- **React Router DOM v6** (Gerenciamento de Rotas)
-- **Bootstrap 5.3 & Bootstrap Icons** (Grid, utilitários e iconografia)
-- **CSS3 / Design System Customizado** (Tokens com suporte a Dark/Light Mode via Context API)
+## Tecnologias
 
-## 📖 Manual de Arquitetura e Pastas
-Para entender detalhadamente o que cada pasta e arquivo contém, consulte o manual completo:
-👉 **[ESTRUTURA_PROJETO.md](./ESTRUTURA_PROJETO.md)**
+- React 18 e Vite 5
+- React Router 6
+- Bootstrap 5 e Bootstrap Icons
+- CSS customizado com tokens para temas claro e escuro
+- Context API para tema e sessão demonstrativa local
 
-## 💻 Como Rodar o Projeto
+## Executar o projeto
+
 ```bash
-# Instalar dependências
 npm install
-
-# Rodar em ambiente de desenvolvimento
 npm run dev
-
-# Build de produção
-npm run build
 ```
 
-## 📄 Licença
-Este projeto é para fins acadêmicos.
+O servidor abre em `http://localhost:3000`.
+
+Para gerar a versão de produção:
+
+```bash
+npm run build
+npm run preview
+```
+
+No Windows, se o PowerShell bloquear `npm`, use `npm.cmd` nos mesmos comandos.
+
+## Importante
+
+Este repositório é um protótipo de interface. Autenticação, mensagens, contratos, documentos, propostas e formulário de contato ainda não possuem persistência ou integração com servidor. A entrada cria uma sessão demonstrativa apenas na aba atual; mensagens e propostas adicionadas pela interface não são enviadas a um servidor. Publicações sociais criadas pelo usuário e a conclusão de “Próximos passos” usam armazenamento local somente para demonstrar o comportamento.
+
+O novo feed social fica em `/inicio`. O painel operacional anterior foi preservado em `/operacao`, com o nome “Minha operação”. Para substituir as imagens demonstrativas dos três posts, consulte [`public/images/social/README.md`](./public/images/social/README.md).
+
+Consulte [ESTRUTURA_PROJETO.md](./ESTRUTURA_PROJETO.md) para o mapa das rotas e pastas.

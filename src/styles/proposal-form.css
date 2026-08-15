@@ -1,0 +1,312 @@
+.proposal-form-panel {
+  margin-top: 18px;
+  padding: clamp(18px, 2.2vw, 26px);
+  border: 1px solid var(--border-strong);
+  border-top: 3px solid var(--action);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.proposal-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.proposal-form-title {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.proposal-form-title > i {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+  background: var(--action-soft);
+  color: var(--action);
+}
+
+.proposal-form-title h3,
+.proposal-form-title h4 {
+  margin: 0 0 3px;
+  font-size: 1.08rem;
+}
+
+.proposal-form-title p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: .73rem;
+}
+
+.proposal-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.proposal-field,
+.currency-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.proposal-form-grid .form-label {
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  font-size: .72rem;
+  font-weight: 720;
+}
+
+.proposal-form-grid .form-control,
+.proposal-form-grid .date-field input {
+  min-height: 46px;
+  margin: 0;
+}
+
+.currency-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 46px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.currency-control:focus-within {
+  border-color: var(--action);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 18%, transparent);
+}
+
+.currency-control.has-error {
+  border-color: var(--danger);
+}
+
+.currency-prefix {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  padding: 0 10px;
+  border-right: 1px solid var(--border);
+  background: var(--surface-accent);
+  color: var(--action);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.currency-control input {
+  width: 100%;
+  height: 44px;
+  min-width: 0;
+  padding: 0 12px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.currency-control input::placeholder {
+  color: var(--text-soft);
+}
+
+.currency-control input:disabled {
+  cursor: wait;
+  opacity: .62;
+}
+
+.currency-hint,
+.proposal-field-hint {
+  margin-top: 5px;
+  color: var(--text-soft);
+  font-size: .62rem;
+}
+
+.proposal-field-error {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+  color: var(--danger);
+  font-size: .64rem;
+  font-weight: 650;
+}
+
+.proposal-note-field {
+  grid-column: 1 / -1;
+}
+
+.proposal-note-field textarea {
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  padding: 11px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  color: var(--text);
+  font: inherit;
+  font-size: .77rem;
+  line-height: 1.5;
+}
+
+.proposal-note-field textarea:focus {
+  border-color: var(--action);
+  outline: 0;
+  background: var(--surface);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 18%, transparent);
+}
+
+.proposal-note-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 5px;
+  color: var(--text-soft);
+  font-size: .61rem;
+}
+
+.proposal-ready-summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 17px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--earth);
+  background: var(--earth-soft);
+  color: var(--text-muted);
+  font-size: .68rem;
+}
+
+.proposal-ready-summary strong {
+  color: var(--text);
+}
+
+.proposal-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.proposal-form-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: .63rem;
+  line-height: 1.45;
+}
+
+.proposal-form-disclaimer i {
+  margin-top: 1px;
+  color: var(--info);
+}
+
+.proposal-submit {
+  min-width: 184px;
+}
+
+.proposal-submit:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+.proposal-submit-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid color-mix(in srgb, currentColor 38%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: proposal-spinner .75s linear infinite;
+}
+
+.proposal-form-feedback {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 20px;
+  margin: 10px 0 0;
+  color: var(--danger);
+  font-size: .66rem;
+}
+
+.proposal-submission-feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  color: var(--action);
+  font-size: .76rem;
+  font-weight: 720;
+}
+
+.proposal-submission-feedback small {
+  color: var(--text-soft);
+  font-weight: 560;
+}
+
+@keyframes proposal-spinner {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 720px) {
+  .proposal-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .proposal-note-field {
+    grid-column: auto;
+  }
+
+  .proposal-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .proposal-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .proposal-form-panel {
+    margin-inline: -4px;
+    padding: 16px 13px;
+  }
+
+  .proposal-form-title > i {
+    display: none;
+  }
+
+  .proposal-submission-feedback {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proposal-submit-spinner {
+    animation-duration: .01ms;
+    animation-iteration-count: 1;
+  }
+}

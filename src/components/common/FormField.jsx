@@ -1,106 +1,29 @@
 import React from 'react';
 
-export default function FormField({
-  id,
-  label,
-  type = 'text',
-  value,
-  onChange,
-  onBlur,
-  error,
-  placeholder,
-  required = false,
-  maxLength,
-  rows,
-  options,
-  children
-}) {
+export default function FormField({ id, label, type = 'text', value = '', onChange, onBlur, error, placeholder, required = false, maxLength, rows, options, children }) {
   const isError = Boolean(error);
+  const errorId = `error-${id}`;
+  const counterId = `counter-${id}`;
+  const describedBy = [isError ? errorId : null, maxLength ? counterId : null].filter(Boolean).join(' ') || undefined;
+  const sharedProps = { id, name: id, value, onChange, onBlur, required, 'aria-invalid': isError || undefined, 'aria-describedby': describedBy };
 
   return (
     <div className="mb-3 text-start">
-      {label && (
-        <label htmlFor={id} className="form-label">
-          {label}
-        </label>
-      )}
-
+      {label && <label htmlFor={id} className="form-label">{label}{required && <span aria-hidden="true"> *</span>}</label>}
       {type === 'textarea' ? (
-        <>
-          <textarea
-            id={id}
-            name={id}
-            className={`form-control ${isError ? 'input-error' : ''}`}
-            rows={rows || 5}
-            placeholder={placeholder}
-            maxLength={maxLength}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            required={required}
-          ></textarea>
-          <div className="d-flex justify-content-between align-items-center mt-1">
-            <div
-              className="error-message"
-              id={`error-${id}`}
-              style={{ display: isError ? 'block' : 'none' }}
-            >
-              {error}
-            </div>
-            {maxLength && (
-              <div
-                className={`char-counter ${value.length >= maxLength ? 'limit-reached' : ''}`}
-                id="char-counter"
-              >
-                {value.length} / {maxLength} caracteres
-              </div>
-            )}
-          </div>
-        </>
+        <textarea {...sharedProps} className={`form-control ${isError ? 'input-error' : ''}`} rows={rows || 5} placeholder={placeholder} maxLength={maxLength} />
       ) : type === 'select' ? (
-        <>
-          <select
-            id={id}
-            name={id}
-            className={`form-select ${isError ? 'input-error' : ''}`}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            required={required}
-          >
-            {options &&
-              options.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            {children}
-          </select>
-          {isError && (
-            <div className="error-message d-block" id={`error-${id}`}>
-              {error}
-            </div>
-          )}
-        </>
+        <select {...sharedProps} className={`form-select ${isError ? 'input-error' : ''}`}>
+          {options?.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}{children}
+        </select>
       ) : (
-        <>
-          <input
-            type={type}
-            id={id}
-            name={id}
-            className={`form-control ${isError ? 'input-error' : ''}`}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            required={required}
-          />
-          {isError && (
-            <div className="error-message d-block" id={`error-${id}`}>
-              {error}
-            </div>
-          )}
-        </>
+        <input {...sharedProps} type={type} className={`form-control ${isError ? 'input-error' : ''}`} placeholder={placeholder} />
+      )}
+      {(isError || maxLength) && (
+        <div className="d-flex justify-content-between align-items-center mt-1">
+          <div className="error-message" id={errorId} role={isError ? 'alert' : undefined}>{error}</div>
+          {maxLength && <div className={`char-counter ${value.length >= maxLength ? 'limit-reached' : ''}`} id={counterId}>{value.length} / {maxLength} caracteres</div>}
+        </div>
       )}
     </div>
   );

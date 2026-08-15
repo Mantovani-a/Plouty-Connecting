@@ -26,7 +26,6 @@ export const solutionsData = [
   {
     id: 'card-produtor',
     icon: 'bi-person-workspace',
-    gradient: 'linear-gradient(135deg, var(--cor-verde-claro), var(--cor-acao))',
     title: 'Produtor Rural',
     description:
       'Cadastra sua colheita, ganha visibilidade, avaliações e garante contratos de fornecimento com preços justos.'
@@ -34,7 +33,6 @@ export const solutionsData = [
   {
     id: 'card-instituicao',
     icon: 'bi-building',
-    gradient: 'linear-gradient(135deg, #1a4b5c, #2a5d45)',
     title: 'Compradores Institucionais',
     description:
       'Escolas, hospitais e restaurantes publicam suas demandas e compram alimentos frescos com garantia de procedência.'
@@ -42,7 +40,6 @@ export const solutionsData = [
   {
     id: 'card-fomezero',
     icon: 'bi-heart-pulse-fill',
-    gradient: 'linear-gradient(135deg, var(--cor-acao), var(--cor-verde-claro))',
     title: 'ODS 2: Fome Zero',
     description:
       'Fortalecimento da segurança alimentar comunitária e promoção de práticas agrícolas sustentáveis e regenerativas.'
