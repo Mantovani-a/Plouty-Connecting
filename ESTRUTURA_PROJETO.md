@@ -1,53 +1,60 @@
 # Estrutura do projeto — Plouty Connecting
 
-## Stack
+## 🛠️ Stack Rápida
+- **React 18** (SPA com Vite) + **React Router v6**
+- **Bootstrap 5.3** + **Bootstrap Icons** + **CSS Variables** (Dark/Light Mode)
+- **Context API** (`ThemeContext`)
 
-- React 18 com Vite
-- React Router 6
-- Bootstrap 5 e Bootstrap Icons
-- CSS global orientado por tokens semânticos
-- Context API para tema e sessão demonstrativa de produtor ou instituição
+---
 
-## Pastas
+## 🌳 O que fica em cada pasta?
 
-| Pasta | Responsabilidade |
-| --- | --- |
-| `public/images/` | Marca e fotografia local otimizada. |
-| `public/images/social/` | Fotografias locais opcionais para os posts demonstrativos e instruções de substituição. |
-| `src/components/business/` | Timeline demonstrativa de propostas, contratos e entregas. |
-| `src/components/common/` | Campos reutilizáveis de data, moeda, quantidade/unidade e sliders com ajuste preciso. |
-| `src/components/explorar/` | Filtros e perfis comerciais de produtores. |
-| `src/components/home/` | Oportunidades, publicação de demanda e lateral operacional. |
-| `src/components/layout/` | Cabeçalhos, rodapé, navegação móvel, drawers e painel de mensagens. |
-| `src/components/profile/` | Resumo de reputação e saída da demonstração. |
-| `src/components/social/` | Compositor, mídia, comentários, ações e estados do feed profissional. |
-| `src/context/` | Tema claro/escuro e sessão demonstrativa por perfil. |
-| `src/data/` | Mocks estáveis de oportunidades, reputação, fluxos comerciais e conversas. |
-| `src/hooks/` | Foco acessível de dialogs e observação de media queries. |
-| `src/pages/` | Telas mapeadas no roteador. |
-| `src/styles/` | Design system, componentes, responsividade e acessibilidade. |
-| `src/utils/` | Conversão e validação de datas, moeda e quantidades no padrão brasileiro. |
+| Pasta | O que contém |
+| :--- | :--- |
+| **`public/`** | Arquivos estáticos e imagens gerais servidos diretamente (`favicon.png`, `images/`). |
+| **`src/components/`** | Componentes reutilizáveis em PascalCase divididos por domínio. |
+| **`src/context/`** | Contextos globais da aplicação (`ThemeContext.jsx` para tema claro/escuro). |
+| **`src/data/`** | Mocks de dados e constantes (`demandsData`, `producersData`, `aboutData`, `navigationData`). |
+| **`src/hooks/`** | Custom hooks em camelCase com regras de negócio e validação (`useContactForm.js`). |
+| **`src/pages/`** | As 5 telas principais da aplicação em PascalCase. |
+| **`src/styles/`** | Estilos globais mundiais, tokens de cores e resets (`globals.css`). |
 
-## Rotas
+---
 
-| Rota | Tela |
-| --- | --- |
-| `/` | Entrada pública da demonstração, sem perfil selecionado por padrão. |
-| `/inicio` | Feed social profissional protegido, comum a produtores e instituições. |
-| `/operacao` | Painel operacional anterior, protegido e adaptado ao perfil escolhido. |
-| `/oportunidades` | Busca protegida e comparação de demandas institucionais para o perfil produtor. |
-| `/negocios` | Área protegida de propostas, negociações, contratos e timeline demonstrativa. |
-| `/explorar` | Diretório comercial protegido de produtores e cooperativas para o perfil instituição. |
-| `/sobre` | História, proposta de valor e ODS 2. |
-| `/contato` | Formulário com validação local. |
-| `/entrar` | Mesmo fluxo público de entrada, com seleção de perfil e sem autenticação no backend. |
+## 🧩 Componentes (`src/components/`)
 
-## Dados e integrações
+- **`auth/`**: `AuthModal.jsx` → Modal de login/cadastro com troca de perfil (Produtor/Instituição).
+- **`common/`**: `FormField.jsx` → Input, textarea e select com validação e erros integrados.
+- **`profile/`**: `ProfileSummary.jsx` → Card unificado de perfil (avatar, métricas e links), usado na Sidebar e no Drawer.
+- **`layout/`**: `Navbar.jsx`, `Footer.jsx`, `MobileBottomNav.jsx`, `ProfileDrawer.jsx` → Casca e navegação global.
+- **`home/`**: `DemandCreator.jsx`, `DemandCard.jsx`, `SidebarProfile.jsx`, `ImpactSidebar.jsx` → Feed e painéis da página inicial.
+- **`explorar/`**: `ProducerCard.jsx`, `ProducerFilters.jsx` → Catálogo e barra lateral de filtros.
+- **`sobre/`**: `ProblemCard.jsx`, `SolutionCard.jsx` → Cards modulares da página Sobre.
 
-Os dados de oportunidades, produtores, reputação, mensagens, timelines, negócios e os três posts iniciais são mocks fixos marcados como demonstrativos. O perfil ativo usa `sessionStorage`, portanto permanece ao atualizar a mesma aba e é removido ao sair. Mensagens e propostas existem apenas na memória da tela; publicações criadas pelo usuário e a conclusão dos próximos passos usam `localStorage` demonstrativo. Imagens escolhidas no compositor não são enviadas a servidor. O projeto não contém API, autenticação real, banco de dados nem envio de e-mail.
+---
 
-## Comandos
+## 📄 Páginas & Rotas (`src/pages/` mapeadas em `App.jsx`)
 
+| Rota | Página | Descrição |
+| :--- | :--- | :--- |
+| `/` | `Home.jsx` | Feed de demandas institucionais, publicação de pedidos e métricas ODS 2. |
+| `/explorar` | `Explorar.jsx` | Busca de produtores rurais com filtros multi-critério (região, tipo, estrelas). |
+| `/sobre` | `Sobre.jsx` | Proposta de valor, problema da intermediação e impacto social com animação. |
+| `/contato` | `Contato.jsx` | Formulário de suporte validado em tempo real com contador de caracteres. |
+| `/entrar` | `Entrar.jsx` | Apresentação para Produtores/Instituições e acesso ao modal de autenticação. |
+
+---
+
+## ⚡ Guia Rápido: Como Adicionar Novas Funcionalidades
+
+1. **Nova Página:** Crie em `src/pages/MinhaPagina.jsx`, adicione a rota no [src/App.jsx](file:///c:/Users/User/Faculdade-Projs/Plouty-Connecting/src/App.jsx) e inclua em `src/data/navigationData.js` se for um item de menu.
+2. **Novo Componente:** Crie dentro da subpasta correspondente em `src/components/`. Evite blocos gigantes de HTML dentro das páginas.
+3. **Novos Dados/Mocks:** Adicione o array/objeto estruturado em `src/data/` e renderize no JSX via `.map()`.
+4. **Usar Tema Dark/Light:** Importe `import { useTheme } from '../context/ThemeContext'` e acesse `{ theme, toggleTheme }`.
+
+---
+
+## 💻 Comandos
 ```bash
 npm run dev
 npm run build
