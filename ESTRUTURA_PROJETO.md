@@ -62,3 +62,5 @@ npm run preview
 ```
 
 Não há lint ou testes automatizados configurados nesta versão.
+
+teste
