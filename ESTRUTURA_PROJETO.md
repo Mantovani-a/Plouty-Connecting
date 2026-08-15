@@ -47,7 +47,7 @@
 
 ## ⚡ Guia Rápido: Como Adicionar Novas Funcionalidades
 
-1. **Nova Página:** Crie em `src/pages/MinhaPagina.jsx`, adicione a rota no [src/App.jsx](file:///c:/Users/User/Faculdade-Projs/Plouty-Connecting/src/App.jsx) e inclua em `src/data/navigationData.js` se for um item de menu.
+1. **Nova Página:** Crie em `src/pages/MinhaPagina.jsx`, adicione a rota no [src/App.jsx]e inclua em `src/data/navigationData.js` se for um item de menu.
 2. **Novo Componente:** Crie dentro da subpasta correspondente em `src/components/`. Evite blocos gigantes de HTML dentro das páginas.
 3. **Novos Dados/Mocks:** Adicione o array/objeto estruturado em `src/data/` e renderize no JSX via `.map()`.
 4. **Usar Tema Dark/Light:** Importe `import { useTheme } from '../context/ThemeContext'` e acesse `{ theme, toggleTheme }`.
