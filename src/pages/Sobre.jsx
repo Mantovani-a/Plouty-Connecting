@@ -1,12 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { problemsData, solutionsData } from '../data/aboutData';
 
 export default function Sobre() {
   const solutionRef = useRef(null);
-  const timeoutRef = useRef(null);
-
-  useEffect(() => () => clearTimeout(timeoutRef.current), []);
 
   const showHowItWorks = () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

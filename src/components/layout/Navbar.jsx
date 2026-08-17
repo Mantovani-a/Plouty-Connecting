@@ -19,7 +19,7 @@ function Brand({ compact = false }) {
   );
 }
 
-export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessages, onOpenNotifications, messagesOpen = false, unreadMessages = 0 }) {
+export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessages, messagesOpen = false, unreadMessages = 0 }) {
   const { theme, toggleTheme } = useTheme();
   const { hasSession, isProducer, profile } = useWorkspace();
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +32,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     const term = searchTerm.trim();
-    const target = isProducer ? '/oportunidades' : '/explorar';
+    const target = '/explorar';
     navigate(term ? `${target}?search=${encodeURIComponent(term)}` : target);
     setMobileSearchOpen(false);
   };
@@ -79,12 +79,12 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
         </nav>
 
         <form className={`header-search ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
-          <label className="visually-hidden" htmlFor="busca-oportunidades">{isProducer ? 'Buscar oportunidades' : 'Buscar produtores'}</label>
+          <label className="visually-hidden" htmlFor="busca-global">Buscar produtores ou demandas</label>
           <i className="bi bi-search" aria-hidden="true" />
           <input
-            id="busca-oportunidades"
+            id="busca-global"
             type="search"
-            placeholder={isProducer ? 'Buscar produto ou instituição' : 'Buscar produtor ou produto'}
+            placeholder="Buscar produtor, produto ou demanda"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
@@ -92,24 +92,20 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
         </form>
 
         <div className="header-actions product-actions">
-          <button className="icon-button mobile-search-trigger" type="button" onClick={() => setMobileSearchOpen((open) => !open)} aria-expanded={mobileSearchOpen} aria-controls="busca-oportunidades" aria-label="Abrir busca">
+          <button className="icon-button mobile-search-trigger" type="button" onClick={() => setMobileSearchOpen((open) => !open)} aria-expanded={mobileSearchOpen} aria-controls="busca-global" aria-label="Abrir busca">
             <i className={`bi ${mobileSearchOpen ? 'bi-x-lg' : 'bi-search'}`} aria-hidden="true" />
           </button>
           <button className="icon-button message-trigger" type="button" onClick={onOpenMessages} aria-label={`Mensagens${unreadMessages ? `, ${unreadMessages} não lidas` : ''}`} aria-expanded={messagesOpen} aria-controls="plouty-messages-panel">
             <i className="bi bi-chat-left-text" aria-hidden="true" />
             {unreadMessages > 0 && <span className="notification-dot" aria-hidden="true" />}
           </button>
-          <button className="icon-button" type="button" onClick={onOpenNotifications} aria-label="Notificações, 2 novas">
-            <i className="bi bi-bell" aria-hidden="true" />
-            <span className="count-badge" aria-hidden="true">2</span>
-          </button>
           <button className="icon-button" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}>
             <i className={`bi ${theme === 'dark' ? 'bi-sun' : 'bi-moon-stars'}`} aria-hidden="true" />
           </button>
-          <button className="profile-button" type="button" onClick={onOpenProfile} aria-label={`Abrir perfil de ${profile.name}`}>
-            <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt="" />
+          <button className="profile-button" type="button" onClick={onOpenProfile} aria-label={`Abrir perfil de ${profile?.name || 'Usuário'}`}>
+            <Avatar className="profile-avatar" src={profile?.avatar} initials={profile?.initials || 'PL'} alt="" />
             <span className="profile-button-copy">
-              <strong>{profile.shortName}</strong>
+              <strong>{profile?.shortName || 'Perfil'}</strong>
               <small>{isProducer ? 'Produtor' : 'Comprador'}</small>
             </span>
             <i className="bi bi-chevron-down" aria-hidden="true" />

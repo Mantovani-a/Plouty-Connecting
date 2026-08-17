@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-export default function ProducerCard({ producer }) {
+export default function ProducerCard({ producer, onOpenMessages }) {
   const [saved, setSaved] = useState(false);
-  const [contacted, setContacted] = useState(false);
 
   return (
     <article className="producer-card">
@@ -95,8 +94,9 @@ export default function ProducerCard({ producer }) {
         <button
           className="btn btn-primary"
           type="button"
+          onClick={() => onOpenMessages?.()}
         >
-          Entrar em contato
+          <i className="bi bi-chat-left-text" aria-hidden="true" /> Entrar em contato
         </button>
         <button
           className="btn btn-secondary"

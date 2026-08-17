@@ -4,7 +4,7 @@ import ProducerFilters from '../components/explorar/ProducerFilters';
 import ProducerCard from '../components/explorar/ProducerCard';
 import { initialProducers } from '../data/producersData';
 
-export default function Explorar() {
+export default function Explorar({ onOpenMessages }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParam = searchParams.get('search') || '';
   const [tipo, setTipo] = useState('Todos');
@@ -71,7 +71,7 @@ export default function Explorar() {
 
             {filteredProducers.length ? (
               filteredProducers.map((producer) => (
-                <ProducerCard key={producer.id} producer={producer} />
+                <ProducerCard key={producer.id} producer={producer} onOpenMessages={onOpenMessages} />
               ))
             ) : (
               <div className="empty-state">

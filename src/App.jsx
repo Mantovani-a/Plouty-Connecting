@@ -6,35 +6,28 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import MobileBottomNav from './components/layout/MobileBottomNav';
 import ProfileDrawer from './components/layout/ProfileDrawer';
-import UtilityPanel from './components/layout/UtilityPanel';
 import MessagePanel from './components/layout/MessagePanel';
 import { buyerConversations, getUnreadConversationCount, producerConversations } from './data/messagesData';
 
 import Operation from './pages/Home';
 import SocialHome from './pages/SocialHome';
-import Oportunidades from './pages/Oportunidades';
-import Negocios from './pages/Negocios';
 import Explorar from './pages/Explorar';
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import Entrar from './pages/Entrar';
 
-const PRODUCT_PATHS = ['/inicio', '/operacao', '/oportunidades', '/negocios', '/explorar'];
-const ROLE_PRODUCT_PATHS = {
-  producer: ['/inicio', '/operacao', '/oportunidades', '/negocios'],
-  buyer: ['/inicio', '/operacao', '/explorar', '/negocios']
-};
+const PRODUCT_PATHS = ['/inicio', '/operacao', '/explorar'];
 
-function getEntryDestination(search, role) {
+function getEntryDestination(search) {
   const candidate = new URLSearchParams(search).get('retorno');
   if (!candidate || !candidate.startsWith('/') || candidate.startsWith('//')) return '/inicio';
   const parsed = new URL(candidate, 'https://plouty.local');
-  if (!ROLE_PRODUCT_PATHS[role]?.includes(parsed.pathname)) return '/inicio';
+  if (!PRODUCT_PATHS.includes(parsed.pathname)) return '/inicio';
   return `${parsed.pathname}${parsed.search}${parsed.hash}`;
 }
 
-function ProtectedRoute({ children, allowedRoles }) {
-  const { hasSession, role } = useWorkspace();
+function ProtectedRoute({ children }) {
+  const { hasSession } = useWorkspace();
   const location = useLocation();
 
   if (!hasSession) {
@@ -42,17 +35,13 @@ function ProtectedRoute({ children, allowedRoles }) {
     return <Navigate to={`/entrar?retorno=${encodeURIComponent(returnPath)}`} replace state={{ from: location }} />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(role)) {
-    return <Navigate to="/inicio" replace />;
-  }
-
   return children;
 }
 
 function PublicEntryRoute() {
-  const { hasSession, role } = useWorkspace();
+  const { hasSession } = useWorkspace();
   const location = useLocation();
-  return hasSession ? <Navigate to={getEntryDestination(location.search, role)} replace /> : <Entrar />;
+  return hasSession ? <Navigate to={getEntryDestination(location.search)} replace /> : <Entrar />;
 }
 
 function AppContent() {
@@ -83,17 +72,11 @@ function AppContent() {
         variant={isProductArea ? 'product' : 'public'}
         onOpenProfile={() => setProfileOpen(true)}
         onOpenMessages={() => activePanel?.type === 'messages' ? closeActivePanel() : openMessages()}
-        onOpenNotifications={() => setActivePanel({ type: 'notifications' })}
         messagesOpen={activePanel?.type === 'messages'}
         unreadMessages={unreadMessages}
       />
 
       <ProfileDrawer isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
-      <UtilityPanel
-        type="notifications"
-        isOpen={activePanel?.type === 'notifications'}
-        onClose={closeActivePanel}
-      />
 
       {isProductArea && (
         <MessagePanel
@@ -108,11 +91,9 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<PublicEntryRoute />} />
         <Route path="/entrar" element={<PublicEntryRoute />} />
-        <Route path="/inicio" element={<ProtectedRoute allowedRoles={['producer', 'buyer']}><SocialHome /></ProtectedRoute>} />
-        <Route path="/operacao" element={<ProtectedRoute allowedRoles={['producer', 'buyer']}><Operation onOpenMessages={openMessages} /></ProtectedRoute>} />
-        <Route path="/oportunidades" element={<ProtectedRoute allowedRoles={['producer']}><Oportunidades /></ProtectedRoute>} />
-        <Route path="/negocios" element={<ProtectedRoute allowedRoles={['producer', 'buyer']}><Negocios onOpenMessages={openMessages} /></ProtectedRoute>} />
-        <Route path="/explorar" element={<ProtectedRoute allowedRoles={['buyer']}><Explorar /></ProtectedRoute>} />
+        <Route path="/inicio" element={<ProtectedRoute><SocialHome /></ProtectedRoute>} />
+        <Route path="/operacao" element={<ProtectedRoute><Operation onOpenMessages={openMessages} /></ProtectedRoute>} />
+        <Route path="/explorar" element={<ProtectedRoute><Explorar onOpenMessages={openMessages} /></ProtectedRoute>} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/contato" element={<Contato />} />
         <Route path="*" element={<Navigate to={hasSession ? '/inicio' : '/'} replace />} />

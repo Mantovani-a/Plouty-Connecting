@@ -83,79 +83,6 @@ export const buyerSummary = [
   }
 ];
 
-export const productionAvailability = [
-  { id: 1, product: 'Batata-doce rosada', quantity: '180 kg', quantityValue: '180', quantityUnit: 'kg', period: 'Disponível agora' },
-  { id: 2, product: 'Couve-manteiga', quantity: '90 maços', quantityValue: '90', quantityUnit: 'maço', period: 'Colheita em 2 dias' },
-  { id: 3, product: 'Alface crespa', quantity: '120 un.', quantityValue: '120', quantityUnit: 'un', period: 'Disponível até 20 ago' },
-  { id: 4, product: 'Cebolinha', quantity: '60 maços', quantityValue: '60', quantityUnit: 'maço', period: 'Colheita semanal' }
-];
-
-export const businessPipeline = [
-  {
-    id: 1,
-    title: 'Hortaliças para merenda escolar',
-    counterpart: 'Escola Municipal Sol Nascente',
-    stage: 'Proposta enviada',
-    stageKey: 'proposal',
-    value: 'R$ 2.480',
-    nextStep: 'Retorno previsto até 16 ago',
-    progress: 45
-  },
-  {
-    id: 2,
-    title: 'Fornecimento semanal de folhosas',
-    counterpart: 'Hospital Regional de Guarapari',
-    stage: 'Em negociação',
-    stageKey: 'negotiation',
-    value: 'R$ 3.200/mês',
-    nextStep: 'Ajustar janela de entrega',
-    progress: 68
-  },
-  {
-    id: 3,
-    title: 'Cesta de produtos da estação',
-    counterpart: 'Restaurante Sabor da Serra',
-    stage: 'Contrato ativo',
-    stageKey: 'active',
-    value: 'R$ 1.860',
-    nextStep: 'Entrega em 18 ago, às 7h',
-    progress: 88
-  }
-];
-
-export const buyerBusinessPipeline = [
-  {
-    id: 1,
-    title: 'Hortaliças para merenda escolar',
-    counterpart: 'Cooperativa Verde',
-    stage: 'Propostas recebidas',
-    stageKey: 'proposal',
-    value: '4 propostas',
-    nextStep: 'Comparar preço e logística até 16 ago',
-    progress: 40
-  },
-  {
-    id: 2,
-    title: 'Fornecimento semanal de frutas',
-    counterpart: 'Maria dos Santos',
-    stage: 'Em negociação',
-    stageKey: 'negotiation',
-    value: 'R$ 1.180/entrega',
-    nextStep: 'Confirmar frequência e janela de entrega',
-    progress: 66
-  },
-  {
-    id: 3,
-    title: 'Cesta de produtos da estação',
-    counterpart: 'João Carlos Silva',
-    stage: 'Contrato ativo',
-    stageKey: 'active',
-    value: 'R$ 1.860',
-    nextStep: 'Recebimento em 18 ago, às 7h',
-    progress: 88
-  }
-];
-
 export const operationalAlerts = [
   {
     id: 1,
@@ -164,7 +91,7 @@ export const operationalAlerts = [
     title: 'Prazo de proposta',
     text: 'Batata-doce e couve encerra amanhã, às 18h.',
     action: 'Ver oportunidade',
-    to: '/oportunidades?search=batata'
+    to: '/explorar?search=batata'
   },
   {
     id: 2,
@@ -180,19 +107,8 @@ export const operationalAlerts = [
     tone: 'positive',
     title: 'Entrega confirmada',
     text: 'Restaurante Sabor da Serra confirmou recebimento para 18 ago.',
-    action: 'Ver negócio',
-    to: '/negocios'
+    action: 'Abrir mensagens'
   }
-];
-
-export const notificationItems = [
-  { id: 1, title: 'Proposta visualizada', text: 'A Escola Sol Nascente abriu sua proposta.', time: 'há 20 min' },
-  { id: 2, title: 'Nova oportunidade próxima', text: 'Demanda de hortaliças a 18 km da sua propriedade.', time: 'há 1 h' }
-];
-
-export const buyerNotificationItems = [
-  { id: 1, title: 'Nova proposta recebida', text: 'A Cooperativa Verde enviou uma proposta para a demanda de hortaliças.', time: 'há 15 min' },
-  { id: 2, title: 'Documento validado', text: 'O CAF de João Carlos foi validado para análise comercial.', time: 'há 2 h' }
 ];
 
 export const impactSummary = {

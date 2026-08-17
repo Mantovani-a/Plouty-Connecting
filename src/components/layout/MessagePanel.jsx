@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { getUnreadConversationCount } from '../../data/messagesData';
 
 export default function MessagePanel({ conversations, isOpen, onOpen, onClose, targetBusinessKey }) {
   const [selectedId, setSelectedId] = useState(null);
@@ -14,7 +15,7 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
   const threadRef = useRef(null);
   const localIdRef = useRef(1);
   const isModal = useMediaQuery('(max-width: 1180px)');
-  const unreadCount = conversations.reduce((total, conversation) => total + conversation.unread, 0);
+  const unreadCount = getUnreadConversationCount(conversations);
   const selectedConversation = conversations.find((conversation) => conversation.id === selectedId) || null;
   const threadMessages = useMemo(() => (
     selectedConversation

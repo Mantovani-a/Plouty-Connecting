@@ -157,7 +157,7 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
               Enviar proposta <i className="bi bi-arrow-right" aria-hidden="true" />
             </button>
           )}
-          <NavLink to={`/oportunidades?search=${encodeURIComponent(demand.product)}`} className="text-link">Ver oportunidade</NavLink>
+          <NavLink to={`/explorar?search=${encodeURIComponent(demand.product)}`} className="text-link">Ver oportunidade</NavLink>
           <span className="published-time">Publicada em {publishedDateLabel || demand.timeAgo}</span>
         </div>
 

@@ -14,11 +14,7 @@ const ROLE_CONTENT = {
   }
 };
 
-const INTERNAL_PATHS = ['/inicio', '/operacao', '/oportunidades', '/negocios', '/explorar'];
-const ROLE_INTERNAL_PATHS = {
-  producer: ['/inicio', '/operacao', '/oportunidades', '/negocios'],
-  buyer: ['/inicio', '/operacao', '/explorar', '/negocios']
-};
+const INTERNAL_PATHS = ['/inicio', '/operacao', '/explorar'];
 
 function validateLogin(form, role) {
   const errors = {};
@@ -38,20 +34,20 @@ function validateLogin(form, role) {
   return errors;
 }
 
-function normalizeInternalDestination(candidate, role) {
+function normalizeInternalDestination(candidate) {
   if (typeof candidate !== 'string' || !candidate.startsWith('/') || candidate.startsWith('//')) {
     return null;
   }
   const parsed = new URL(candidate, 'https://plouty.local');
-  if (!INTERNAL_PATHS.includes(parsed.pathname) || !ROLE_INTERNAL_PATHS[role]?.includes(parsed.pathname)) {
+  if (!INTERNAL_PATHS.includes(parsed.pathname)) {
     return null;
   }
   return `${parsed.pathname}${parsed.search}${parsed.hash}`;
 }
 
-function getReturnDestination(location, role) {
+function getReturnDestination(location) {
   const queryDestination = new URLSearchParams(location.search).get('retorno');
-  const safeQueryDestination = normalizeInternalDestination(queryDestination, role);
+  const safeQueryDestination = normalizeInternalDestination(queryDestination);
   if (safeQueryDestination) return safeQueryDestination;
 
   const locationState = location.state;
@@ -60,8 +56,7 @@ function getReturnDestination(location, role) {
     normalizeInternalDestination(
       previousLocation
         ? `${previousLocation.pathname}${previousLocation.search || ''}${previousLocation.hash || ''}`
-        : null,
-      role
+        : null
     ) || '/inicio'
   );
 }
@@ -108,7 +103,7 @@ export default function Entrar() {
       startDemoSession(role);
       setForm((current) => ({ ...current, password: '' }));
       setSuccessMessage('Acesso demonstrativo validado. Abrindo seu espaço na Plouty…');
-      navigate(getReturnDestination(location, role), { replace: true });
+      navigate(getReturnDestination(location), { replace: true });
       timerRef.current = null;
     }, 650);
   };

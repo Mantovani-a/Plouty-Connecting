@@ -6,6 +6,8 @@ import Avatar from '../common/Avatar';
 export default function ProfileSummary({ onNavigate }) {
   const { endDemoSession, isProducer, profile } = useWorkspace();
 
+  if (!profile) return null;
+
   return (
     <div className="profile-summary">
       <div className="profile-summary-head">
@@ -51,12 +53,8 @@ export default function ProfileSummary({ onNavigate }) {
         <NavLink to="/operacao" end onClick={onNavigate}>
           <i className="bi bi-grid-1x2" aria-hidden="true" /> Minha operação
         </NavLink>
-        <NavLink to="/negocios" onClick={onNavigate}>
-          <i className="bi bi-kanban" aria-hidden="true" /> Meus negócios
-        </NavLink>
-        <NavLink to={isProducer ? '/oportunidades' : '/explorar'} onClick={onNavigate}>
-          <i className={`bi ${isProducer ? 'bi-briefcase' : 'bi-people'}`} aria-hidden="true" />{' '}
-          {isProducer ? 'Oportunidades' : 'Produtores'}
+        <NavLink to="/explorar" onClick={onNavigate}>
+          <i className="bi bi-compass" aria-hidden="true" /> Explorar
         </NavLink>
       </nav>
 

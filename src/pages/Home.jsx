@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import DemandCard from '../components/home/DemandCard';
+import DemandCreator from '../components/home/DemandCreator';
 import ImpactSidebar from '../components/home/ImpactSidebar';
 import { initialDemands } from '../data/demandsData';
 import { buyerSummary, producerSummary } from '../data/dashboardData';
@@ -34,8 +35,8 @@ function ProducerHome({ onOpenMessages }) {
             <p>Há novas compras institucionais perto da sua região e uma proposta aguardando retorno.</p>
           </div>
           <div className="hero-actions">
-            <NavLink className="btn btn-primary" to="/oportunidades">
-              Encontrar oportunidades <i className="bi bi-arrow-right" aria-hidden="true" />
+            <NavLink className="btn btn-primary" to="/explorar">
+              Explorar oportunidades <i className="bi bi-arrow-right" aria-hidden="true" />
             </NavLink>
           </div>
         </section>
@@ -63,7 +64,7 @@ function ProducerHome({ onOpenMessages }) {
                 <h2 id="recommended-title">Oportunidades recomendadas</h2>
                 <p>Compatibilidade calculada com base nos produtos, volume e distância do perfil demonstrativo.</p>
               </div>
-              <NavLink to="/oportunidades" className="text-link">
+              <NavLink to="/explorar" className="text-link">
                 Ver todas <i className="bi bi-arrow-right" aria-hidden="true" />
               </NavLink>
             </div>
@@ -82,7 +83,8 @@ function ProducerHome({ onOpenMessages }) {
 }
 
 function BuyerHome({ onOpenMessages }) {
-  const ownDemands = [
+  const [showCreator, setShowCreator] = useState(false);
+  const [demandsList, setDemandsList] = useState([
     {
       id: 1,
       product: 'Hortaliças para merenda escolar',
@@ -99,7 +101,12 @@ function BuyerHome({ onOpenMessages }) {
       status: 'Em análise',
       proposals: 7
     }
-  ];
+  ]);
+
+  const handleAddDemand = (newDemand) => {
+    setDemandsList((prev) => [newDemand, ...prev]);
+    setShowCreator(false);
+  };
 
   return (
     <main id="conteudo-principal" className="workspace-main buyer-home">
@@ -113,11 +120,16 @@ function BuyerHome({ onOpenMessages }) {
             <p>Organize suas compras, compare propostas e encontre produtores com capacidade comprovada.</p>
           </div>
           <div className="hero-actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setShowCreator((prev) => !prev)}
+            >
+              <i className={`bi ${showCreator ? 'bi-x-lg' : 'bi-plus-lg'}`} />{' '}
+              {showCreator ? 'Fechar publicação' : 'Publicar demanda'}
+            </button>
             <NavLink className="btn btn-secondary" to="/explorar">
               <i className="bi bi-people" /> Encontrar produtores
-            </NavLink>
-            <NavLink className="btn btn-primary" to="/negocios">
-              <i className="bi bi-briefcase" /> Ver negócios
             </NavLink>
           </div>
         </section>
@@ -139,6 +151,15 @@ function BuyerHome({ onOpenMessages }) {
 
         <div className="workspace-layout buyer-layout">
           <section className="workspace-feed" aria-labelledby="buyer-demands-title">
+            {showCreator && (
+              <div className="mb-4">
+                <DemandCreator
+                  onAddDemand={handleAddDemand}
+                  onCancel={() => setShowCreator(false)}
+                />
+              </div>
+            )}
+
             <div className="section-title-row opportunity-list-title">
               <div>
                 <span className="eyebrow">Sua operação de compra</span>
@@ -147,7 +168,7 @@ function BuyerHome({ onOpenMessages }) {
               </div>
             </div>
             <div className="buyer-demand-list">
-              {ownDemands.map((demand) => {
+              {demandsList.map((demand) => {
                 const deadlineLabel = formatISODateShort(demand.deadline) || 'a definir';
                 const deliveryLabel = formatISODateShort(demand.delivery);
                 return (
@@ -164,9 +185,13 @@ function BuyerHome({ onOpenMessages }) {
                       </p>
                     </div>
                     <strong>{demand.proposals} propostas</strong>
-                    <NavLink to="/negocios" className="btn btn-secondary">
-                      Analisar
-                    </NavLink>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => onOpenMessages?.()}
+                    >
+                      Conversar
+                    </button>
                   </article>
                 );
               })}
