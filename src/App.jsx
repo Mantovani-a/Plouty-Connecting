@@ -16,7 +16,7 @@ import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import Entrar from './pages/Entrar';
 
-const PRODUCT_PATHS = ['/inicio', '/operacao', '/explorar'];
+const PRODUCT_PATHS = ['/inicio', '/operacao', '/explorar', '/contato'];
 
 function getEntryDestination(search) {
   const candidate = new URLSearchParams(search).get('retorno');

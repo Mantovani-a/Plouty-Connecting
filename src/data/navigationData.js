@@ -1,13 +1,15 @@
 export const PRODUCER_NAV_ITEMS = [
   { to: '/inicio', label: 'Início', icon: 'bi-house-door', end: true },
   { to: '/operacao', label: 'Minha operação', icon: 'bi-grid-1x2', end: true },
-  { to: '/explorar', label: 'Explorar', icon: 'bi-compass', end: false }
+  { to: '/explorar', label: 'Explorar', icon: 'bi-compass', end: false },
+  { to: '/contato', label: 'Contato', icon: 'bi-headset', end: false }
 ];
 
 export const BUYER_NAV_ITEMS = [
   { to: '/inicio', label: 'Início', icon: 'bi-house-door', end: true },
   { to: '/operacao', label: 'Minha operação', icon: 'bi-grid-1x2', end: true },
-  { to: '/explorar', label: 'Produtores', icon: 'bi-people', end: false }
+  { to: '/explorar', label: 'Produtores', icon: 'bi-people', end: false },
+  { to: '/contato', label: 'Contato', icon: 'bi-headset', end: false }
 ];
 
 export const PUBLIC_NAV_ITEMS = [

@@ -31,6 +31,10 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
           </span>
         )}
       </button>
+      <NavLink to="/contato" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
+        <i className="bi bi-headset" aria-hidden="true" />
+        <span>Contato</span>
+      </NavLink>
     </nav>
   );
 }

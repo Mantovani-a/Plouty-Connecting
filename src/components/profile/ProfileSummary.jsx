@@ -56,6 +56,9 @@ export default function ProfileSummary({ onNavigate }) {
         <NavLink to="/explorar" onClick={onNavigate}>
           <i className="bi bi-compass" aria-hidden="true" /> Explorar
         </NavLink>
+        <NavLink to="/contato" onClick={onNavigate}>
+          <i className="bi bi-headset" aria-hidden="true" /> Fale com a Plouty
+        </NavLink>
       </nav>
 
       <div className="profile-readiness">
