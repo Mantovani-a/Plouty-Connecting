@@ -107,18 +107,18 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
     <article className={`opportunity-card ${compact ? 'opportunity-card-compact' : ''}`}>
       <div className="opportunity-accent" aria-hidden="true" />
       <div className="opportunity-main">
-        <div className="opportunity-topline">
-          <div className="institution-line">
-            <span className="institution-mark" aria-hidden="true"><i className={`bi ${demand.icon}`} /></span>
-            <div>
+        <div className="opportunity-topline d-flex align-items-start justify-content-between gap-3">
+          <div className="institution-line d-flex align-items-center gap-2">
+            <span className="institution-mark d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true"><i className={`bi ${demand.icon}`} /></span>
+            <div className="d-flex flex-column">
               <span>{demand.institutionType}</span>
               <strong>{demand.institution}</strong>
             </div>
             {demand.verified && <i className="bi bi-patch-check-fill verified-icon" title="Instituição verificada" aria-label="Instituição verificada" />}
           </div>
-          <div className="opportunity-badges">
+          <div className="opportunity-badges d-flex align-items-center gap-2 flex-shrink-0">
             <span className={`status-chip status-${urgencyTone[demand.urgency]}`}>{demand.urgency === 'Alta' ? 'Urgente' : demand.status}</span>
-            <button type="button" className={`save-button ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((value) => !value)} aria-pressed={saved} aria-label={saved ? 'Remover oportunidade dos salvos' : 'Salvar oportunidade'}>
+            <button type="button" className={`save-button d-inline-flex align-items-center justify-content-center ${saved ? 'is-saved' : ''}`} onClick={() => setSaved((value) => !value)} aria-pressed={saved} aria-label={saved ? 'Remover oportunidade dos salvos' : 'Salvar oportunidade'}>
               <i className={`bi ${saved ? 'bi-bookmark-fill' : 'bi-bookmark'}`} aria-hidden="true" />
             </button>
           </div>
@@ -127,7 +127,7 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
         <div className="opportunity-heading">
           <div>
             <Heading>{demand.title}</Heading>
-            <p>{demand.description}</p>
+            <p className="mb-0">{demand.description}</p>
           </div>
           <strong className="price-range">{demand.priceRange}</strong>
         </div>
@@ -146,9 +146,9 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
           </div>
         )}
 
-        <div className="opportunity-actions">
+        <div className="opportunity-actions d-flex align-items-center gap-3 mt-3 flex-wrap">
           {proposalSent ? (
-            <span className="proposal-submission-feedback" role="status">
+            <span className="proposal-submission-feedback d-inline-flex align-items-center gap-2" role="status">
               <i className="bi bi-check-circle-fill" aria-hidden="true" />
               <span>Proposta registrada na demonstração <small>Somente nesta sessão</small></span>
             </span>
@@ -158,17 +158,17 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
             </button>
           )}
           <NavLink to={`/explorar?search=${encodeURIComponent(demand.product)}`} className="text-link">Ver oportunidade</NavLink>
-          <span className="published-time">Publicada em {publishedDateLabel || demand.timeAgo}</span>
+          <span className="published-time ms-auto">Publicada em {publishedDateLabel || demand.timeAgo}</span>
         </div>
 
         {proposalOpen && (
           <form id={proposalFormId} className="proposal-form-panel" onSubmit={handleSubmitProposal} noValidate>
-            <div className="proposal-form-header">
-              <div className="proposal-form-title">
-                <i className="bi bi-file-earmark-text" aria-hidden="true" />
-                <div>
-                  <ProposalHeading>Sua proposta</ProposalHeading>
-                  <p>Informe o valor e quando consegue realizar a entrega.</p>
+            <div className="proposal-form-header d-flex align-items-center justify-content-between gap-3 pb-3">
+              <div className="proposal-form-title d-flex align-items-start gap-3">
+                <i className="bi bi-file-earmark-text d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true" />
+                <div className="d-flex flex-column">
+                  <ProposalHeading>{demand.title}</ProposalHeading>
+                  <p className="mb-0">Informe o valor e quando consegue realizar a entrega.</p>
                 </div>
               </div>
               <button type="button" className="icon-button" onClick={() => setProposalOpen(false)} aria-label="Fechar formulário de proposta" disabled={isSubmitting}>
@@ -209,7 +209,7 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
                   placeholder="Ex.: disponibilidade por lote, condições de transporte ou detalhes da entrega."
                   onChange={(event) => setProposalForm((current) => ({ ...current, note: event.target.value }))}
                 />
-                <div className="proposal-note-meta" id={`proposal-note-hint-${demand.id}`}>
+                <div className="proposal-note-meta d-flex justify-content-between mt-1" id={`proposal-note-hint-${demand.id}`}>
                   <span>Opcional — não inclua dados pessoais sensíveis.</span>
                   <span aria-label={`${proposalForm.note.length} de 320 caracteres`}>{proposalForm.note.length}/320</span>
                 </div>
@@ -217,7 +217,7 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
             </div>
 
             {proposalIsValid && (
-              <div className="proposal-ready-summary" aria-live="polite">
+              <div className="proposal-ready-summary d-flex align-items-center gap-2 mt-3 p-2" aria-live="polite">
                 <i className="bi bi-check2-circle" aria-hidden="true" />
                 <span>Resumo: <strong>{formatCurrencyBRL(proposalForm.amountValue)}</strong>, com entrega prevista para <strong>{proposalForm.deliveryDate}</strong>.</span>
               </div>
@@ -227,8 +227,8 @@ export default function DemandCard({ demand, compact = false, headingLevel = 2 }
               {proposalFeedback && <><i className="bi bi-exclamation-circle" aria-hidden="true" /> {proposalFeedback}</>}
             </p>
 
-            <div className="proposal-form-footer">
-              <p className="proposal-form-disclaimer">
+            <div className="proposal-form-footer d-flex align-items-center justify-content-between gap-3 mt-3 flex-wrap">
+              <p className="proposal-form-disclaimer mb-0">
                 <i className="bi bi-info-circle" aria-hidden="true" />
                 Esta é uma simulação local. A proposta não será enviada nem salva em servidor.
               </p>

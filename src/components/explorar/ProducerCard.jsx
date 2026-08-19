@@ -5,12 +5,12 @@ export default function ProducerCard({ producer, onOpenMessages }) {
 
   return (
     <article className="producer-card">
-      <div className="producer-head">
-        <span className="producer-avatar" aria-hidden="true">
+      <div className="producer-head d-flex align-items-center gap-3">
+        <span className="producer-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true">
           {producer.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}
         </span>
-        <div className="producer-identity">
-          <div>
+        <div className="producer-identity d-flex flex-column">
+          <div className="d-flex align-items-center gap-2">
             <h2>{producer.name}</h2>
             {producer.verified && (
               <i
@@ -20,14 +20,14 @@ export default function ProducerCard({ producer, onOpenMessages }) {
               />
             )}
           </div>
-          <p>{producer.role}</p>
+          <p className="mb-0">{producer.role}</p>
           <span>
             <i className="bi bi-geo-alt" aria-hidden="true" /> {producer.location}
           </span>
         </div>
         <button
           type="button"
-          className={`save-button ${saved ? 'is-saved' : ''}`}
+          className={`save-button d-inline-flex align-items-center justify-content-center ms-auto ${saved ? 'is-saved' : ''}`}
           onClick={() => setSaved((value) => !value)}
           aria-pressed={saved}
           aria-label={saved ? 'Remover produtor dos salvos' : 'Salvar produtor'}
@@ -38,7 +38,7 @@ export default function ProducerCard({ producer, onOpenMessages }) {
 
       <p className="producer-description">{producer.description}</p>
 
-      <div className="producer-tags">
+      <div className="producer-tags d-flex flex-wrap gap-2">
         {producer.tags.map((tag) => (
           <span key={tag}>{tag}</span>
         ))}
@@ -68,16 +68,16 @@ export default function ProducerCard({ producer, onOpenMessages }) {
         </div>
       </dl>
 
-      <div className={`availability-line availability-${producer.availability.status}`}>
+      <div className={`availability-line d-flex justify-content-between align-items-center gap-2 availability-${producer.availability.status}`}>
         <span>
           <i className="bi bi-circle-fill" aria-hidden="true" /> {producer.availability.label}
         </span>
         <strong>{producer.availability.summary}</strong>
       </div>
 
-      <div className="verification-tags" aria-label="Verificações">
+      <div className="verification-tags d-flex flex-wrap gap-2 mt-2" aria-label="Verificações">
         {producer.verifications.map((item) => (
-          <span key={item}>
+          <span key={item} className="d-inline-flex align-items-center gap-1">
             <i className="bi bi-shield-check" aria-hidden="true" /> {item}
           </span>
         ))}
@@ -90,7 +90,7 @@ export default function ProducerCard({ producer, onOpenMessages }) {
         </footer>
       </blockquote>
 
-      <div className="producer-actions">
+      <div className="producer-actions d-flex gap-2 mt-3">
         <button
           className="btn btn-primary"
           type="button"

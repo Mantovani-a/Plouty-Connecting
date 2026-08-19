@@ -35,11 +35,11 @@ export default function SocialPost({ post, onFeedback }) {
           alt={`Foto de ${post.author.name}`}
         />
         <div className="social-author-copy">
-          <div>
+          <div className="d-flex align-items-center gap-2">
             <h2 id={`post-author-${post.id}`}>{post.author.name}</h2>
             {post.author.verified && <i className="bi bi-patch-check-fill" aria-label="Identidade verificada" />}
           </div>
-          <p>{post.author.role}</p>
+          <p className="mb-0 text-muted">{post.author.role}</p>
           <time>{post.publishedAt}</time>
         </div>
         {post.isLocal && (
@@ -52,16 +52,16 @@ export default function SocialPost({ post, onFeedback }) {
       {post.text && <p className="social-post-text">{post.text}</p>}
       <FeedMedia media={post.postImage || post.image} />
 
-      <div className="social-post-metrics" aria-label={countLabel(reactionCount, 'curtida', 'curtidas')}>
-        <span>
+      <div className="social-post-metrics d-flex align-items-center gap-3" aria-label={countLabel(reactionCount, 'curtida', 'curtidas')}>
+        <span className="d-inline-flex align-items-center gap-1 me-auto">
           <i className="bi bi-hand-thumbs-up-fill" aria-hidden="true" /> {countLabel(reactionCount, 'curtida', 'curtidas')}
         </span>
       </div>
 
-      <div className="social-post-actions" aria-label="Ações da publicação">
+      <div className="social-post-actions d-flex align-items-center" aria-label="Ações da publicação">
         <button
           type="button"
-          className={liked ? 'is-active' : ''}
+          className={`d-inline-flex align-items-center justify-content-center gap-2 ${liked ? 'is-active' : ''}`}
           onClick={toggleLike}
           aria-pressed={liked}
         >

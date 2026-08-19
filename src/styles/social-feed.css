@@ -1,43 +1,53 @@
 /* ==========================================================================
-   Plouty Connecting — 5. Social Feed & Communities
+   Plouty Connecting — Feed Social e Comunidades
    ========================================================================== */
 
-/* Feed Shell & Heading */.social-feed-shell {
+/* Estrutura do Feed e Título */
+.social-feed-shell {
   display: grid; grid-template-columns: 320px minmax(0, 780px);
   gap: 24px; align-items: start;
   width: min(calc(100% - 40px), 1124px); margin-inline: auto;
-}.social-feed-primary { grid-column: 2; min-width: 0; }.social-feed-heading h1 {
+}
+.social-feed-primary { grid-column: 2; min-width: 0; }
+.social-feed-heading h1 {
   margin: 7px 0 8px;
   color: var(--forest-950);
   font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: -0.04em;
 }
 
-/* Post Composer */.social-composer {
+/* Publicador de Postagens */
+.social-composer {
   margin-bottom: 22px; padding: 20px;
   border: 1px solid var(--border-strong); border-top: 3px solid var(--action);
   border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm);
-}.social-composer-head {
+}
+.social-composer-head {
   display: grid; grid-template-columns: 38px minmax(0, 1fr);
   gap: 12px; align-items: center;
   margin-bottom: 13px;
-}.social-composer-head > div {
+}
+.social-composer-head > div {
   display: flex; flex-direction: column; gap: 2px;
   min-width: 0;
-}.social-composer-head label {
+}
+.social-composer-head label {
   display: block;
   color: var(--text);
   font-size: 0.88rem; font-weight: 740;
-}.social-composer-head small {
+}
+.social-composer-head small {
   display: block;
   color: var(--text-muted);
   font-size: 0.74rem;
-}.social-composer textarea {
+}
+.social-composer textarea {
   width: 100%; min-height: 58px; padding: 13px 14px;
   border: 1px solid var(--border); border-radius: var(--radius-sm);
   outline: 0; background: var(--surface-muted); color: var(--text);
   font-size: 0.83rem; line-height: 1.55;
   resize: vertical;
-}.social-composer.is-expanded textarea { min-height: 128px; background: var(--surface); }
+}
+.social-composer.is-expanded textarea { min-height: 128px; background: var(--surface); }
 .social-composer-toolbar {
   display: flex;
   align-items: center;
@@ -51,9 +61,6 @@
   gap: 10px;
 }
 .social-media-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
   min-height: 38px;
   padding: 8px 14px;
   border: 1px solid var(--border-strong);
@@ -74,7 +81,6 @@
   font-size: 0.72rem;
 }
 .social-character-counter {
-  margin-left: auto;
   color: var(--text-soft);
   font-size: 0.75rem;
   font-weight: 600;
@@ -85,25 +91,26 @@
   font-size: 0.8rem;
 }
 
-/* Social Post Card */.social-post {
+/* Card de Publicação */
+.social-post {
   overflow: hidden; margin-bottom: 18px;
   border: 1px solid var(--border); border-radius: var(--radius-md);
   background: var(--surface); box-shadow: var(--shadow-sm);
   scroll-margin-top: calc(var(--header-height) + 18px);
-}.social-post-header {
+}
+.social-post-header {
   display: grid; grid-template-columns: 44px minmax(0, 1fr) auto;
   gap: 11px; align-items: center;
   padding: 18px 20px 0;
-}.social-author-avatar {
+}
+.social-author-avatar {
   width: 44px; height: 44px;
   border-radius: 50%; background: var(--structure-bg); color: var(--structure-text);
   font-size: 0.74rem; font-weight: 800;
-}.social-author-copy {
+}
+.social-author-copy {
   display: flex; flex-direction: column; gap: 2px;
   min-width: 0;
-}
-.social-author-copy > div {
-  display: flex; align-items: center; gap: 6px;
 }
 .social-author-copy h2 {
   margin: 0; color: var(--text); font-size: 0.96rem; font-weight: 700;
@@ -116,43 +123,39 @@
 }
 .social-author-copy time {
   color: var(--text-soft); font-size: 0.68rem;
-}.social-post-text {
+}
+.social-post-text {
   margin: 16px 20px 18px;
   color: var(--text);
   font-size: 0.86rem; line-height: 1.65; white-space: pre-wrap;
-}.social-media-frame {
+}
+.social-media-frame {
   display: grid;
   position: relative; width: 100%; overflow: hidden;
   background: var(--surface-accent);
   aspect-ratio: 16 / 9;
-}.social-media-frame img {
+}
+.social-media-frame img {
   width: 100%; height: 100%;
   object-fit: cover;
-}.social-media-placeholder {
+}
+.social-media-placeholder {
   display: grid; place-content: center; gap: 7px;
   padding: 24px;
   color: var(--text-soft);
   text-align: center;
   justify-items: center;
-}.social-post-metrics {
-  display: flex; align-items: center; gap: 13px;
+}
+.social-post-metrics {
   min-height: 42px; padding: 8px 20px;
   color: var(--text-soft);
   font-size: 0.65rem;
-}.social-post-metrics span:first-child {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-right: auto;
-}.social-post-actions {
-  display: flex;
-  align-items: center;
+}
+.social-post-actions {
   padding: 6px 12px;
   border-top: 1px solid var(--border);
 }
 .social-post-actions button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
   min-height: 38px;
   padding: 0 16px;
   border: 0;
@@ -170,22 +173,26 @@
   background: var(--action-soft);
 }
 
-/* Community Sidebar */
+/* Barra Lateral da Comunidade */
 .social-feed-sidebar {
   grid-column: 1; grid-row: 1; display: grid; gap: 16px;
   position: sticky; top: calc(var(--header-height) + 22px);
   min-width: 0;
-}.social-side-card {
+}
+.social-side-card {
   overflow: hidden;
   border: 1px solid var(--border); border-radius: var(--radius-md);
   background: var(--surface); box-shadow: var(--shadow-sm);
-}.social-profile-cover {
+}
+.social-profile-cover {
   position: relative; width: 100%; height: 82px;
   background: var(--surface-accent);
-}.social-profile-cover img {
+}
+.social-profile-cover img {
   width: 100%; height: 100%;
   object-fit: cover;
-}.social-profile-cover.is-placeholder > div {
+}
+.social-profile-cover.is-placeholder > div {
   width: 100%;
   height: 100%;
   background: var(--surface-accent);
@@ -198,11 +205,7 @@
   font-size: 0.86rem;
 }
 .social-user-identity {
-  display: flex; flex-direction: column; gap: 2px;
   margin-top: 10px;
-}
-.social-user-identity > div {
-  display: flex; align-items: center; gap: 6px;
 }
 .social-user-identity h2 {
   margin: 0;
@@ -224,9 +227,6 @@
   margin: 0 0 12px;
   color: var(--text-soft);
   font-size: 0.72rem;
-}
-.social-user-details > div {
-  display: flex; align-items: center; gap: 8px;
 }
 .social-user-details dt, .social-user-details dd { margin: 0; }
 .social-user-stats {
@@ -253,9 +253,6 @@
   gap: 10px; align-items: center;
   padding: 16px 16px 12px;
 }
-.social-side-card-heading > div {
-  display: flex; flex-direction: column; gap: 1px;
-}
 .social-side-card-heading h2 { margin: 0; font-size: 0.94rem; }
 .social-side-card-heading p {
   margin: 0;
@@ -271,10 +268,6 @@
   gap: 8px; align-items: center;
   padding: 9px 0;
   border-top: 1px solid var(--border);
-}
-.social-topics li > div {
-  display: flex; flex-direction: column; gap: 2px;
-  min-width: 0;
 }
 .social-topics li strong {
   display: block;
@@ -311,7 +304,6 @@
 }
 .social-suggestions li > div {
   grid-area: info;
-  display: flex; flex-direction: column; gap: 2px;
   min-width: 0;
 }
 .social-suggestions li > div > strong {
@@ -332,7 +324,6 @@
 }
 .social-suggestions li button {
   grid-area: action;
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   width: fit-content; min-height: 28px; padding: 4px 12px;
   border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
   background: var(--surface); color: var(--action);
@@ -348,7 +339,8 @@
   border-color: var(--border); background: var(--surface-muted);
   color: var(--text-soft);
   cursor: default;
-}.social-toast {
+}
+.social-toast {
   display: grid; grid-template-columns: 20px minmax(0, 1fr) 30px;
   gap: 9px; align-items: center;
   position: fixed; left: 22px; bottom: 22px;
@@ -357,20 +349,25 @@
   color: var(--text); box-shadow: var(--shadow-overlay); opacity: 0; visibility: hidden;
   transform: translateY(12px);
   transition: opacity var(--transition), transform var(--transition);
-}.social-toast.is-visible {
+}
+.social-toast.is-visible {
   opacity: 1; visibility: visible;
   transform: translateY(0);
 }
 
-/* Social Breakpoints */@media (max-width: 991px) {
+/* Breakpoints Responsivos do Feed */
+@media (max-width: 991px) {
   .social-feed-shell {
     grid-template-columns: minmax(0, 780px); justify-content: center;
-}.social-feed-primary, .social-feed-sidebar { grid-column: auto; grid-row: auto; }.social-feed-sidebar {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  position: static; max-height: none;
-}}
+  }
+  .social-feed-primary, .social-feed-sidebar { grid-column: auto; grid-row: auto; }
+  .social-feed-sidebar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: static; max-height: none;
+  }
+}
 
 @media (max-width: 767px) {
-  .social-feed-sidebar { grid-template-columns: 1fr;
-}.social-post-actions { grid-template-columns: 1fr 1fr; }
+  .social-feed-sidebar { grid-template-columns: 1fr; }
+  .social-post-actions { grid-template-columns: 1fr 1fr; }
 }

@@ -16,33 +16,33 @@ export default function Contato() {
     <main id="conteudo-principal" className="contact-page">
       <div className="shell-container contact-grid">
         <section className="contact-intro">
-          <span className="eyebrow">Fale com a Plouty</span>
+          <span className="eyebrow d-inline-flex align-items-center gap-2">Fale com a Plouty</span>
           <h1>Uma conversa direta, como deve ser.</h1>
-          <p>
+          <p className="text-muted">
             Conte onde você está na jornada: vendendo sua produção, organizando uma compra institucional ou conhecendo o projeto.
           </p>
 
-          <div className="contact-channel">
-            <span><i className="bi bi-life-preserver" /></span>
-            <div>
+          <div className="contact-channel d-flex align-items-start gap-3">
+            <span className="flex-shrink-0"><i className="bi bi-life-preserver" /></span>
+            <div className="d-flex flex-column gap-1">
               <strong>Suporte ao uso</strong>
-              <p>Ajuda para produtores e instituições no protótipo.</p>
+              <p className="mb-0 text-muted">Ajuda para produtores e instituições no protótipo.</p>
               <a href="mailto:suporte@plouty.com.br">suporte@plouty.com.br</a>
             </div>
           </div>
 
-          <div className="contact-channel">
-            <span className="earth"><i className="bi bi-building-check" /></span>
-            <div>
+          <div className="contact-channel d-flex align-items-start gap-3">
+            <span className="earth flex-shrink-0"><i className="bi bi-building-check" /></span>
+            <div className="d-flex flex-column gap-1">
               <strong>Parcerias institucionais</strong>
-              <p>Faculdades, cooperativas e organizações interessadas.</p>
+              <p className="mb-0 text-muted">Faculdades, cooperativas e organizações interessadas.</p>
               <a href="mailto:parcerias@plouty.com.br">parcerias@plouty.com.br</a>
             </div>
           </div>
 
-          <div className="contact-note">
+          <div className="contact-note d-flex align-items-start gap-2">
             <i className="bi bi-clock" />
-            <span>
+            <span className="d-flex flex-column gap-1">
               <strong>Retorno demonstrativo</strong>
               Este formulário valida os campos, mas ainda não envia mensagens para um servidor.
             </span>
@@ -50,11 +50,11 @@ export default function Contato() {
         </section>
 
         <section className="contact-form-panel" aria-labelledby="contact-title">
-          <span className="eyebrow">Envie uma mensagem</span>
+          <span className="eyebrow d-inline-flex align-items-center gap-2">Envie uma mensagem</span>
           <h2 id="contact-title">Como podemos ajudar?</h2>
 
           {isSuccess && (
-            <div className="feedback-banner success" role="status">
+            <div className="feedback-banner success d-flex align-items-center gap-3 mb-4" role="status">
               <i className="bi bi-check-circle-fill" />
               <span>
                 <strong>Mensagem validada.</strong> Em produção, ela seria encaminhada à equipe Plouty.

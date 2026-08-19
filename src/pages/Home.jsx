@@ -26,15 +26,15 @@ function ProducerHome({ onOpenMessages }) {
   return (
     <main id="conteudo-principal" className="workspace-main">
       <div className="shell-container">
-        <section className="workspace-hero" aria-labelledby="home-title">
+        <section className="workspace-hero d-flex align-items-end justify-content-between gap-4 flex-wrap" aria-labelledby="home-title">
           <div>
-            <span className="context-label">
+            <span className="context-label d-inline-flex align-items-center gap-2">
               <i className="bi bi-sun" aria-hidden="true" /> {todayLabel}
             </span>
             <h1 id="home-title">Bom dia, João.</h1>
-            <p>Há novas compras institucionais perto da sua região e uma proposta aguardando retorno.</p>
+            <p className="mb-0 text-muted">Há novas compras institucionais perto da sua região e uma proposta aguardando retorno.</p>
           </div>
-          <div className="hero-actions">
+          <div className="hero-actions d-flex gap-2 flex-shrink-0">
             <NavLink className="btn btn-primary" to="/explorar">
               Explorar oportunidades <i className="bi bi-arrow-right" aria-hidden="true" />
             </NavLink>
@@ -43,8 +43,8 @@ function ProducerHome({ onOpenMessages }) {
 
         <section className="summary-strip" aria-label="Resumo operacional">
           {producerSummary.map((item) => (
-            <article key={item.label} className={`summary-item tone-${item.tone}`}>
-              <span className="summary-icon">
+            <article key={item.label} className={`summary-item d-flex align-items-center gap-3 tone-${item.tone}`}>
+              <span className="summary-icon d-inline-flex align-items-center justify-content-center flex-shrink-0">
                 <i className={`bi ${item.icon}`} aria-hidden="true" />
               </span>
               <div>
@@ -58,13 +58,13 @@ function ProducerHome({ onOpenMessages }) {
 
         <div className="workspace-layout">
           <section className="workspace-feed" aria-labelledby="recommended-title">
-            <div className="section-title-row opportunity-list-title">
+            <div className="section-title-row opportunity-list-title d-flex align-items-start justify-content-between gap-3">
               <div>
-                <span className="eyebrow">Selecionadas para sua produção</span>
+                <span className="eyebrow d-inline-flex align-items-center gap-2">Selecionadas para sua produção</span>
                 <h2 id="recommended-title">Oportunidades recomendadas</h2>
-                <p>Compatibilidade calculada com base nos produtos, volume e distância do perfil demonstrativo.</p>
+                <p className="mb-0 text-muted">Compatibilidade calculada com base nos produtos, volume e distância do perfil demonstrativo.</p>
               </div>
-              <NavLink to="/explorar" className="text-link">
+              <NavLink to="/explorar" className="text-link flex-shrink-0">
                 Ver todas <i className="bi bi-arrow-right" aria-hidden="true" />
               </NavLink>
             </div>
@@ -111,15 +111,15 @@ function BuyerHome({ onOpenMessages }) {
   return (
     <main id="conteudo-principal" className="workspace-main buyer-home">
       <div className="shell-container">
-        <section className="workspace-hero" aria-labelledby="buyer-home-title">
+        <section className="workspace-hero d-flex align-items-end justify-content-between gap-4 flex-wrap" aria-labelledby="buyer-home-title">
           <div>
-            <span className="context-label">
+            <span className="context-label d-inline-flex align-items-center gap-2">
               <i className="bi bi-building" /> Comprador institucional · demonstração
             </span>
             <h1 id="buyer-home-title">Bom dia, equipe Caminhos.</h1>
-            <p>Organize suas compras, compare propostas e encontre produtores com capacidade comprovada.</p>
+            <p className="mb-0 text-muted">Organize suas compras, compare propostas e encontre produtores com capacidade comprovada.</p>
           </div>
-          <div className="hero-actions">
+          <div className="hero-actions d-flex gap-2 flex-shrink-0">
             <button
               type="button"
               className="btn btn-primary"
@@ -136,8 +136,8 @@ function BuyerHome({ onOpenMessages }) {
 
         <section className="summary-strip" aria-label="Resumo operacional do comprador">
           {buyerSummary.map((item) => (
-            <article key={item.label} className={`summary-item tone-${item.tone}`}>
-              <span className="summary-icon">
+            <article key={item.label} className={`summary-item d-flex align-items-center gap-3 tone-${item.tone}`}>
+              <span className="summary-icon d-inline-flex align-items-center justify-content-center flex-shrink-0">
                 <i className={`bi ${item.icon}`} />
               </span>
               <div>
@@ -160,11 +160,11 @@ function BuyerHome({ onOpenMessages }) {
               </div>
             )}
 
-            <div className="section-title-row opportunity-list-title">
+            <div className="section-title-row opportunity-list-title d-flex align-items-start justify-content-between gap-3">
               <div>
-                <span className="eyebrow">Sua operação de compra</span>
+                <span className="eyebrow d-inline-flex align-items-center gap-2">Sua operação de compra</span>
                 <h2 id="buyer-demands-title">Demandas recentes</h2>
-                <p>Acompanhe propostas e prazos sem perder o próximo passo.</p>
+                <p className="mb-0 text-muted">Acompanhe propostas e prazos sem perder o próximo passo.</p>
               </div>
             </div>
             <div className="buyer-demand-list">
@@ -173,13 +173,13 @@ function BuyerHome({ onOpenMessages }) {
                 const deliveryLabel = formatISODateShort(demand.delivery);
                 return (
                   <article key={demand.id}>
-                    <span className="buyer-demand-icon">
+                    <span className="buyer-demand-icon flex-shrink-0">
                       <i className="bi bi-clipboard2-data" />
                     </span>
-                    <div>
+                    <div className="d-flex flex-column">
                       <span className="status-chip">{demand.status}</span>
                       <h3>{demand.product}</h3>
-                      <p>
+                      <p className="mb-0 text-muted">
                         {demand.quantity || 'Quantidade informada na publicação'} · propostas até {deadlineLabel}
                         {deliveryLabel ? ` · entrega em ${deliveryLabel}` : ''}
                       </p>

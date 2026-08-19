@@ -46,7 +46,7 @@ export default function ProducerFilters({
         role={isOpenMobile ? 'dialog' : undefined}
         aria-modal={isOpenMobile ? 'true' : undefined}
       >
-        <div className="filters-title">
+        <div className="filters-title d-flex justify-content-between align-items-start gap-2">
           <div>
             <span className="eyebrow">Busca de fornecedores</span>
             <h2>Filtros</h2>

@@ -21,9 +21,9 @@ export default function PostComposer({ profile, onPublish, onFeedback }) {
     <form className={`social-composer ${expanded ? 'is-expanded' : ''}`} onSubmit={handleSubmit} noValidate>
       <div className="social-composer-head">
         <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
-        <div>
+        <div className="d-flex flex-column">
           <label htmlFor="social-post-text">Compartilhe uma experiência, entrega ou conquista</label>
-          <small>Conte algo relevante para produtores, instituições e comunidades.</small>
+          <small className="text-muted">Conte algo relevante para produtores, instituições e comunidades.</small>
         </div>
       </div>
 
@@ -38,14 +38,14 @@ export default function PostComposer({ profile, onPublish, onFeedback }) {
         onChange={(event) => { setText(event.target.value); setExpanded(true); }}
       />
 
-      <div className="social-composer-toolbar">
-        <div className="social-composer-media-action">
-          <button className="social-media-button" type="button" onClick={() => onFeedback && onFeedback('Upload de imagens disponível nas próximas versões.')}>
+      <div className="social-composer-toolbar d-flex align-items-center justify-content-between gap-3 mt-3">
+        <div className="social-composer-media-action d-flex align-items-center gap-2">
+          <button className="social-media-button d-inline-flex align-items-center gap-2" type="button" onClick={() => onFeedback && onFeedback('Upload de imagens disponível nas próximas versões.')}>
             <i className="bi bi-image" aria-hidden="true" /> Adicionar imagem
           </button>
           <small id="social-post-local-note">Modo demonstrativo</small>
         </div>
-        <span id="social-post-counter" className="social-character-counter" aria-live="polite">{text.length}/{POST_CHARACTER_LIMIT}</span>
+        <span id="social-post-counter" className="social-character-counter ms-auto" aria-live="polite">{text.length}/{POST_CHARACTER_LIMIT}</span>
         <button className="btn btn-primary social-publish-button" type="submit" disabled={!text.trim()}>
           <i className="bi bi-send" aria-hidden="true" /> Publicar
         </button>

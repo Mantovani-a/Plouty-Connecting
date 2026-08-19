@@ -109,11 +109,11 @@ export default function Entrar() {
   };
 
   return (
-    <main id="conteudo-principal" className="auth-page">
+    <main id="conteudo-principal" className="auth-page d-flex align-items-center">
       <div className="auth-field-pattern" aria-hidden="true" />
       <div className="shell-container login-page-grid">
         <section className="login-intro" aria-labelledby="login-story-title">
-          <span className="eyebrow">Conexões, reputação e negócios agrícolas</span>
+          <span className="eyebrow d-inline-flex align-items-center gap-2">Conexões, reputação e negócios agrícolas</span>
           <h1 id="login-story-title">
             A rede profissional que conecta quem produz a quem alimenta comunidades.
           </h1>
@@ -125,7 +125,7 @@ export default function Entrar() {
 
         <section className="login-panel" aria-labelledby="login-title">
           <div className="login-panel-heading">
-            <span className="eyebrow">Acesso à plataforma</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Acesso à plataforma</span>
             <h2 id="login-title">Entre na demonstração</h2>
             <p>Escolha como você participa da rede e acesse o painel correspondente.</p>
           </div>
@@ -154,7 +154,7 @@ export default function Entrar() {
                 <span className="login-role-icon">
                   <i className="bi bi-person-workspace" aria-hidden="true" />
                 </span>
-                <span>
+                <span className="d-flex flex-column">
                   <strong>Produtor</strong>
                   <small>Ofertar e negociar produção</small>
                 </span>
@@ -172,14 +172,14 @@ export default function Entrar() {
                 <span className="login-role-icon">
                   <i className="bi bi-building" aria-hidden="true" />
                 </span>
-                <span>
+                <span className="d-flex flex-column">
                   <strong>Instituição</strong>
                   <small>Comprar e gerir fornecimento</small>
                 </span>
                 <i className="bi bi-check-circle-fill role-selection-check" aria-hidden="true" />
               </label>
             </div>
-            <p id="login-role-destination" className="login-role-destination" aria-live="polite">
+            <p id="login-role-destination" className="login-role-destination d-flex align-items-start gap-2" aria-live="polite">
               <i className="bi bi-arrow-right-circle" aria-hidden="true" />{' '}
               {roleContent?.destination ||
                 'Selecione o perfil que representa sua participação nesta demonstração.'}
@@ -250,7 +250,7 @@ export default function Entrar() {
             </div>
 
             <button
-              className="btn btn-primary login-submit"
+              className="btn btn-primary login-submit d-flex align-items-center justify-content-between w-100"
               type="submit"
               disabled={isLoading || Boolean(successMessage)}
             >
@@ -278,7 +278,7 @@ export default function Entrar() {
             </div>
           </form>
 
-          <div className="login-demo-disclaimer">
+          <div className="login-demo-disclaimer d-flex gap-2">
             <i className="bi bi-info-circle" aria-hidden="true" />
             <p>
               <strong>Acesso demonstrativo</strong>Não existe autenticação no backend. O perfil
@@ -295,9 +295,9 @@ export default function Entrar() {
           aria-label="Como uma conexão comercial acontece na Plouty"
         >
           <div className="login-connection" aria-label="Exemplo demonstrativo de conexão comercial">
-            <div className="connection-party">
+            <div className="connection-party d-flex align-items-center gap-2">
               <span className="connection-avatar">JC</span>
-              <div>
+              <div className="d-flex flex-column">
                 <small>Produtor familiar</small>
                 <strong>João Carlos</strong>
                 <em><i className="bi bi-patch-check-fill" /> CAF validado</em>
@@ -306,7 +306,7 @@ export default function Entrar() {
             <div className="connection-path" aria-hidden="true">
               <i className="bi bi-arrow-right" />
             </div>
-            <div className="connection-deal">
+            <div className="connection-deal d-flex flex-column gap-1 text-start">
               <span>OPORTUNIDADE</span>
               <strong>180 kg de frutas</strong>
               <small>fornecimento semanal</small>
@@ -314,9 +314,9 @@ export default function Entrar() {
             <div className="connection-path" aria-hidden="true">
               <i className="bi bi-arrow-right" />
             </div>
-            <div className="connection-party institution">
+            <div className="connection-party institution d-flex align-items-center gap-2">
               <span className="connection-avatar"><i className="bi bi-hospital" /></span>
-              <div>
+              <div className="d-flex flex-column">
                 <small>Comprador institucional</small>
                 <strong>Hospital Regional</strong>
                 <em><i className="bi bi-shield-check" /> Instituição verificada</em>
@@ -327,24 +327,24 @@ export default function Entrar() {
           <ul className="login-trust-list">
             <li>
               <i className="bi bi-people" aria-hidden="true" />
-              <span>
+              <span className="d-flex flex-column gap-1">
                 <strong>Relações profissionais</strong>Conexões entre quem produz e quem compra para comunidades.
               </span>
             </li>
             <li>
               <i className="bi bi-patch-check" aria-hidden="true" />
-              <span>
+              <span className="d-flex flex-column gap-1">
                 <strong>Reputação em contexto</strong>Avaliações, entregas e documentos apoiam decisões mais seguras.
               </span>
             </li>
             <li>
               <i className="bi bi-briefcase" aria-hidden="true" />
-              <span>
+              <span className="d-flex flex-column gap-1">
                 <strong>Negócios acompanhados</strong>Oportunidades, propostas e contratos organizados em cada etapa.
               </span>
             </li>
           </ul>
-          <p className="login-impact-note">
+          <p className="login-impact-note d-flex align-items-center gap-2 mt-3">
             <i className="bi bi-globe-americas" aria-hidden="true" /> Projeto acadêmico alinhado à ODS 2 — Fome Zero e Agricultura Sustentável.
           </p>
         </section>

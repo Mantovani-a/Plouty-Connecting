@@ -33,15 +33,15 @@ export default function Explorar({ onOpenMessages }) {
   return (
     <main id="conteudo-principal" className="workspace-main producers-page">
       <div className="shell-container">
-        <section className="page-heading">
+        <section className="page-heading d-flex align-items-end justify-content-between gap-4 flex-wrap">
           <div>
-            <span className="eyebrow">Rede de fornecimento</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Rede de fornecimento</span>
             <h1>Produtores e cooperativas</h1>
-            <p>
+            <p className="mb-0 text-muted">
               Perfis comerciais com disponibilidade, histórico de entrega e documentos demonstrativos.
             </p>
           </div>
-          <div className="mock-label">
+          <div className="mock-label d-inline-flex align-items-center gap-2">
             <i className="bi bi-database" /> Dados demonstrativos
           </div>
         </section>
@@ -58,7 +58,7 @@ export default function Explorar({ onOpenMessages }) {
           />
 
           <section className="producer-results">
-            <div className="results-toolbar">
+            <div className="results-toolbar d-flex align-items-center justify-content-between gap-3 mb-3">
               <div role="status" aria-live="polite" aria-atomic="true">
                 <strong>
                   {filteredProducers.length} {filteredProducers.length === 1 ? 'fornecedor' : 'fornecedores'}

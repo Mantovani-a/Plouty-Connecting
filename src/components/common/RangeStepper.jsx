@@ -180,7 +180,7 @@ export default function RangeStepper({
 
   return (
     <div className={rootClassName}>
-      <div className="range-stepper-heading">
+      <div className="range-stepper-heading d-flex align-items-center justify-content-between gap-2">
         <label htmlFor={id}>{label}</label>
         <output className="range-stepper-output" htmlFor={id}>
           <strong>{displayedValue}</strong>

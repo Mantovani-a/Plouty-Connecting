@@ -23,17 +23,17 @@ function UserSummaryCard({ profile }) {
       <ProfileCover src={profile.coverImage} alt={`Capa demonstrativa de ${profile.name}`} />
       <div className="social-user-summary-body">
         <Avatar className="social-user-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
-        <div className="social-user-identity">
-          <div>
+        <div className="social-user-identity d-flex flex-column">
+          <div className="d-flex align-items-center gap-2">
             <h2 id="social-user-summary-title">{profile.name}</h2>
             {profile.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}
           </div>
-          <p>{profile.role}</p>
+          <p className="mb-0 text-muted">{profile.role}</p>
         </div>
         <p className="social-user-description">{profile.description}</p>
         <dl className="social-user-details">
-          <div><dt><i className="bi bi-geo-alt" aria-hidden="true" /><span className="visually-hidden">Localização</span></dt><dd>{profile.location}</dd></div>
-          <div><dt><i className="bi bi-buildings" aria-hidden="true" /><span className="visually-hidden">Organização</span></dt><dd>{profile.organization}</dd></div>
+          <div className="d-flex align-items-center gap-2"><dt><i className="bi bi-geo-alt" aria-hidden="true" /><span className="visually-hidden">Localização</span></dt><dd>{profile.location}</dd></div>
+          <div className="d-flex align-items-center gap-2"><dt><i className="bi bi-buildings" aria-hidden="true" /><span className="visually-hidden">Organização</span></dt><dd>{profile.organization}</dd></div>
         </dl>
         <div className="social-user-stats" aria-label="Resumo de confiança">
           <div><strong>{profile.completedDeals}</strong><span>negócios concluídos</span></div>
@@ -49,13 +49,13 @@ function TopicsCard() {
     <section className="social-side-card social-topics" aria-labelledby="social-topics-title">
       <div className="social-side-card-heading">
         <span aria-hidden="true"><i className="bi bi-broadcast" /></span>
-        <div><h2 id="social-topics-title">Em pauta na rede</h2><p>Conversas recentes da comunidade</p></div>
+        <div className="d-flex flex-column"><h2 id="social-topics-title">Em pauta na rede</h2><p className="mb-0 text-muted">Conversas recentes da comunidade</p></div>
       </div>
       <ol>
         {socialTopics.map((topic, index) => (
           <li key={topic.id}>
             <span>{String(index + 1).padStart(2, '0')}</span>
-            <div><strong>{topic.label}</strong><small>{topic.recentPosts} publicações recentes</small></div>
+            <div className="d-flex flex-column"><strong>{topic.label}</strong><small>{topic.recentPosts} publicações recentes</small></div>
           </li>
         ))}
       </ol>
@@ -76,7 +76,7 @@ function SuggestionsCard({ suggestions, onFeedback }) {
     <section className="social-side-card social-suggestions" aria-labelledby="social-suggestions-title">
       <div className="social-side-card-heading">
         <span aria-hidden="true"><i className="bi bi-people" /></span>
-        <div><h2 id="social-suggestions-title">Pessoas e instituições que talvez conheça</h2><p>Sugestões demonstrativas</p></div>
+        <div className="d-flex flex-column"><h2 id="social-suggestions-title">Pessoas e instituições que talvez conheça</h2><p className="mb-0 text-muted">Sugestões demonstrativas</p></div>
       </div>
       <ul>
         {suggestions.slice(0, 3).map((suggestion) => {
@@ -84,8 +84,8 @@ function SuggestionsCard({ suggestions, onFeedback }) {
           return (
             <li key={suggestion.id}>
               <Avatar className="social-suggestion-avatar" src={suggestion.avatar} initials={suggestion.initials} alt={`Foto de ${suggestion.name}`} />
-              <div><strong>{suggestion.name}</strong><span>{suggestion.type}</span><small>{suggestion.detail}</small></div>
-              <button type="button" className={requestSent ? 'is-sent' : ''} onClick={() => sendRequest(suggestion)} disabled={requestSent}>
+              <div className="d-flex flex-column"><strong>{suggestion.name}</strong><span>{suggestion.type}</span><small>{suggestion.detail}</small></div>
+              <button type="button" className={`d-inline-flex align-items-center justify-content-center gap-1 ${requestSent ? 'is-sent' : ''}`} onClick={() => sendRequest(suggestion)} disabled={requestSent}>
                 <i className={`bi ${requestSent ? 'bi-check2' : 'bi-person-plus'}`} aria-hidden="true" />
                 {requestSent ? 'Solicitação enviada' : 'Conectar'}
               </button>

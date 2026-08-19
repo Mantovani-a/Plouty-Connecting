@@ -66,7 +66,7 @@ function AppContent() {
   }, [location.pathname]);
 
   return (
-    <div className={isProductArea ? 'app-shell has-message-dock' : 'public-shell'}>
+    <div className={`d-flex flex-column min-vh-100 ${isProductArea ? 'app-shell has-message-dock' : 'public-shell'}`}>
       <a className="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
       <Navbar
         variant={isProductArea ? 'product' : 'public'}

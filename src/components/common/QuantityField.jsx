@@ -383,7 +383,7 @@ export default function QuantityField({
                   key={item.value}
                   id={`${unitId}-option-${itemIndex}`}
                   type="button"
-                  className={`quantity-unit-option${active ? ' is-active' : ''}${selected ? ' is-selected' : ''}`}
+                  className={`quantity-unit-option d-flex align-items-center justify-content-between w-100${active ? ' is-active' : ''}${selected ? ' is-selected' : ''}`}
                   role="option"
                   tabIndex={-1}
                   aria-selected={selected}
@@ -445,7 +445,7 @@ export default function QuantityField({
           ref={unitButtonRef}
           id={unitButtonId}
           type="button"
-          className={`quantity-unit-trigger ${selectClassName}`.trim()}
+          className={`quantity-unit-trigger d-inline-flex align-items-center justify-content-between gap-2 ${selectClassName}`.trim()}
           disabled={unitDisabled}
           aria-label={selectProps['aria-label'] || `${unitLabel}: ${selectedUnit}`}
           aria-haspopup="listbox"

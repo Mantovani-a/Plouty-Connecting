@@ -10,7 +10,7 @@ export default function ProfileSummary({ onNavigate }) {
 
   return (
     <div className="profile-summary">
-      <div className="profile-summary-head">
+      <div className="profile-summary-head d-flex align-items-center gap-3">
         <Avatar
           className="profile-avatar profile-avatar-large"
           src={profile.avatar}
@@ -19,14 +19,14 @@ export default function ProfileSummary({ onNavigate }) {
         />
         <div>
           <h3>{profile.name}</h3>
-          <p>{profile.role}</p>
+          <p className="mb-0">{profile.role}</p>
           <span>
             <i className="bi bi-geo-alt" aria-hidden="true" /> {profile.location}
           </span>
         </div>
       </div>
 
-      <div className="verification-line">
+      <div className="verification-line d-flex align-items-center gap-2">
         <i className="bi bi-patch-check-fill" aria-hidden="true" />
         <span>{profile.verification}</span>
       </div>
@@ -46,17 +46,17 @@ export default function ProfileSummary({ onNavigate }) {
         </div>
       </dl>
 
-      <nav className="profile-menu" aria-label="Opções do perfil">
-        <NavLink to="/inicio" end onClick={onNavigate}>
+      <nav className="profile-menu d-flex flex-column gap-1 mt-3" aria-label="Opções do perfil">
+        <NavLink to="/inicio" end onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-house-door" aria-hidden="true" /> Início
         </NavLink>
-        <NavLink to="/operacao" end onClick={onNavigate}>
+        <NavLink to="/operacao" end onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-grid-1x2" aria-hidden="true" /> Minha operação
         </NavLink>
-        <NavLink to="/explorar" onClick={onNavigate}>
+        <NavLink to="/explorar" onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-compass" aria-hidden="true" /> Explorar
         </NavLink>
-        <NavLink to="/contato" onClick={onNavigate}>
+        <NavLink to="/contato" onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-headset" aria-hidden="true" /> Fale com a Plouty
         </NavLink>
       </nav>
@@ -82,7 +82,7 @@ export default function ProfileSummary({ onNavigate }) {
           endDemoSession();
           onNavigate?.();
         }}
-        className="text-link profile-exit"
+        className="text-link profile-exit d-inline-flex align-items-center gap-2 mt-3"
       >
         <i className="bi bi-box-arrow-right" aria-hidden="true" /> Sair da demonstração
       </a>

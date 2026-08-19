@@ -79,13 +79,13 @@ export default function ImpactSidebar({ onOpenMessages }) {
   return (
     <aside className="operational-sidebar" aria-label="Atividade importante">
       <section ref={alertSectionRef} className="sidebar-section">
-        <div className="section-title-row">
+        <div className="section-title-row d-flex align-items-center justify-content-between gap-3">
           <div>
             <span className="eyebrow">Para agir agora</span>
             <h2>Próximos passos</h2>
           </div>
           <span
-            className="counter-pill"
+            className="counter-pill d-inline-flex align-items-center justify-content-center"
             aria-label={`${visibleAlerts.length} ${visibleAlerts.length === 1 ? 'próximo passo' : 'próximos passos'}`}
           >
             {visibleAlerts.length}
@@ -96,12 +96,12 @@ export default function ImpactSidebar({ onOpenMessages }) {
           {visibleAlerts.map((alert) => {
             const content = (
               <>
-                <span className={`activity-icon tone-${alert.tone}`}>
+                <span className={`activity-icon d-inline-flex align-items-center justify-content-center flex-shrink-0 tone-${alert.tone}`}>
                   <i className={`bi ${alert.icon}`} aria-hidden="true" />
                 </span>
-                <span>
+                <span className="d-flex flex-column">
                   <strong>{alert.title}</strong>
-                  <small>{alert.text}</small>
+                  <small className="text-muted">{alert.text}</small>
                   <em>
                     {alert.action} <i className="bi bi-arrow-right" aria-hidden="true" />
                   </em>
@@ -112,15 +112,15 @@ export default function ImpactSidebar({ onOpenMessages }) {
             return (
               <div className="alert-row" key={alert.id} data-alert-id={alert.id}>
                 {alert.to ? (
-                  <NavLink className="alert-item" to={alert.to}>{content}</NavLink>
+                  <NavLink className="alert-item d-flex align-items-start gap-2" to={alert.to}>{content}</NavLink>
                 ) : (
-                  <button type="button" className="alert-item" onClick={() => onOpenMessages?.()}>
+                  <button type="button" className="alert-item d-flex align-items-start gap-2" onClick={() => onOpenMessages?.()}>
                     {content}
                   </button>
                 )}
                 <button
                   type="button"
-                  className="alert-complete-button"
+                  className="alert-complete-button d-inline-flex align-items-center justify-content-center"
                   onClick={() => completeAlert(alert)}
                   aria-label={`Marcar ${alert.title.toLocaleLowerCase('pt-BR')} como concluído`}
                   title="Marcar como concluído"
@@ -133,23 +133,23 @@ export default function ImpactSidebar({ onOpenMessages }) {
 
           {!visibleAlerts.length && (
             <div ref={emptyStateRef} className="next-steps-empty" tabIndex="-1">
-              <span><i className="bi bi-check2-circle" aria-hidden="true" /></span>
+              <span className="d-inline-flex align-items-center justify-content-center"><i className="bi bi-check2-circle" aria-hidden="true" /></span>
               <strong>Tudo em dia por aqui</strong>
-              <p>Você concluiu os próximos passos desta demonstração.</p>
+              <p className="text-muted mb-0">Você concluiu os próximos passos desta demonstração.</p>
             </div>
           )}
         </div>
 
         {undoAlert && (
-          <div className="next-step-feedback" role="status">
+          <div className="next-step-feedback d-flex align-items-center gap-2 mt-2 p-2" role="status">
             <i className="bi bi-check-circle-fill" aria-hidden="true" />
-            <span><strong>Item concluído</strong>{undoAlert.title}</span>
-            <button ref={undoButtonRef} type="button" onClick={undoCompletion}>Desfazer</button>
+            <span className="d-flex flex-column"><strong>Item concluído</strong>{undoAlert.title}</span>
+            <button ref={undoButtonRef} type="button" className="ms-auto" onClick={undoCompletion}>Desfazer</button>
           </div>
         )}
 
         {completedIds.length > 0 && (
-          <button type="button" className="restore-next-steps" onClick={restoreCompletedAlerts}>
+          <button type="button" className="restore-next-steps d-inline-flex align-items-center gap-2 mt-2" onClick={restoreCompletedAlerts}>
             <i className="bi bi-arrow-counterclockwise" aria-hidden="true" />
             Restaurar itens concluídos
           </button>
@@ -159,7 +159,7 @@ export default function ImpactSidebar({ onOpenMessages }) {
 
       <section className="sidebar-section reputation-section">
         <span className="eyebrow">Sua confiança comercial</span>
-        <div className="reputation-score">
+        <div className="reputation-score d-flex align-items-baseline justify-content-between my-2">
           <strong>4,8</strong>
           <span><i className="bi bi-star-fill" aria-hidden="true" /> 38 avaliações</span>
         </div>
@@ -182,13 +182,13 @@ export default function ImpactSidebar({ onOpenMessages }) {
           </div>
         </div>
 
-        <p className="verified-docs">
+        <p className="verified-docs d-flex align-items-center gap-2 mt-3 pt-2">
           <i className="bi bi-shield-check" aria-hidden="true" /> CAF e identidade validadas
         </p>
       </section>
 
       <section className="impact-note">
-        <span><i className="bi bi-globe-americas" aria-hidden="true" /> {impactSummary.label}</span>
+        <span className="d-flex align-items-center gap-2"><i className="bi bi-globe-americas" aria-hidden="true" /> {impactSummary.label}</span>
         <strong>{impactSummary.value}</strong>
         <p>{impactSummary.detail}</p>
         <small>{impactSummary.footnote}</small>

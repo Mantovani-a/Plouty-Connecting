@@ -24,9 +24,9 @@ export default function SocialHome() {
       <div className="social-feed-shell">
         <div className="social-feed-primary">
           <header className="social-feed-heading">
-            <span className="eyebrow">Início · Rede Plouty</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Início · Rede Plouty</span>
             <h1>O que acontece na rede Plouty</h1>
-            <p>Experiências de produção, fornecimento e parceria que aproximam quem cultiva de quem alimenta comunidades.</p>
+            <p className="text-muted">Experiências de produção, fornecimento e parceria que aproximam quem cultiva de quem alimenta comunidades.</p>
           </header>
 
           <PostComposer profile={profile} onFeedback={showFeedback} />

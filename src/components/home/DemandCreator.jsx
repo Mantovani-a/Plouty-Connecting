@@ -75,7 +75,7 @@ export default function DemandCreator({ onAddDemand, onCancel }) {
 
   return (
     <form className="demand-composer" onSubmit={handleSubmit} noValidate>
-      <div className="section-title-row">
+      <div className="section-title-row d-flex align-items-start justify-content-between gap-3">
         <div>
           <span className="eyebrow">Nova compra</span>
           <h2>Publicar demanda</h2>
@@ -154,7 +154,7 @@ export default function DemandCreator({ onAddDemand, onCancel }) {
         </label>
       </div>
 
-      <div className="editor-actions">
+      <div className="editor-actions d-flex align-items-center justify-content-between gap-3 mt-3">
         <small>
           <i className="bi bi-info-circle" /> Publicação local, sem integração com servidor.
         </small>

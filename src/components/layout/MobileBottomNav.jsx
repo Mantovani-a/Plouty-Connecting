@@ -3,22 +3,22 @@ import { NavLink } from 'react-router-dom';
 
 export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, unreadMessages = 0 }) {
   return (
-    <nav className="mobile-bottom-nav" aria-label="Navegação móvel">
-      <NavLink to="/inicio" end className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
+    <nav className="mobile-bottom-nav d-grid d-lg-none" aria-label="Navegação móvel">
+      <NavLink to="/inicio" end className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-house-door" aria-hidden="true" />
         <span>Início</span>
       </NavLink>
-      <NavLink to="/operacao" end className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
+      <NavLink to="/operacao" end className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-grid-1x2" aria-hidden="true" />
         <span>Operação</span>
       </NavLink>
-      <NavLink to="/explorar" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
+      <NavLink to="/explorar" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-compass" aria-hidden="true" />
         <span>Explorar</span>
       </NavLink>
       <button
         type="button"
-        className={`mobile-nav-item ${messagesOpen ? 'active' : ''}`}
+        className={`mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${messagesOpen ? 'active' : ''}`}
         onClick={onOpenMessages}
         aria-expanded={messagesOpen}
         aria-controls="plouty-messages-panel"
@@ -31,7 +31,7 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
           </span>
         )}
       </button>
-      <NavLink to="/contato" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
+      <NavLink to="/contato" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-headset" aria-hidden="true" />
         <span>Contato</span>
       </NavLink>
