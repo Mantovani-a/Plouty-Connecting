@@ -1,5 +1,4 @@
-// Os nomes de arquivo abaixo são fixos. Basta colocar as imagens nas pastas
-// public/images/social/ indicadas no GUIA_FOTOS_DEMONSTRACAO.txt.
+// Os nomes de arquivo abaixo são fixos em public/images/social/.
 export const socialFeedPosts = [
   {
     id: 'escola-festa-milho',
