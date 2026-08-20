@@ -8,10 +8,6 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
         <i className="bi bi-house-door" aria-hidden="true" />
         <span>Início</span>
       </NavLink>
-      <NavLink to="/operacao" end className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
-        <i className="bi bi-grid-1x2" aria-hidden="true" />
-        <span>Operação</span>
-      </NavLink>
       <NavLink to="/explorar" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-compass" aria-hidden="true" />
         <span>Explorar</span>

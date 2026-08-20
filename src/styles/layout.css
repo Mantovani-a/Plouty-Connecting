@@ -273,7 +273,7 @@
   .profile-button { padding: 3px; border-radius: 50%; }
   .workspace-main, .has-message-dock .workspace-main { padding-bottom: 94px; }
   .mobile-bottom-nav {
-    display: grid !important; grid-template-columns: repeat(5, 1fr);
+    display: grid !important; grid-template-columns: repeat(4, 1fr);
     position: fixed; left: 0; right: 0;
     bottom: 0; z-index: 1500; min-height: 70px; padding-bottom: env(safe-area-inset-bottom);
     border-top: 1px solid var(--border);

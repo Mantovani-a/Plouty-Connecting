@@ -1,183 +1,6 @@
 /* ==========================================================================
-   Plouty Connecting — Formulários, Propostas e Autenticação
+   Plouty Connecting — Formulários e Autenticação
    ========================================================================== */
-
-/* Criador de Disponibilidade e Demandas */
-.availability-editor,
-.demand-composer {
-  margin-bottom: 22px; padding: 22px;
-  border: 1px solid var(--border-strong); border-left: 4px solid var(--earth);
-  border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm);
-}
-.availability-editor .section-title-row p,
-.demand-composer .section-title-row p {
-  margin: 5px 0 0;
-  color: var(--text-muted);
-  font-size: 0.88rem;
-}
-.availability-grid {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
-  margin-top: 18px;
-}
-.availability-grid fieldset {
-  display: grid; grid-template-columns: 1.2fr 1.15fr 1fr; gap: 10px;
-  padding: 12px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-.availability-grid label,
-.demand-composer-grid label,
-.login-field label {
-  color: var(--text-muted);
-  font-size: 0.72rem; font-weight: 700;
-}
-.availability-grid input,
-.demand-composer-grid input,
-.demand-composer-grid textarea,
-.demand-composer-grid select {
-  width: 100%; min-height: 38px; margin-top: 5px; padding: 8px 10px;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--surface-muted); color: var(--text);
-}
-.editor-actions small,
-.login-registration-note {
-  color: var(--text-soft); font-size: 0.68rem;
-}
-.demand-composer-grid {
-  display: grid; grid-template-columns: 1.25fr 1fr 0.8fr 0.8fr; gap: 10px;
-  margin-top: 18px;
-}
-.composer-field,
-.date-field,
-.quantity-field,
-.login-field {
-  display: flex; flex-direction: column;
-  min-width: 0;
-}
-.composer-notes,
-.proposal-note-field {
-  grid-column: 1 / -1;
-}
-
-/* Formulário de Propostas */
-.proposal-form-panel {
-  margin-top: 18px; padding: clamp(18px, 2.2vw, 26px);
-  border: 1px solid var(--border-strong); border-top: 3px solid var(--action);
-  border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--shadow-sm);
-}
-.proposal-form-header { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-.proposal-form-footer { margin-top: 18px; }
-.proposal-form-title > i {
-  display: grid; place-items: center; flex: 0 0 auto;
-  width: 34px; height: 34px;
-  border-radius: var(--radius-sm); background: var(--action-soft); color: var(--action);
-}
-.proposal-form-title h3,
-.proposal-form-title h4 {
-  margin: 0 0 3px; font-size: 1.08rem;
-}
-.proposal-form-grid {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px;
-  margin-top: 18px;
-}
-.currency-control {
-  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center;
-  min-height: 46px; overflow: hidden;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm); background: var(--surface-muted);
-}
-.currency-control:focus-within {
-  border-color: var(--action);
-  background: var(--surface); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 18%, transparent);
-}
-.currency-prefix {
-  align-self: stretch; display: grid; place-items: center;
-  min-width: 48px; padding: 0 10px;
-  border-right: 1px solid var(--border);
-  background: var(--surface-accent); color: var(--action);
-  font-size: 0.76rem; font-weight: 800;
-}
-.currency-control input {
-  width: 100%; height: 44px; padding: 0 12px;
-  border: 0; outline: 0; background: transparent; color: var(--text);
-  font-size: 0.82rem;
-}
-.proposal-note-field textarea {
-  width: 100%; min-height: 92px; padding: 11px 12px;
-  border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
-  background: var(--surface-muted); color: var(--text);
-  resize: vertical;
-}
-.proposal-ready-summary {
-  margin-top: 17px; padding: 10px 12px;
-  border-left: 3px solid var(--earth);
-  background: var(--earth-soft); color: var(--text-muted);
-  font-size: 0.68rem;
-}
-.proposal-submit-spinner,
-.button-spinner {
-  width: 16px; height: 16px;
-  border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
-  border-radius: 50%;
-  border-top-color: currentColor; animation: spin 0.8s linear infinite;
-}
-
-/* Campo de Quantidade e Unidades */
-.quantity-field { --quantity-control-height: 44px; }
-.availability-grid .quantity-field { --quantity-control-height: 38px; }
-.quantity-field-controls {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(82px, 28%, 106px); align-items: stretch;
-  min-width: 0; margin-top: 5px; overflow: hidden;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm); background: var(--surface-muted);
-}
-.quantity-field-controls:focus-within,
-.quantity-field-controls.is-menu-open {
-  border-color: var(--action); box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 18%, transparent);
-}
-.quantity-field .quantity-value-input {
-  width: 100%; height: var(--quantity-control-height);
-  margin: 0 !important; padding: 0 12px;
-  border: 0 !important; outline: 0 !important;
-  background: transparent !important; color: var(--text) !important;
-}
-.quantity-unit-trigger {
-  height: var(--quantity-control-height); padding: 0 11px 0 13px;
-  border: 0; border-left: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-accent) 74%, var(--surface-muted)); color: var(--action);
-  font-size: 0.78rem; font-weight: 760;
-  cursor: pointer;
-}
-.quantity-unit-chevron {
-  flex: 0 0 auto;
-  font-size: 0.66rem;
-  transition: transform var(--transition);
-}
-.quantity-field-controls.is-menu-open .quantity-unit-chevron { transform: rotate(180deg); }
-.quantity-unit-menu {
-  position: fixed; left: var(--menu-left, 0); top: var(--menu-top, 0); width: var(--menu-width, auto);
-  max-height: var(--menu-max-height, 320px); z-index: 2400; overflow-y: auto; padding: 6px;
-  border: 1px solid var(--border); border-radius: var(--radius-md);
-  background: var(--surface-raised); box-shadow: var(--shadow-overlay); color: var(--text);
-  transition: opacity var(--transition), transform var(--transition);
-}
-.quantity-unit-group-label {
-  padding: 6px 9px 4px;
-  color: var(--text-soft);
-  font-size: 0.6rem; font-weight: 780; text-transform: uppercase;
-}
-.quantity-unit-option {
-  width: 100%; min-height: 38px; padding: 7px 9px;
-  border: 0; border-radius: var(--radius-sm);
-  background: transparent; color: var(--text);
-  font-size: 0.73rem; font-weight: 650;
-  cursor: pointer;
-}
-.quantity-unit-option:hover,
-.quantity-unit-option.is-selected {
-  background: var(--action-soft); color: var(--action);
-  font-weight: 760;
-}
 
 /* Autenticação e Entrada */
 .auth-page {
@@ -504,15 +327,13 @@
 
 /* Breakpoints Responsivos de Formulários e Páginas Públicas */
 @media (max-width: 991px) {
-  .availability-grid, .demand-composer-grid { grid-template-columns: 1fr 1fr; }
   .about-hero-grid, .about-problem, .contact-grid { grid-template-columns: 1fr; }
   .login-page-grid { grid-template-areas: "intro" "panel" "details"; grid-template-columns: 1fr; gap: 32px; }
   .login-panel, .contact-form-panel { width: min(100%, 650px); justify-self: center; }
 }
 
 @media (max-width: 767px) {
-  .availability-grid, .demand-composer-grid, .path-grid { grid-template-columns: 1fr; }
-  .proposal-form-grid { grid-template-columns: 1fr; }
+  .path-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 540px) {

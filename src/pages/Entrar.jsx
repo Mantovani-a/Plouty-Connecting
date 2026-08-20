@@ -14,7 +14,7 @@ const ROLE_CONTENT = {
   }
 };
 
-const INTERNAL_PATHS = ['/inicio', '/operacao', '/explorar'];
+const INTERNAL_PATHS = ['/inicio', '/explorar', '/contato'];
 
 function validateLogin(form, role) {
   const errors = {};

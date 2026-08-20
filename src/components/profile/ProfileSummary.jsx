@@ -50,9 +50,6 @@ export default function ProfileSummary({ onNavigate }) {
         <NavLink to="/inicio" end onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-house-door" aria-hidden="true" /> Início
         </NavLink>
-        <NavLink to="/operacao" end onClick={onNavigate} className="d-flex align-items-center gap-2">
-          <i className="bi bi-grid-1x2" aria-hidden="true" /> Minha operação
-        </NavLink>
         <NavLink to="/explorar" onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-compass" aria-hidden="true" /> Explorar
         </NavLink>

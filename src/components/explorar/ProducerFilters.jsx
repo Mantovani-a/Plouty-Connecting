@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
-import RangeStepper from '../common/RangeStepper';
 
 export default function ProducerFilters({
   tipo,
@@ -92,22 +91,22 @@ export default function ProducerFilters({
             </select>
           </div>
 
-          <RangeStepper
-            id="producer-rating"
-            className="filter-group range-filter"
-            label="Avaliação mínima"
-            min={0}
-            max={5}
-            step={0.1}
-            value={reputacaoMin}
-            onChange={setReputacaoMin}
-            formatValue={(currentRating) => currentRating.toFixed(1)}
-            getValueText={(currentRating) =>
-              `${currentRating.toFixed(1).replace('.', ',')} de 5 estrelas`
-            }
-            decreaseLabel="Diminuir avaliação mínima em 0,1 estrela"
-            increaseLabel="Aumentar avaliação mínima em 0,1 estrela"
-          />
+          <div className="filter-group">
+            <div className="d-flex justify-content-between align-items-center mb-1">
+              <label htmlFor="producer-rating" className="mb-0">Avaliação mínima</label>
+              <strong>{reputacaoMin > 0 ? `${reputacaoMin.toFixed(1)} ★` : 'Todas'}</strong>
+            </div>
+            <input
+              id="producer-rating"
+              type="range"
+              className="form-range"
+              min="0"
+              max="5"
+              step="0.5"
+              value={reputacaoMin}
+              onChange={(e) => setReputacaoMin(Number(e.target.value))}
+            />
+          </div>
 
           {activeFilters && (
             <button type="button" className="btn btn-ghost w-100" onClick={onReset}>

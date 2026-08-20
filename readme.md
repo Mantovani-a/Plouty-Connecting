@@ -2,7 +2,7 @@
 
 Projeto acadêmico relacionado à **ODS 2 — Fome Zero e Agricultura Sustentável**.
 
-A Plouty conecta pequenos produtores rurais a compradores institucionais. O protótipo demonstra uma rede profissional agrícola, descoberta de oportunidades, publicação de demandas, propostas, reputação comercial, acompanhamento de negócios e conversas — tudo com dados locais, sem backend.
+A Plouty conecta pequenos produtores rurais a compradores institucionais. O protótipo demonstra uma rede social profissional agrícola com feed de publicações, catálogo e busca de produtores/cooperativas com filtros, painel de conversas e negociações em tempo real, alternância de perfis (produtor vs. comprador) e páginas institucionais — tudo com dados locais, sem backend.
 
 ## Tecnologias
 
@@ -30,8 +30,14 @@ npm run preview
 
 No Windows, se o PowerShell bloquear `npm`, use `npm.cmd` nos mesmos comandos.
 
+## Estrutura de Páginas
+
+- `/inicio`: Feed Social da rede com publicações, interações e barra lateral de perfil.
+- `/explorar`: Catálogo de produtores e cooperativas com filtros por raio, avaliação e produtos.
+- `/sobre`: Página institucional sobre a proposta de valor e impacto socioambiental (ODS 2).
+- `/contato`: Canal de atendimento e contato.
+- `/entrar`: Tela de login e alternador de perfil demonstrativo (Produtor vs. Instituição).
+
 ## Importante
 
-Este repositório é um protótipo de interface. Autenticação, mensagens, contratos, documentos, propostas e formulário de contato ainda não possuem persistência ou integração com servidor. A entrada cria uma sessão demonstrativa apenas na aba atual; mensagens e propostas adicionadas pela interface não são enviadas a um servidor. Publicações sociais criadas pelo usuário e a conclusão de “Próximos passos” usam armazenamento local somente para demonstrar o comportamento.
-
-O novo feed social fica em `/inicio`. O painel operacional anterior foi preservado em `/operacao`, com o nome “Minha operação”.
+Este repositório é um protótipo de interface. Autenticação, mensagens e formulário de contato utilizam estado em memória e `sessionStorage` para a sessão demonstrativa atual. Publicações sociais criadas pelo usuário utilizam persistência em `localStorage` para enriquecer a experiência interativa.
