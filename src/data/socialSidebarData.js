@@ -12,7 +12,7 @@ export const socialSuggestions = {
       name: 'Escola Municipal Sol Nascente',
       type: 'Instituição de ensino',
       detail: 'Vila Velha, ES',
-      avatar: '/images/social/avatars/escola-sol-nascente.jpg'
+      avatar: '/images/social/avatars/escola-sol-nascente.png'
     },
     {
       id: 'hospital-regional-guarapari',
@@ -20,7 +20,7 @@ export const socialSuggestions = {
       name: 'Hospital Regional de Guarapari',
       type: 'Instituição de saúde',
       detail: 'Guarapari, ES',
-      avatar: '/images/social/avatars/hospital-regional-guarapari.jpg'
+      avatar: '/images/social/avatars/hospital-regional-guarapari.png'
     },
     {
       id: 'restaurante-sabor-serra',
@@ -28,7 +28,7 @@ export const socialSuggestions = {
       name: 'Restaurante Sabor da Serra',
       type: 'Restaurante',
       detail: 'Domingos Martins, ES',
-      avatar: '/images/social/avatars/restaurante-sabor-serra.jpg'
+      avatar: '/images/social/avatars/restaurante-sabor-serra.png'
     }
   ],
   buyer: [
@@ -38,7 +38,7 @@ export const socialSuggestions = {
       name: 'João Carlos Silva',
       type: 'Produtor familiar',
       detail: 'Guarapari, ES',
-      avatar: '/images/social/avatars/joao-carlos.jpg'
+      avatar: '/images/social/avatars/joao-carlos.png'
     },
     {
       id: 'maria-dos-santos',
@@ -46,7 +46,7 @@ export const socialSuggestions = {
       name: 'Maria dos Santos',
       type: 'Produtora de frutas',
       detail: 'Presidente Prudente, SP',
-      avatar: '/images/social/avatars/maria-dos-santos.jpg'
+      avatar: '/images/social/avatars/maria-dos-santos.png'
     },
     {
       id: 'cooperativa-verde',
@@ -54,7 +54,7 @@ export const socialSuggestions = {
       name: 'Cooperativa Verde',
       type: 'Cooperativa agrícola',
       detail: 'Londrina, PR',
-      avatar: '/images/social/avatars/cooperativa-verde.jpg'
+      avatar: '/images/social/avatars/cooperativa-verde.png'
     }
   ]
 };

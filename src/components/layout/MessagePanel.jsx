@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { getUnreadConversationCount } from '../../data/messagesData';
+import Avatar from '../common/Avatar';
 
 export default function MessagePanel({ conversations, isOpen, onOpen, onClose, targetBusinessKey }) {
   const [selectedId, setSelectedId] = useState(null);
@@ -160,7 +161,12 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
               onClick={() => handleSelectConversation(conversation.id)}
               aria-label={`Abrir conversa com ${conversation.name}${conversation.unread ? `, ${conversation.unread} não lidas` : ''}`}
             >
-              <span className="conversation-avatar" aria-hidden="true">{conversation.initials}</span>
+              <Avatar
+                className="conversation-avatar"
+                src={conversation.avatar}
+                initials={conversation.initials}
+                alt={`Foto de ${conversation.name}`}
+              />
               <span className="conversation-preview d-flex flex-column gap-1">
                 <span className="d-flex align-items-center gap-1"><strong>{conversation.name}</strong>{conversation.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}</span>
                 <small className="text-muted text-truncate">{conversation.lastMessage}</small>

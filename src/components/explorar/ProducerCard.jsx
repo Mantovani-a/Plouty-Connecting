@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import Avatar from '../common/Avatar';
 
 export default function ProducerCard({ producer, onOpenMessages }) {
   const [saved, setSaved] = useState(false);
+  const initials = producer.name.split(' ').slice(0, 2).map((part) => part[0]).join('');
 
   return (
     <article className="producer-card">
       <div className="producer-head d-flex align-items-center gap-3">
-        <span className="producer-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true">
-          {producer.name.split(' ').slice(0, 2).map((part) => part[0]).join('')}
-        </span>
+        <Avatar
+          className="producer-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0"
+          src={producer.avatar}
+          initials={initials}
+          alt={`Foto de ${producer.name}`}
+        />
         <div className="producer-identity d-flex flex-column">
           <div className="d-flex align-items-center gap-2">
             <h2>{producer.name}</h2>
