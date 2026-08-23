@@ -38,7 +38,7 @@ export default function PostComposer({ profile, onPublish, onFeedback }) {
         onChange={(event) => { setText(event.target.value); setExpanded(true); }}
       />
 
-      <div className="social-composer-toolbar d-flex align-items-center justify-content-between gap-3 mt-3">
+      <div className="social-composer-toolbar d-flex flex-wrap align-items-center justify-content-between gap-2 gap-sm-3 mt-3">
         <div className="social-composer-media-action d-flex align-items-center gap-2">
           <button className="social-media-button d-inline-flex align-items-center gap-2" type="button" onClick={() => onFeedback && onFeedback('Upload de imagens disponível nas próximas versões.')}>
             <i className="bi bi-image" aria-hidden="true" /> Adicionar imagem

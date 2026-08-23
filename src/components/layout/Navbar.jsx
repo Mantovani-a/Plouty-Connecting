@@ -24,6 +24,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
   const { hasSession, isProducer, profile } = useWorkspace();
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [publicMenuOpen, setPublicMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const navigationItems = isProducer ? PRODUCER_NAV_ITEMS : BUYER_NAV_ITEMS;
@@ -40,12 +41,17 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
   if (variant === 'public') {
     return (
       <header className="site-header site-header-public">
-        <div className="shell-container site-header-inner d-flex align-items-center justify-content-between gap-3 h-100">
+        <div className="shell-container site-header-inner d-flex align-items-center justify-content-between gap-2 gap-sm-3 h-100">
           <Brand />
-          <div className="d-flex align-items-center gap-3 ms-auto">
-            <nav className="public-navigation d-none d-md-flex align-items-center gap-1" aria-label="Navegação institucional">
+          <div className="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
+            <nav className={`public-navigation ${publicMenuOpen ? 'is-open' : 'd-none d-md-flex'} align-items-center gap-1`} aria-label="Navegação institucional">
               {PUBLIC_NAV_ITEMS.map((item) => (
-                <NavLink key={item.to} to={item.to} className={({ isActive }) => `d-inline-flex align-items-center gap-2 ${isActive ? 'active' : ''}`}>
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setPublicMenuOpen(false)}
+                  className={({ isActive }) => `d-inline-flex align-items-center gap-2 ${isActive ? 'active' : ''}`}
+                >
                   {item.label}
                 </NavLink>
               ))}
@@ -59,6 +65,15 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
               ) : !isEntryPage ? (
                 <NavLink to="/entrar" className="btn btn-primary btn-compact">Entrar</NavLink>
               ) : null}
+              <button
+                className="icon-button d-inline-grid d-md-none"
+                type="button"
+                onClick={() => setPublicMenuOpen((open) => !open)}
+                aria-expanded={publicMenuOpen}
+                aria-label={publicMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+              >
+                <i className={`bi ${publicMenuOpen ? 'bi-x-lg' : 'bi-list'}`} aria-hidden="true" />
+              </button>
             </div>
           </div>
         </div>

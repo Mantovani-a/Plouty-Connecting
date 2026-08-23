@@ -287,7 +287,7 @@
   background: var(--action-soft);
 }
 .thread-message span { color: var(--text-soft); font-size: 0.6rem; }
-.message-composer { padding: 11px 12px 9px; border-top: 1px solid var(--border); background: var(--surface); }
+.message-composer { padding: 11px 12px calc(9px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border); background: var(--surface); }
 .message-composer > div {
   display: grid; grid-template-columns: minmax(0, 1fr) 38px; align-items: center;
   overflow: hidden;
@@ -296,7 +296,7 @@
 .message-composer input {
   width: 100%; height: 40px; padding: 0 6px 0 14px;
   border: 0; outline: 0; background: transparent; color: var(--text);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
 }
 .message-send-button {
   width: 34px; height: 34px;
@@ -305,14 +305,14 @@
 .message-send-feedback {
   margin: 6px 4px 2px;
   color: var(--text-soft);
-  font-size: 0.64rem;
+  font-size: 0.66rem;
   line-height: 1.35;
 }
 .message-panel-layer { position: fixed; inset: 0; z-index: 2050; }
 .mobile-unread-badge {
-  position: absolute; top: 6px; left: calc(50% + 7px); min-width: 17px; height: 17px; padding: 0 4px;
+  position: absolute; top: 5px; left: calc(50% + 6px); min-width: 18px; height: 18px; padding: 0 4px;
   border: 2px solid var(--surface); background: var(--danger); color: #ffffff;
-  font-size: 0.5rem;
+  font-size: 0.6rem; font-weight: 800;
 }
 
 /* Breakpoints Responsivos */
@@ -326,9 +326,16 @@
 }
 
 @media (max-width: 767px) {
-  .producers-layout { display: block; margin-top: 18px; }
+  .producers-layout { display: block; margin-top: 14px; }
+  .producer-filter-trigger {
+    display: inline-flex !important;
+    align-items: center; justify-content: center; gap: 8px;
+    width: 100%; min-height: 44px; margin-bottom: 14px;
+    font-size: 0.86rem; font-weight: 700;
+  }
   .filters-panel {
-    position: fixed; inset: 0 0 0 auto; z-index: 1900; width: min(350px, calc(100% - 24px)); overflow-y: auto;
+    position: fixed; inset: 0 0 0 auto; z-index: 1900; width: min(340px, calc(100% - 24px)); height: 100%; overflow-y: auto;
+    padding: 22px 20px;
     visibility: hidden; border: 0; border-radius: 0; box-shadow: var(--shadow-overlay);
     pointer-events: none; transform: translateX(110%); transition: transform var(--transition), visibility 0s linear 160ms;
   }
@@ -339,17 +346,60 @@
   .filters-panel.is-open {
     visibility: visible; pointer-events: auto; transform: translateX(0); transition-delay: 0s;
   }
-  .filters-close, .mobile-filter-button, .producer-filter-trigger { display: inline-grid; }
+  .filters-close, .mobile-filter-button { display: inline-grid; }
   .message-panel-layer .message-dock {
     position: absolute; inset: 0; width: 100%; height: 100dvh; border: 0; border-radius: 0;
   }
 }
 
 @media (max-width: 540px) {
-  .producer-trust-grid, .results-controls { grid-template-columns: 1fr; gap: 8px 0; }
-  .producer-trust-grid > div { border-left: none !important; padding-inline: 0 !important; }
-  .producer-trust-grid > div:nth-child(even) { border-left: none !important; }
-  .producer-actions { flex-direction: column; }
-  .producer-actions .btn { width: 100%; }
+  .producer-card {
+    padding: 16px 16px;
+    margin-bottom: 12px;
+  }
+  .producer-avatar {
+    width: 42px;
+    height: 42px;
+  }
+  .producer-description {
+    margin: 12px 0 8px;
+    font-size: 0.8rem;
+  }
+  .producer-trust-grid, .results-controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 0;
+  }
+  .producer-trust-grid > div {
+    border-left: none !important;
+    padding-inline: 8px;
+  }
+  .producer-trust-grid > div:nth-child(even) {
+    border-left: 1px solid var(--border) !important;
+  }
+  .producer-trust-grid > div:nth-child(2n+1) {
+    padding-left: 0;
+  }
+  .producer-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .producer-actions .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 400px) {
+  .producer-trust-grid {
+    grid-template-columns: 1fr;
+    gap: 6px 0;
+  }
+  .producer-trust-grid > div {
+    border-left: none !important;
+    padding-inline: 0 !important;
+  }
+  .producer-trust-grid > div:nth-child(even) {
+    border-left: none !important;
+  }
 }
 

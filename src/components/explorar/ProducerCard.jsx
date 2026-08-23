@@ -73,7 +73,7 @@ export default function ProducerCard({ producer, onOpenMessages }) {
         </div>
       </dl>
 
-      <div className={`availability-line d-flex justify-content-between align-items-center gap-2 availability-${producer.availability.status}`}>
+      <div className={`availability-line d-flex flex-wrap justify-content-between align-items-center gap-2 availability-${producer.availability.status}`}>
         <span>
           <i className="bi bi-circle-fill" aria-hidden="true" /> {producer.availability.label}
         </span>
@@ -95,7 +95,7 @@ export default function ProducerCard({ producer, onOpenMessages }) {
         </footer>
       </blockquote>
 
-      <div className="producer-actions d-flex gap-2 mt-3">
+      <div className="producer-actions d-flex flex-wrap gap-2 mt-3">
         <button
           className="btn btn-primary"
           type="button"
