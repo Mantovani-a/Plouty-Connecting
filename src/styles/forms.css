@@ -330,12 +330,22 @@
   .about-hero-grid, .about-problem, .contact-grid { grid-template-columns: 1fr; }
   .login-page-grid { grid-template-areas: "intro" "panel" "details"; grid-template-columns: 1fr; gap: 32px; }
   .login-panel, .contact-form-panel { width: min(100%, 650px); justify-self: center; }
+  .about-hero-image figcaption { left: 16px; }
+  .login-panel { border-radius: var(--radius-md); }
 }
 
 @media (max-width: 767px) {
   .path-grid { grid-template-columns: 1fr; }
+  .path-grid article + article { border-left: 0; border-top: 1px solid rgba(255, 255, 255, 0.15); }
 }
 
 @media (max-width: 540px) {
   .login-connection, .login-trust-list { grid-template-columns: 1fr; }
+  .connection-path { display: grid; place-items: center; padding-block: 4px; }
+  .connection-path i { transform: rotate(90deg); }
+}
+
+@media (max-width: 480px) {
+  .login-role-switch { grid-template-columns: 1fr; }
+  .login-role-switch label { min-height: 52px; }
 }

@@ -111,6 +111,7 @@
 
 /* Barra de Busca */
 .header-search {
+  display: flex; align-items: center; position: relative;
   width: 100%; min-width: 180px; max-width: 310px;
 }
 .header-search > i {
@@ -301,6 +302,7 @@
     display: none;
     position: absolute; top: calc(100% + 1px); left: 0; right: 0; padding: 10px 14px;
     background: var(--surface); border-bottom: 1px solid var(--border);
+    max-width: none; min-width: 0; width: 100%;
   }
   .header-search.is-open { display: flex !important; }
   .mobile-search-trigger { display: inline-grid !important; }
@@ -310,6 +312,11 @@
     grid-template-columns: 1fr;
     text-align: center;
     justify-items: center;
+  }
+  .site-footer nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px !important;
   }
 }
 

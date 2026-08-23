@@ -358,16 +358,35 @@
 /* Breakpoints Responsivos do Feed */
 @media (max-width: 991px) {
   .social-feed-shell {
-    grid-template-columns: minmax(0, 780px); justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
-  .social-feed-primary, .social-feed-sidebar { grid-column: auto; grid-row: auto; }
+  .social-feed-primary {
+    order: 2;
+  }
   .social-feed-sidebar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    position: static; max-height: none;
+    order: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: static;
+    max-height: none;
+  }
+  .social-user-summary {
+    grid-column: span 2;
   }
 }
 
 @media (max-width: 767px) {
-  .social-feed-sidebar { grid-template-columns: 1fr; }
   .social-post-actions { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 540px) {
+  .social-feed-sidebar {
+    grid-template-columns: 1fr;
+  }
+  .social-user-summary {
+    grid-column: auto;
+  }
 }

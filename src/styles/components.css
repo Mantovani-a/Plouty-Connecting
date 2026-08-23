@@ -318,7 +318,10 @@
 /* Breakpoints Responsivos */
 @media (max-width: 991px) {
   .producers-layout { grid-template-columns: 220px minmax(0, 1fr); gap: 18px; }
-  .producer-trust-grid { grid-template-columns: 1fr 1fr; }
+  .producer-trust-grid { grid-template-columns: 1fr 1fr; gap: 12px 0; }
+  .producer-trust-grid > div { border-left: none !important; padding-inline: 12px; }
+  .producer-trust-grid > div:nth-child(even) { border-left: 1px solid var(--border) !important; }
+  .producer-trust-grid > div:nth-child(2n+1) { padding-left: 0; }
   .message-dock-launcher { display: none; }
 }
 
@@ -343,6 +346,10 @@
 }
 
 @media (max-width: 540px) {
-  .producer-trust-grid, .results-controls { grid-template-columns: 1fr; }
+  .producer-trust-grid, .results-controls { grid-template-columns: 1fr; gap: 8px 0; }
+  .producer-trust-grid > div { border-left: none !important; padding-inline: 0 !important; }
+  .producer-trust-grid > div:nth-child(even) { border-left: none !important; }
+  .producer-actions { flex-direction: column; }
+  .producer-actions .btn { width: 100%; }
 }
 

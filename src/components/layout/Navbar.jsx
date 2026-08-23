@@ -82,7 +82,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
         </div>
 
         <div className="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
-          <form className={`header-search d-flex align-items-center position-relative ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
+          <form className={`header-search ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
             <label className="visually-hidden" htmlFor="busca-global">Buscar produtores ou demandas</label>
             <i className="bi bi-search" aria-hidden="true" />
             <input
