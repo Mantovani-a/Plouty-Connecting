@@ -10,9 +10,8 @@ function Brand({ compact = false }) {
     <NavLink to={compact ? '/inicio' : '/'} className="brand d-inline-flex align-items-center gap-2 flex-shrink-0" aria-label="Plouty — página inicial">
       <img src="/images/logo_P.png" alt="" width="42" height="42" />
       {!compact && (
-        <span className="brand-copy d-flex flex-column">
+        <span className="brand-copy d-flex align-items-center">
           <strong>Plouty</strong>
-          <small>negócios que alimentam</small>
         </span>
       )}
     </NavLink>
@@ -99,7 +98,9 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
         <div className="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
           <form className={`header-search ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
             <label className="visually-hidden" htmlFor="busca-global">Buscar produtores ou demandas</label>
-            <i className="bi bi-search" aria-hidden="true" />
+            <button type="submit" className="header-search-submit" aria-label="Buscar">
+              <i className="bi bi-search" aria-hidden="true" />
+            </button>
             <input
               id="busca-global"
               type="search"
@@ -107,7 +108,6 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
-            <button type="submit" className="visually-hidden-focusable">Buscar</button>
           </form>
 
           <div className="header-actions product-actions d-flex align-items-center gap-2 flex-shrink-0">
@@ -124,7 +124,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
             <button className="profile-button d-flex align-items-center gap-2" type="button" onClick={onOpenProfile} aria-label={`Abrir perfil de ${profile?.name || 'Usuário'}`}>
               <Avatar className="profile-avatar" src={profile?.avatar} initials={profile?.initials || 'PL'} alt="" />
               <span className="profile-button-copy d-none d-lg-flex flex-column text-start">
-                <strong>{profile?.shortName || 'Perfil'}</strong>
+                <strong className="text-truncate">{profile?.shortName || 'Perfil'}</strong>
                 <small>{isProducer ? 'Produtor' : 'Comprador'}</small>
               </span>
               <i className="bi bi-chevron-down d-none d-lg-inline-block" aria-hidden="true" />

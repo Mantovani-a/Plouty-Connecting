@@ -26,7 +26,7 @@ export default function SocialPost({ post, onFeedback }) {
   };
 
   return (
-    <article id={`post-${post.id}`} className="social-post" aria-labelledby={`post-author-${post.id}`}>
+    <article id={`post-${post.id}`} className="social-post card d-block" aria-labelledby={`post-author-${post.id}`}>
       <header className="social-post-header">
         <Avatar
           className={`social-author-avatar is-${post.author.type}`}

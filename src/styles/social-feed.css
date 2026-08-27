@@ -15,11 +15,15 @@
   grid-column: 2;
   min-width: 0;
 }
+.social-feed-heading {
+  margin-bottom: 14px;
+}
 .social-feed-heading h1 {
-  margin: 7px 0 8px;
+  margin: 0;
   color: var(--forest-950);
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  letter-spacing: -0.04em;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-weight: 760;
+  letter-spacing: -0.02em;
 }
 
 /* Publicador de Postagens */
@@ -28,9 +32,6 @@
   padding: 20px;
   border: 1px solid var(--border-strong);
   border-top: 3px solid var(--action);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
 }
 .social-composer-head {
   display: grid;
@@ -40,20 +41,15 @@
   margin-bottom: 13px;
 }
 .social-composer-head > div {
-  display: flex;
-  flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
 .social-composer-head label {
-  display: block;
   color: var(--text);
   font-size: 0.88rem;
   font-weight: 740;
 }
 .social-composer-head small {
-  display: block;
-  color: var(--text-muted);
   font-size: 0.74rem;
 }
 .social-composer textarea {
@@ -62,7 +58,6 @@
   padding: 13px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  outline: 0;
   background: var(--surface-muted);
   color: var(--text);
   font-size: 0.83rem;
@@ -72,18 +67,6 @@
 .social-composer.is-expanded textarea {
   min-height: 128px;
   background: var(--surface);
-}
-.social-composer-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 14px;
-}
-.social-composer-media-action {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .social-media-button {
   min-height: 38px;
@@ -120,10 +103,6 @@
 .social-post {
   overflow: hidden;
   margin-bottom: 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
   scroll-margin-top: calc(var(--header-height) + 18px);
 }
 .social-post-header {
@@ -136,9 +115,6 @@
 .social-author-avatar {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-  background: var(--structure-bg);
-  color: var(--structure-text);
   font-size: 0.74rem;
   font-weight: 800;
 }
@@ -159,8 +135,6 @@
   font-size: 0.85rem;
 }
 .social-author-copy p {
-  margin: 0;
-  color: var(--text-muted);
   font-size: 0.74rem;
 }
 .social-author-copy time {
@@ -192,11 +166,6 @@
   overflow: hidden;
   background: var(--surface-accent);
   aspect-ratio: 16 / 9;
-}
-.social-media-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .social-media-placeholder {
   display: grid;
@@ -243,25 +212,31 @@
   gap: 16px;
   position: sticky;
   top: calc(var(--header-height) + 22px);
+  max-height: calc(100dvh - var(--header-height) - 44px);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 0 4px 2px 0;
   min-width: 0;
+  scrollbar-color: color-mix(in srgb, var(--action) 45%, var(--border)) transparent;
+  scrollbar-width: thin;
+}
+.social-feed-sidebar::-webkit-scrollbar { width: 7px; }
+.social-feed-sidebar::-webkit-scrollbar-track { background: transparent; }
+.social-feed-sidebar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--action) 45%, var(--border));
+}
+.social-feed-sidebar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--action) 68%, var(--border));
 }
 .social-side-card {
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
 }
 .social-profile-cover {
   position: relative;
   width: 100%;
   height: 82px;
   background: var(--surface-accent);
-}
-.social-profile-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .social-profile-cover.is-placeholder > div {
   width: 100%;
@@ -277,9 +252,6 @@
   height: 64px;
   margin-top: -32px;
   border: 4px solid var(--surface);
-  border-radius: 50%;
-  background: var(--structure-bg);
-  color: var(--structure-text);
   box-shadow: 0 5px 14px rgba(10, 32, 19, 0.16);
   font-size: 0.86rem;
 }
@@ -290,8 +262,6 @@
   font-size: 1rem;
 }
 .social-user-identity p {
-  margin: 0;
-  color: var(--text-muted);
   font-size: 0.74rem;
 }
 .social-user-description {
@@ -325,14 +295,12 @@
   text-align: center;
 }
 .social-user-stats strong {
-  display: block;
   color: var(--forest-950);
   font-size: 1.25rem;
   font-weight: 800;
   line-height: 1.1;
 }
 .social-user-stats span {
-  display: block;
   color: var(--text-soft);
   font-size: 0.65rem;
   line-height: 1.2;
@@ -343,14 +311,9 @@
   grid-template-columns: 34px minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 11px;
 }
-.social-side-card-heading h2 { margin: 0; font-size: 0.94rem; }
-.social-side-card-heading p {
-  margin: 0;
-  color: var(--text-soft);
-  font-size: 0.68rem;
-}
+.social-side-card-heading h2 { margin: 0; font-size: 0.94rem; line-height: 1.25; }
 .social-topics ol,
 .social-suggestions ul {
   margin: 0;
@@ -366,15 +329,10 @@
   border-top: 1px solid var(--border);
 }
 .social-topics li strong {
-  display: block;
-  overflow: hidden;
   color: var(--text);
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 0.78rem;
 }
 .social-topics li small {
-  display: block;
   color: var(--text-soft);
   font-size: 0.65rem;
 }
@@ -392,44 +350,29 @@
 }
 .social-suggestion-avatar {
   grid-area: avatar;
-  display: inline-grid;
-  place-items: center;
   width: 38px;
   height: 38px;
-  border-radius: 50%;
   background: var(--surface-accent);
   color: var(--action);
   font-size: 0.72rem;
   font-weight: 800;
   text-align: center;
 }
-.social-suggestion-avatar > span {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-}
 .social-suggestions li > div {
   grid-area: info;
   min-width: 0;
 }
 .social-suggestions li > div > strong {
-  display: block;
-  overflow: hidden;
   color: var(--text);
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 0.82rem;
   font-weight: 700;
 }
 .social-suggestions li > div > span {
-  display: block;
   color: var(--action);
   font-size: 0.68rem;
   font-weight: 600;
 }
 .social-suggestions li > div > small {
-  display: block;
   color: var(--text-soft);
   font-size: 0.65rem;
 }
@@ -505,6 +448,9 @@
     gap: 16px;
     position: static;
     max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
+    padding: 0;
   }
   .social-user-summary { grid-column: 1 / -1; }
 }
@@ -512,10 +458,8 @@
 @media (max-width: 640px) {
   .social-feed-sidebar {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
   .social-user-summary { grid-column: auto; }
-  .social-composer-toolbar { gap: 10px; }
   .social-publish-button {
     width: 100%;
     order: 3;

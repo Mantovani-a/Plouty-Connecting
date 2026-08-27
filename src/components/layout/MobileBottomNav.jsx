@@ -22,7 +22,7 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
         <i className="bi bi-chat-left-text" aria-hidden="true" />
         <span>Mensagens</span>
         {unreadMessages > 0 && (
-          <span className="mobile-unread-badge" aria-label={`${unreadMessages} mensagens não lidas`}>
+          <span className="mobile-unread-badge d-inline-flex align-items-center justify-content-center" aria-label={`${unreadMessages} mensagens não lidas`}>
             {unreadMessages}
           </span>
         )}

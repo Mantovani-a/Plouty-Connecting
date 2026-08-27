@@ -9,7 +9,7 @@ export default function FeedMedia({ media, onRemove, className = '' }) {
   return (
     <figure className={`social-media-frame ${hasImage ? 'has-image' : 'is-placeholder'} ${className}`.trim()}>
       {hasImage ? (
-        <img src={media.src} alt={media.alt || ''} loading="lazy" decoding="async" onError={() => setLoadFailed(true)} />
+        <img className="w-100 h-100 object-fit-cover" src={media.src} alt={media.alt || ''} loading="lazy" decoding="async" onError={() => setLoadFailed(true)} />
       ) : (
         <div className="social-media-placeholder" role="img" aria-label={media?.alt || 'Imagem demonstrativa ainda não adicionada'}>
           <span><i className="bi bi-image" aria-hidden="true" /></span>

@@ -35,7 +35,7 @@
   --info-soft: #dcecf2;
   --border: #d8d5cb;
   --border-strong: #b8bcb3;
-  --focus: #c57b18;
+  --focus: #237a3c;
   --shadow-sm: 0 1px 2px rgba(24, 38, 28, 0.08);
   --shadow-md: 0 12px 32px rgba(24, 38, 28, 0.12);
   --shadow-overlay: 0 24px 64px rgba(9, 19, 13, 0.28);
@@ -80,7 +80,7 @@
   --info-soft: #223945;
   --border: #334038;
   --border-strong: #4c5a51;
-  --focus: #f2bd61;
+  --focus: #82cf92;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.32);
   --shadow-overlay: 0 28px 72px rgba(0, 0, 0, 0.58);
@@ -119,7 +119,6 @@ h1, h2, h3, h4, h5 {
 }
 h1 { font-size: clamp(2rem, 4vw, 3.25rem); }
 h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-:focus-visible { outline: 3px solid var(--focus) !important; outline-offset: 3px; }
 ::selection { color: var(--action-contrast); background: var(--action); }
 
 /* Acessibilidade */
@@ -137,23 +136,8 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
 }
 .skip-link:focus { transform: translateY(0); }
 
-.visually-hidden-focusable:not(:focus):not(:focus-within) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  border: 0 !important;
-  white-space: nowrap !important;
-  clip: rect(0, 0, 0, 0) !important;
-}
-
 /* Rótulos e Badges Compartilhados */
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
   color: var(--action);
   font-size: 0.76rem;
   font-weight: 780;
@@ -235,9 +219,6 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
 }
 
 .text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   border: 0;
   background: none;
   color: var(--action);
@@ -259,11 +240,9 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
   flex: 0 0 auto;
   position: relative;
   overflow: hidden;
-}
-.avatar-frame > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  border-radius: 50%;
+  background: var(--structure-bg);
+  color: var(--structure-text);
 }
 .avatar-frame > span {
   display: grid;
@@ -313,10 +292,6 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
 .empty-state p { color: var(--text-muted); }
 
 .feedback-banner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
   padding: 13px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -336,7 +311,7 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
   color: var(--text);
   box-shadow: var(--shadow-sm);
 }
-.card-body { padding: 24px; }
+.text-muted { color: var(--text-muted) !important; }
 .form-label {
   margin-bottom: 6px;
   color: var(--text-muted);
@@ -345,23 +320,51 @@ h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
 }
 .form-control, .form-select {
   min-height: 44px;
-  border: 1px solid var(--border) !important;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background-color: var(--surface-muted) !important;
-  color: var(--text) !important;
+  background-color: var(--surface-muted);
+  color: var(--text);
 }
 .form-control:focus, .form-select:focus {
-  border-color: var(--action) !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 22%, transparent) !important;
+  border-color: var(--border-strong);
+  box-shadow: none;
 }
 .form-control::placeholder { color: var(--text-soft); }
-.input-error { border-color: var(--danger) !important; }
+.input-error {
+  border-color: color-mix(in srgb, var(--danger) 72%, var(--border));
+  background-color: color-mix(in srgb, var(--danger-soft) 38%, var(--surface-muted));
+}
 .error-message {
-  margin-top: 5px;
+  margin-top: 4px;
   color: var(--danger);
-  font-size: 0.72rem;
+  font-size: 0.73rem;
+  line-height: 1.35;
 }
 .char-counter { color: var(--text-soft); font-size: 0.7rem; }
+
+/* Foco global — indicador único, verde e acessível */
+#root :focus { outline: none; }
+#root :focus-visible,
+#root .login-role-switch label:has(input:focus-visible),
+#root .login-input:has(input:focus-visible),
+#root .message-composer > div:has(input:focus-visible) {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--focus) !important;
+}
+#root .login-role-switch input:focus-visible,
+#root .login-input input:focus-visible,
+#root .message-composer input:focus-visible { box-shadow: none !important; }
+
+@media (forced-colors: active) {
+  #root :focus-visible,
+  #root .login-role-switch label:has(input:focus-visible),
+  #root .login-input:has(input:focus-visible),
+  #root .message-composer > div:has(input:focus-visible) {
+    outline-color: Highlight !important;
+    box-shadow: none !important;
+  }
+}
 
 /* Redução de Movimento */
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,6 @@
 <div align="center">
   <img src="./public/images/logo_plouty.png" alt="Logo da Plouty" width="360">
   <h1>Plouty</h1>
-  <p><strong>Negócios que alimentam</strong></p>
 </div>
 
 A **Plouty** é um projeto acadêmico desenvolvido para a **FIAP**, alinhado à **ODS 2 — Fome Zero e Agricultura Sustentável**. O protótipo apresenta uma rede profissional agrícola que aproxima pequenos produtores rurais e instituições compradoras, organizando conexões, reputação e descoberta de fornecedores em uma experiência digital acessível e voltada ao contexto brasileiro.

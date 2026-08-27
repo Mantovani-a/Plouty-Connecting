@@ -16,21 +16,29 @@ const ROLE_CONTENT = {
 
 const INTERNAL_PATHS = ['/inicio', '/explorar', '/contato'];
 
+function validateLoginField(name, value, role) {
+  if (name === 'email') {
+    if (!value.trim()) return 'Informe o e-mail usado na Plouty.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
+      return role
+      ? `Digite um e-mail válido, como ${ROLE_CONTENT[role].emailExample}.`
+      : 'Digite um e-mail válido.';
+    }
+  }
+  if (name === 'password') {
+    if (!value) return 'Informe sua senha.';
+    if (value.length < 8) return 'Use pelo menos 8 caracteres.';
+  }
+  return '';
+}
+
 function validateLogin(form, role) {
   const errors = {};
   if (!role) errors.role = 'Escolha Produtor ou Instituição para continuar.';
-  if (!form.email.trim()) {
-    errors.email = 'Informe o e-mail usado na Plouty.';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-    errors.email = role
-      ? `Digite um e-mail válido, como ${ROLE_CONTENT[role].emailExample}.`
-      : 'Digite um e-mail válido.';
-  }
-  if (!form.password) {
-    errors.password = 'Informe sua senha.';
-  } else if (form.password.length < 8) {
-    errors.password = 'A senha precisa ter pelo menos 8 caracteres.';
-  }
+  const emailError = validateLoginField('email', form.email, role);
+  const passwordError = validateLoginField('password', form.password, role);
+  if (emailError) errors.email = emailError;
+  if (passwordError) errors.password = passwordError;
   return errors;
 }
 
@@ -66,6 +74,7 @@ export default function Entrar() {
   const [role, setLoginRole] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [touchedFields, setTouchedFields] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const timerRef = useRef(null);
@@ -79,14 +88,35 @@ export default function Entrar() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
-    setErrors((current) => ({ ...current, [name]: '' }));
+    if (touchedFields[name] || errors[name]) {
+      setErrors((current) => ({
+        ...current,
+        [name]: validateLoginField(name, value, role)
+      }));
+    }
     setSuccessMessage('');
+  };
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target;
+    setTouchedFields((current) => ({ ...current, [name]: true }));
+    setErrors((current) => ({
+      ...current,
+      [name]: validateLoginField(name, value, role)
+    }));
   };
 
   const handleRoleChange = (nextRole) => {
     if (isLoading || nextRole === role) return;
     setLoginRole(nextRole);
-    setErrors((current) => ({ ...current, role: '', email: '' }));
+    setTouchedFields((current) => ({ ...current, role: true }));
+    setErrors((current) => ({
+      ...current,
+      role: '',
+      email: touchedFields.email || current.email
+        ? validateLoginField('email', form.email, nextRole)
+        : ''
+    }));
     setSuccessMessage('');
   };
 
@@ -94,6 +124,7 @@ export default function Entrar() {
     event.preventDefault();
     window.clearTimeout(timerRef.current);
     const nextErrors = validateLogin(form, role);
+    setTouchedFields({ role: true, email: true, password: true });
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
@@ -151,7 +182,7 @@ export default function Entrar() {
                   onChange={() => handleRoleChange('producer')}
                   aria-describedby="login-role-destination"
                 />
-                <span className="login-role-icon">
+                <span className="login-role-icon d-inline-flex align-items-center justify-content-center">
                   <i className="bi bi-person-workspace" aria-hidden="true" />
                 </span>
                 <span className="d-flex flex-column">
@@ -169,7 +200,7 @@ export default function Entrar() {
                   onChange={() => handleRoleChange('buyer')}
                   aria-describedby="login-role-destination"
                 />
-                <span className="login-role-icon">
+                <span className="login-role-icon d-inline-flex align-items-center justify-content-center">
                   <i className="bi bi-building" aria-hidden="true" />
                 </span>
                 <span className="d-flex flex-column">
@@ -194,7 +225,7 @@ export default function Entrar() {
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <div className="login-field">
               <label htmlFor="login-email">E-mail</label>
-              <div className={`login-input ${errors.email ? 'has-error' : ''}`}>
+              <div className={`login-input ${errors.email ? 'has-error' : touchedFields.email && form.email ? 'is-valid' : ''}`}>
                 <i className="bi bi-envelope" aria-hidden="true" />
                 <input
                   id="login-email"
@@ -202,6 +233,7 @@ export default function Entrar() {
                   type="email"
                   value={form.email}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder={roleContent?.emailExample || 'Escolha um perfil acima'}
                   autoComplete="email"
                   aria-invalid={Boolean(errors.email)}
@@ -218,7 +250,7 @@ export default function Entrar() {
 
             <div className="login-field">
               <label htmlFor="login-password">Senha</label>
-              <div className={`login-input ${errors.password ? 'has-error' : ''}`}>
+              <div className={`login-input ${errors.password ? 'has-error' : touchedFields.password && form.password ? 'is-valid' : ''}`}>
                 <i className="bi bi-lock" aria-hidden="true" />
                 <input
                   id="login-password"
@@ -226,6 +258,7 @@ export default function Entrar() {
                   type={showPassword ? 'text' : 'password'}
                   value={form.password}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   placeholder="Mínimo de 8 caracteres"
                   autoComplete="current-password"
                   aria-invalid={Boolean(errors.password)}
@@ -233,6 +266,7 @@ export default function Entrar() {
                   disabled={isLoading}
                 />
                 <button
+                  className="d-inline-flex align-items-center justify-content-center"
                   type="button"
                   onClick={() => setShowPassword((visible) => !visible)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
@@ -296,7 +330,7 @@ export default function Entrar() {
         >
           <div className="login-connection" aria-label="Exemplo demonstrativo de conexão comercial">
             <div className="connection-party d-flex align-items-center gap-2">
-              <span className="connection-avatar">JC</span>
+              <span className="connection-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0">JC</span>
               <div className="d-flex flex-column">
                 <small>Produtor familiar</small>
                 <strong>João Carlos</strong>
@@ -315,7 +349,7 @@ export default function Entrar() {
               <i className="bi bi-arrow-right" />
             </div>
             <div className="connection-party institution d-flex align-items-center gap-2">
-              <span className="connection-avatar"><i className="bi bi-hospital" /></span>
+              <span className="connection-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0"><i className="bi bi-hospital" /></span>
               <div className="d-flex flex-column">
                 <small>Comprador institucional</small>
                 <strong>Hospital Regional</strong>

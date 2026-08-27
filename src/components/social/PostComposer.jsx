@@ -18,7 +18,7 @@ export default function PostComposer({ profile, onPublish, onFeedback }) {
   };
 
   return (
-    <form className={`social-composer ${expanded ? 'is-expanded' : ''}`} onSubmit={handleSubmit} noValidate>
+    <form className={`social-composer card d-block ${expanded ? 'is-expanded' : ''}`} onSubmit={handleSubmit} noValidate>
       <div className="social-composer-head">
         <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
         <div className="d-flex flex-column">

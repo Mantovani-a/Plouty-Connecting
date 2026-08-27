@@ -9,14 +9,14 @@ const INITIAL_STATE = {
 
 export const validateNome = (value) => {
   const trimmed = value.trim();
-  if (!trimmed) return 'O campo Nome Completo não pode ser vazio.';
+  if (!trimmed) return 'Informe seu nome completo.';
   const words = trimmed.split(/\s+/);
   if (words.length < 2) {
-    return 'O nome deve conter pelo menos nome e sobrenome (duas palavras).';
+    return 'Informe nome e sobrenome.';
   }
   for (let word of words) {
     if (word.length < 2) {
-      return 'Cada palavra do nome deve conter no mínimo 2 letras.';
+      return 'Revise o nome informado.';
     }
   }
   return '';
@@ -24,17 +24,17 @@ export const validateNome = (value) => {
 
 export const validateEmail = (value) => {
   const trimmed = value.trim();
-  if (!trimmed) return 'O campo E-mail não pode ser vazio.';
+  if (!trimmed) return 'Informe seu e-mail.';
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailPattern.test(trimmed)) {
-    return 'Insira um formato de e-mail válido (ex: exemplo@email.com).';
+    return 'Digite um e-mail válido.';
   }
   return '';
 };
 
 export const validateMensagem = (value) => {
   const trimmed = value.trim();
-  if (!trimmed) return 'O campo Mensagem não pode ser vazio.';
+  if (!trimmed) return 'Escreva uma mensagem.';
   if (trimmed.length > 500) return 'A mensagem ultrapassou o limite de 500 caracteres.';
   return '';
 };
@@ -42,26 +42,34 @@ export const validateMensagem = (value) => {
 export function useContactForm() {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState({});
+  const [validatedFields, setValidatedFields] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
+
+  const validateField = (field, value) => {
+    if (field === 'nome') return validateNome(value);
+    if (field === 'email') return validateEmail(value);
+    if (field === 'mensagem') return validateMensagem(value);
+    return '';
+  };
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    setIsSuccess(false);
 
-    if (errors[field]) {
-      let err = '';
-      if (field === 'nome') err = validateNome(value);
-      if (field === 'email') err = validateEmail(value);
-      if (field === 'mensagem') err = validateMensagem(value);
-      setErrors((prev) => ({ ...prev, [field]: err }));
+    if (field === 'assunto') {
+      setValidatedFields((prev) => ({ ...prev, assunto: true }));
+    }
+
+    if (validatedFields[field] || errors[field]) {
+      const error = validateField(field, value);
+      setErrors((prev) => ({ ...prev, [field]: error }));
     }
   };
 
   const handleBlur = (field) => {
-    let err = '';
-    if (field === 'nome') err = validateNome(formData.nome);
-    if (field === 'email') err = validateEmail(formData.email);
-    if (field === 'mensagem') err = validateMensagem(formData.mensagem);
-    setErrors((prev) => ({ ...prev, [field]: err }));
+    const value = formData[field] ?? '';
+    setValidatedFields((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
   };
 
   const handleSubmit = (e) => {
@@ -73,6 +81,7 @@ export function useContactForm() {
     const msgErr = validateMensagem(formData.mensagem);
 
     if (nomeErr || emailErr || msgErr) {
+      setValidatedFields({ nome: true, email: true, mensagem: true });
       setErrors({
         nome: nomeErr,
         email: emailErr,
@@ -82,6 +91,7 @@ export function useContactForm() {
     }
 
     setErrors({});
+    setValidatedFields({});
     setIsSuccess(true);
     setFormData(INITIAL_STATE);
   };
@@ -89,6 +99,7 @@ export function useContactForm() {
   return {
     formData,
     errors,
+    validatedFields,
     isSuccess,
     handleChange,
     handleBlur,

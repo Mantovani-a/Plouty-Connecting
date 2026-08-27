@@ -16,7 +16,7 @@ export default function Avatar({ src, initials, alt = '', className = '' }) {
       {...(!hasPhoto ? fallbackAccessibility : {})}
     >
       {hasPhoto
-        ? <img src={src} alt={alt} onError={() => setLoadFailed(true)} />
+        ? <img className="w-100 h-100 object-fit-cover" src={src} alt={alt} onError={() => setLoadFailed(true)} />
         : <span aria-hidden="true">{initials}</span>}
     </span>
   );

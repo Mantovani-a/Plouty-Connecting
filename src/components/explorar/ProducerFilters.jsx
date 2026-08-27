@@ -40,14 +40,14 @@ export default function ProducerFilters({
 
       <aside
         ref={filtersRef}
-        className={`producer-filters filters-panel ${isOpenMobile ? 'is-open' : ''}`}
+        className={`producer-filters filters-panel card d-block ${isOpenMobile ? 'is-open' : ''}`}
         aria-label="Filtros de produtores"
         role={isOpenMobile ? 'dialog' : undefined}
         aria-modal={isOpenMobile ? 'true' : undefined}
       >
         <div className="filters-title d-flex justify-content-between align-items-start gap-2">
           <div>
-            <span className="eyebrow">Busca de fornecedores</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Busca de fornecedores</span>
             <h2>Filtros</h2>
           </div>
           <button

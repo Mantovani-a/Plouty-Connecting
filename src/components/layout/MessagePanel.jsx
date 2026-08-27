@@ -106,9 +106,9 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
           }}
           aria-expanded="false"
         >
-          <span className="message-launcher-icon"><i className="bi bi-chat-left-text" aria-hidden="true" /></span>
-          <span className="d-flex flex-column text-start"><strong>Mensagens</strong><small>Conversas comerciais</small></span>
-          {unreadCount > 0 && <span className="message-unread-count" aria-label={`${unreadCount} mensagens não lidas`}>{unreadCount}</span>}
+          <span className="message-launcher-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><i className="bi bi-chat-left-text" aria-hidden="true" /></span>
+          <strong>Mensagens</strong>
+          {unreadCount > 0 && <span className="message-unread-count d-inline-flex align-items-center justify-content-center" aria-label={`${unreadCount} mensagens não lidas`}>{unreadCount}</span>}
         </button>
       </div>
     );
@@ -118,7 +118,7 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
     <section
       id="plouty-messages-panel"
       ref={panelRef}
-      className={`message-dock d-flex flex-column is-open ${selectedConversation ? 'showing-thread' : 'showing-list'}`}
+      className={`message-dock card d-flex flex-column is-open ${selectedConversation ? 'showing-thread' : 'showing-list'}`}
       role={isModal ? 'dialog' : 'region'}
       aria-modal={isModal ? 'true' : undefined}
       aria-labelledby="message-panel-title"
@@ -129,11 +129,11 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
             <i className="bi bi-arrow-left" aria-hidden="true" />
           </button>
         ) : (
-          <span className="message-launcher-icon" aria-hidden="true"><i className="bi bi-chat-left-text" /></span>
+          <span className="message-launcher-icon d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true"><i className="bi bi-chat-left-text" /></span>
         )}
         <div className="d-flex flex-column gap-1">
-          <h2 id="message-panel-title">{selectedConversation ? selectedConversation.name : 'Mensagens'}</h2>
-          <span>{selectedConversation ? selectedConversation.role : 'Conexões comerciais da Plouty'}</span>
+          <h2 id="message-panel-title" className="text-truncate">{selectedConversation ? selectedConversation.name : 'Mensagens'}</h2>
+          {selectedConversation && <span className="text-truncate">{selectedConversation.role}</span>}
         </div>
         <button ref={closeRef} type="button" className="icon-button message-dock-close" onClick={onClose} aria-label={isModal ? 'Fechar mensagens' : 'Recolher mensagens'}>
           <i className={`bi ${isModal ? 'bi-x-lg' : 'bi-chevron-down'}`} aria-hidden="true" />
@@ -168,7 +168,7 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
                 alt={`Foto de ${conversation.name}`}
               />
               <span className="conversation-preview d-flex flex-column gap-1">
-                <span className="d-flex align-items-center gap-1"><strong>{conversation.name}</strong>{conversation.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}</span>
+                <span className="d-flex align-items-center gap-1"><strong className="text-truncate">{conversation.name}</strong>{conversation.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}</span>
                 <small className="text-muted text-truncate">{conversation.lastMessage}</small>
               </span>
               <span className="conversation-meta d-flex flex-column align-items-end gap-1"><time>{conversation.time}</time>{conversation.unread > 0 && <i aria-label="Mensagem não lida" />}</span>
@@ -196,7 +196,7 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
                 placeholder="Escreva uma mensagem"
                 autoComplete="off"
               />
-              <button type="submit" className="message-send-button" disabled={!draft.trim()} aria-label="Adicionar mensagem nesta sessão">
+              <button type="submit" className="message-send-button d-inline-flex align-items-center justify-content-center" disabled={!draft.trim()} aria-label="Adicionar mensagem nesta sessão">
                 <i className="bi bi-send" aria-hidden="true" />
               </button>
             </div>

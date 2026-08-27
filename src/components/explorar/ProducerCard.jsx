@@ -6,7 +6,7 @@ export default function ProducerCard({ producer, onOpenMessages }) {
   const initials = producer.name.split(' ').slice(0, 2).map((part) => part[0]).join('');
 
   return (
-    <article className="producer-card">
+    <article className="producer-card card d-block">
       <div className="producer-head d-flex align-items-center gap-3">
         <Avatar
           className="producer-avatar d-inline-flex align-items-center justify-content-center flex-shrink-0"

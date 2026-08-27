@@ -11,7 +11,7 @@ function ProfileCover({ src, alt }) {
   return (
     <div className={`social-profile-cover ${hasImage ? 'has-photo' : 'is-placeholder'}`}>
       {hasImage
-        ? <img src={src} alt={alt} onError={() => setLoadFailed(true)} />
+        ? <img className="w-100 h-100 object-fit-cover" src={src} alt={alt} onError={() => setLoadFailed(true)} />
         : <div role="img" aria-label={alt}><span aria-hidden="true" /></div>}
     </div>
   );
@@ -19,7 +19,7 @@ function ProfileCover({ src, alt }) {
 
 function UserSummaryCard({ profile }) {
   return (
-    <section className="social-side-card social-user-summary" aria-labelledby="social-user-summary-title">
+    <section className="social-side-card social-user-summary card d-block" aria-labelledby="social-user-summary-title">
       <ProfileCover src={profile.coverImage} alt={`Capa demonstrativa de ${profile.name}`} />
       <div className="social-user-summary-body">
         <Avatar className="social-user-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
@@ -46,16 +46,16 @@ function UserSummaryCard({ profile }) {
 
 function TopicsCard() {
   return (
-    <section className="social-side-card social-topics" aria-labelledby="social-topics-title">
+    <section className="social-side-card social-topics card d-block" aria-labelledby="social-topics-title">
       <div className="social-side-card-heading">
         <span aria-hidden="true"><i className="bi bi-broadcast" /></span>
-        <div className="d-flex flex-column"><h2 id="social-topics-title">Em pauta na rede</h2><p className="mb-0 text-muted">Conversas recentes da comunidade</p></div>
+        <h2 id="social-topics-title">Em pauta na rede</h2>
       </div>
       <ol>
         {socialTopics.map((topic, index) => (
           <li key={topic.id}>
             <span>{String(index + 1).padStart(2, '0')}</span>
-            <div className="d-flex flex-column"><strong>{topic.label}</strong><small>{topic.recentPosts} publicações recentes</small></div>
+            <div className="d-flex flex-column"><strong className="text-truncate">{topic.label}</strong><small>{topic.recentPosts} publicações recentes</small></div>
           </li>
         ))}
       </ol>
@@ -73,10 +73,10 @@ function SuggestionsCard({ suggestions, onFeedback }) {
   };
 
   return (
-    <section className="social-side-card social-suggestions" aria-labelledby="social-suggestions-title">
+    <section className="social-side-card social-suggestions card d-block" aria-labelledby="social-suggestions-title">
       <div className="social-side-card-heading">
         <span aria-hidden="true"><i className="bi bi-people" /></span>
-        <div className="d-flex flex-column"><h2 id="social-suggestions-title">Pessoas e instituições que talvez conheça</h2><p className="mb-0 text-muted">Sugestões demonstrativas</p></div>
+        <h2 id="social-suggestions-title">Pessoas e instituições que talvez conheça</h2>
       </div>
       <ul>
         {suggestions.slice(0, 3).map((suggestion) => {
@@ -84,7 +84,7 @@ function SuggestionsCard({ suggestions, onFeedback }) {
           return (
             <li key={suggestion.id}>
               <Avatar className="social-suggestion-avatar" src={suggestion.avatar} initials={suggestion.initials} alt={`Foto de ${suggestion.name}`} />
-              <div className="d-flex flex-column"><strong>{suggestion.name}</strong><span>{suggestion.type}</span><small>{suggestion.detail}</small></div>
+              <div className="d-flex flex-column"><strong className="text-truncate">{suggestion.name}</strong><span>{suggestion.type}</span><small>{suggestion.detail}</small></div>
               <button type="button" className={`d-inline-flex align-items-center justify-content-center gap-1 ${requestSent ? 'is-sent' : ''}`} onClick={() => sendRequest(suggestion)} disabled={requestSent}>
                 <i className={`bi ${requestSent ? 'bi-check2' : 'bi-person-plus'}`} aria-hidden="true" />
                 {requestSent ? 'Solicitação enviada' : 'Conectar'}
