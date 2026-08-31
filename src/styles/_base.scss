@@ -1,0 +1,279 @@
+/* ==========================================================================
+   Plouty Connecting — Base (Mapas, Mixins, Tokens de Tema e Placeholders)
+   ========================================================================== */
+
+@use 'sass:map';
+
+/* 1. Mapas e Constantes */
+$breakpoints: ('xs': 400px, 'sm': 540px, 'md': 768px, 'lg': 992px, 'xl': 1040px, 'xxl': 1200px);
+$z-indexes: (
+  'base': 1, 'dock': 900, 'header': 1000, 'dropdown': 1050, 'sticky': 1100,
+  'mobile-nav': 1200, 'modal-backdrop': 1300, 'modal': 1400, 'toast': 1500, 'skip-link': 3000
+);
+
+/* 2. Funções e Mixins */
+@function z($key) {
+  @if map.has-key($z-indexes, $key) { @return map.get($z-indexes, $key); }
+  @return auto;
+}
+
+@mixin media-down($bp) {
+  $w: $bp;
+  @if map.has-key($breakpoints, $bp) { $w: map.get($breakpoints, $bp) - 0.02px; }
+  @media (max-width: $w) { @content; }
+}
+
+@mixin media-up($bp) {
+  $w: $bp;
+  @if map.has-key($breakpoints, $bp) { $w: map.get($breakpoints, $bp); }
+  @media (min-width: $w) { @content; }
+}
+
+@mixin mobile { @include media-down('sm') { @content; } }
+@mixin tablet { @include media-down('lg') { @content; } }
+@mixin desktop { @include media-up('lg') { @content; } }
+
+@mixin flex-center { display: flex; align-items: center; justify-content: center; }
+@mixin flex-column { display: flex; flex-direction: column; }
+@mixin text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@mixin glassmorphism($opacity: 96%, $blur: 12px) {
+  background: color-mix(in srgb, var(--surface) $opacity, transparent);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+@mixin focus-ring($color: var(--focus), $offset: 2px) {
+  outline: 2px solid $color;
+  outline-offset: $offset;
+}
+
+@mixin custom-scrollbar($width: 6px, $track: transparent, $thumb: var(--border), $thumb-hover: var(--border-strong)) {
+  &::-webkit-scrollbar { width: $width; height: $width; }
+  &::-webkit-scrollbar-track { background: $track; }
+  &::-webkit-scrollbar-thumb { background: $thumb; border-radius: 999px; &:hover { background: $thumb-hover; } }
+  scrollbar-width: thin;
+  scrollbar-color: $thumb $track;
+}
+
+/* 3. Placeholders (%extend) */
+%button-icon-base {
+  @include flex-center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all var(--transition);
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+%badge-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+%card-base {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+%input-base {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  &:focus { @include focus-ring; border-color: var(--focus); }
+}
+
+%identity-block {
+  min-width: 0;
+  h2, h3 { margin: 0 0 4px; color: var(--forest-950); font-size: 1.05rem; font-weight: 760; }
+  p, span, small { margin: 0; color: var(--text-muted); font-size: 0.72rem; }
+}
+
+%stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: clamp(8px, 1.5vw, 12px);
+  padding-block: 13px;
+  border-block: 1px solid var(--border);
+  dt { color: var(--text-soft); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  dd { margin: 4px 0 0; color: var(--forest-900); font-size: 0.87rem; font-weight: 760; small { color: var(--text-soft); font-size: 0.62rem; font-weight: 500; } }
+}
+
+%notice-box {
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  p { margin: 0; }
+  strong { display: block; color: var(--text); font-size: 0.76rem; margin-bottom: 2px; }
+}
+
+/* 4. Tokens de Design (Tema Claro & Escuro) */
+:root {
+  color-scheme: light;
+  --canvas: #f4f1e8;
+  --canvas-subtle: #ebe7dc;
+  --surface: #fffdf8;
+  --surface-raised: #ffffff;
+  --surface-muted: #f0eee6;
+  --surface-accent: #e5eee5;
+  --text: #17231c;
+  --text-muted: #5c675f;
+  --text-soft: #667069;
+  --forest-950: #10251a;
+  --forest-900: #173524;
+  --forest-800: #21472f;
+  --forest-700: #2c5b3b;
+  --structure-bg: #173524;
+  --structure-text: #f2f5f0;
+  --structure-muted: #bdc9c0;
+  --action: #2f6b42;
+  --action-hover: #255536;
+  --action-soft: #e0eee3;
+  --action-contrast: #ffffff;
+  --earth: #8c5925;
+  --earth-soft: #f2e7d5;
+  --amber: #915e00;
+  --amber-soft: #fff0c9;
+  --danger: #a33b2f;
+  --danger-soft: #f8e1dc;
+  --info: #306078;
+  --info-soft: #dcecf2;
+  --border: #d8d5cb;
+  --border-strong: #b8bcb3;
+  --focus: #237a3c;
+  --shadow-sm: 0 1px 2px rgba(24, 38, 28, 0.08);
+  --shadow-md: 0 12px 32px rgba(24, 38, 28, 0.12);
+  --shadow-overlay: 0 24px 64px rgba(9, 19, 13, 0.28);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --header-height: 72px;
+  --content-width: 1320px;
+  --transition: 160ms ease;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #0e1511;
+  --canvas-subtle: #141d17;
+  --surface: #18221b;
+  --surface-raised: #1d2921;
+  --surface-muted: #202c24;
+  --surface-accent: #213528;
+  --text: #f1f3ed;
+  --text-muted: #b4beb6;
+  --text-soft: #929f96;
+  --forest-950: #e7efe8;
+  --forest-900: #d9e9dc;
+  --forest-800: #bcd5c2;
+  --forest-700: #8fbd99;
+  --structure-bg: #102219;
+  --structure-text: #f1f4ef;
+  --structure-muted: #b5c2b8;
+  --action: #73b583;
+  --action-hover: #89c697;
+  --action-soft: #233c2b;
+  --action-contrast: #0d1d12;
+  --earth: #dcad72;
+  --earth-soft: #3d3021;
+  --amber: #e4b85c;
+  --amber-soft: #40351e;
+  --danger: #ee9185;
+  --danger-soft: #422721;
+  --info: #8fc3d8;
+  --info-soft: #223945;
+  --border: #334038;
+  --border-strong: #4c5a51;
+  --focus: #82cf92;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.32);
+  --shadow-overlay: 0 28px 72px rgba(0, 0, 0, 0.58);
+}
+
+/* 5. Base & Acessibilidade */
+html { min-width: 320px; scroll-behavior: smooth; scrollbar-gutter: stable; }
+body {
+  min-height: 100vh;
+  background: var(--canvas);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root, .app-shell, .public-shell { min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+
+h1, h2, h3, h4, h5 {
+  color: var(--text);
+  font-weight: 720;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+h1 { font-size: clamp(2rem, 4vw, 3.25rem); }
+h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+::selection { color: var(--action-contrast); background: var(--action); }
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: z('skip-link');
+  padding: 10px 14px;
+  background: var(--structure-bg);
+  color: var(--structure-text);
+  border-radius: var(--radius-sm);
+  transform: translateY(-160%);
+  transition: transform var(--transition);
+  &:focus { transform: translateY(0); }
+}
+
+#root {
+  :focus { outline: none; }
+  :focus-visible,
+  .login-role-switch label:has(input:focus-visible),
+  .login-input:has(input:focus-visible),
+  .message-composer > div:has(input:focus-visible) {
+    outline: 2px solid transparent !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--focus) !important;
+  }
+  .login-role-switch input:focus-visible,
+  .login-input input:focus-visible,
+  .message-composer input:focus-visible { box-shadow: none !important; }
+}
+
+@media (forced-colors: active) {
+  #root {
+    :focus-visible,
+    .login-role-switch label:has(input:focus-visible),
+    .login-input:has(input:focus-visible),
+    .message-composer > div:has(input:focus-visible) {
+      outline-color: Highlight !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -2,8 +2,14 @@
    Plouty Connecting — Folha de Estilos Principal (SCSS)
    ========================================================================== */
 
-@use 'tokens';
+// 1. Fundamentos: Mapas, Mixins, Placeholders, Tokens e Reset
+@use 'base';
+
+// 2. Estrutura Global: Header, Menus, Drawer, Mobile Nav e Footer
 @use 'layout';
+
+// 3. Componentes Reutilizáveis: Botões, Inputs, Cards de Produtores, Filtros e Dock
 @use 'components';
-@use 'forms';
-@use 'social-feed';
+
+// 4. Estilos de Páginas: Feed Social, Autenticação, Sobre e Contato
+@use 'pages';
