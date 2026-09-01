@@ -31,6 +31,8 @@ export default function Entrar() {
     }
   };
 
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const newErrors = {};
@@ -40,7 +42,12 @@ export default function Entrar() {
     }
     if (!email.trim()) {
       newErrors.email = 'Informe o e-mail usado na Plouty.';
+    } else if (!isEmailValid) {
+      newErrors.email = roleContent?.emailExample
+        ? `Digite um e-mail válido, como ${roleContent.emailExample}.`
+        : 'Digite um e-mail válido.';
     }
+
     if (!password) {
       newErrors.password = 'Informe sua senha.';
     } else if (password.length < 8) {
@@ -145,7 +152,7 @@ export default function Entrar() {
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <div className="login-field">
               <label htmlFor="login-email">E-mail</label>
-              <div className={`login-input ${errors.email ? 'has-error' : email ? 'is-valid' : ''}`}>
+              <div className={`login-input ${errors.email ? 'has-error' : isEmailValid ? 'is-valid' : ''}`}>
                 <i className="bi bi-envelope" aria-hidden="true" />
                 <input
                   id="login-email"
@@ -169,7 +176,7 @@ export default function Entrar() {
 
             <div className="login-field">
               <label htmlFor="login-password">Senha</label>
-              <div className={`login-input ${errors.password ? 'has-error' : password ? 'is-valid' : ''}`}>
+              <div className={`login-input ${errors.password ? 'has-error' : password.length >= 8 ? 'is-valid' : ''}`}>
                 <i className="bi bi-lock" aria-hidden="true" />
                 <input
                   id="login-password"
