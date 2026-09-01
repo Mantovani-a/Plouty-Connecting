@@ -16,6 +16,15 @@ export default function Footer() {
           <NavLink to="/sobre">Sobre</NavLink>
           <NavLink to="/contato">Contato</NavLink>
           <NavLink to="/entrar">Entrar</NavLink>
+          <a
+            href="https://www.youtube.com/watch?v=_lUoH_IZhv4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="d-inline-flex align-items-center gap-1"
+          >
+            <i className="bi bi-play-circle-fill text-danger" aria-hidden="true" />
+            <span>Pitch Vídeo</span>
+          </a>
         </nav>
         <small>Projeto acadêmico alinhado à ODS 2 · {new Date().getFullYear()}</small>
       </div>

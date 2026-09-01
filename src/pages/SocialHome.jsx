@@ -23,8 +23,18 @@ export default function SocialHome() {
     <main id="conteudo-principal" className="workspace-main social-feed-main">
       <div className="social-feed-shell">
         <div className="social-feed-primary">
-          <header className="social-feed-heading">
+          <header className="social-feed-heading d-flex align-items-center justify-content-between flex-wrap gap-2">
             <h1>Rede Plouty</h1>
+            <a
+              href="https://www.youtube.com/watch?v=_lUoH_IZhv4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-compact d-inline-flex align-items-center gap-2"
+              aria-label="Assistir Pitch Vídeo no YouTube"
+            >
+              <i className="bi bi-play-circle-fill text-danger" aria-hidden="true" style={{ fontSize: '1.1rem' }} />
+              <span>Pitch Vídeo</span>
+            </a>
           </header>
 
           <PostComposer profile={profile} onFeedback={showFeedback} />

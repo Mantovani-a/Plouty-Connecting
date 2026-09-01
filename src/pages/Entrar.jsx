@@ -161,6 +161,18 @@ export default function Entrar() {
             Na Plouty, produtores rurais e instituições constroem relações de confiança, encontram
             oportunidades e conduzem propostas, negociações e contratos em um só ambiente.
           </p>
+          <div className="login-intro-actions pt-2">
+            <a
+              href="https://www.youtube.com/watch?v=_lUoH_IZhv4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary d-inline-flex align-items-center gap-2"
+              aria-label="Assistir Pitch Vídeo no YouTube"
+            >
+              <i className="bi bi-play-circle-fill text-danger" aria-hidden="true" style={{ fontSize: '1.25rem' }} />
+              <span>Assistir Pitch Vídeo - Sprint 5</span>
+            </a>
+          </div>
         </section>
 
         <section className="login-panel" aria-labelledby="login-title">
