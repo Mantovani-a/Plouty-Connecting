@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useWorkspace } from '../context/WorkspaceContext';
 
-const INITIAL_FORM = { email: '', password: '' };
 const ROLE_CONTENT = {
   producer: {
     emailExample: 'nome@produtor.com.br',
@@ -14,138 +13,46 @@ const ROLE_CONTENT = {
   }
 };
 
-const INTERNAL_PATHS = ['/inicio', '/explorar', '/contato'];
-
-function validateLoginField(name, value, role) {
-  if (name === 'email') {
-    if (!value.trim()) return 'Informe o e-mail usado na Plouty.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
-      return role
-      ? `Digite um e-mail válido, como ${ROLE_CONTENT[role].emailExample}.`
-      : 'Digite um e-mail válido.';
-    }
-  }
-  if (name === 'password') {
-    if (!value) return 'Informe sua senha.';
-    if (value.length < 8) return 'Use pelo menos 8 caracteres.';
-  }
-  return '';
-}
-
-function validateLogin(form, role) {
-  const errors = {};
-  if (!role) errors.role = 'Escolha Produtor ou Instituição para continuar.';
-  const emailError = validateLoginField('email', form.email, role);
-  const passwordError = validateLoginField('password', form.password, role);
-  if (emailError) errors.email = emailError;
-  if (passwordError) errors.password = passwordError;
-  return errors;
-}
-
-function normalizeInternalDestination(candidate) {
-  if (
-    typeof candidate !== 'string' ||
-    !candidate.startsWith('/') ||
-    candidate.startsWith('//') ||
-    candidate.includes('\\')
-  ) {
-    return null;
-  }
-  try {
-    const parsed = new URL(candidate, 'https://plouty.local');
-    if (parsed.origin !== 'https://plouty.local' || !INTERNAL_PATHS.includes(parsed.pathname)) {
-      return null;
-    }
-    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
-  } catch {
-    return null;
-  }
-}
-
-function getReturnDestination(location) {
-  const queryDestination = new URLSearchParams(location.search).get('retorno');
-  const safeQueryDestination = normalizeInternalDestination(queryDestination);
-  if (safeQueryDestination) return safeQueryDestination;
-
-  const locationState = location.state;
-  const previousLocation = locationState?.from;
-  return (
-    normalizeInternalDestination(
-      previousLocation
-        ? `${previousLocation.pathname}${previousLocation.search || ''}${previousLocation.hash || ''}`
-        : null
-    ) || '/inicio'
-  );
-}
-
 export default function Entrar() {
-  const [form, setForm] = useState(INITIAL_FORM);
-  const [role, setLoginRole] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [touchedFields, setTouchedFields] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const timerRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation();
   const { startDemoSession } = useWorkspace();
+
   const roleContent = role ? ROLE_CONTENT[role] : null;
 
-  useEffect(() => () => window.clearTimeout(timerRef.current), []);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-    if (touchedFields[name] || errors[name]) {
-      setErrors((current) => ({
-        ...current,
-        [name]: validateLoginField(name, value, role)
-      }));
+  const handleRoleChange = (selectedRole) => {
+    setRole(selectedRole);
+    if (errors.role) {
+      setErrors((prev) => ({ ...prev, role: '' }));
     }
-    setSuccessMessage('');
-  };
-
-  const handleBlur = (event) => {
-    const { name, value } = event.target;
-    setTouchedFields((current) => ({ ...current, [name]: true }));
-    setErrors((current) => ({
-      ...current,
-      [name]: validateLoginField(name, value, role)
-    }));
-  };
-
-  const handleRoleChange = (nextRole) => {
-    if (isLoading || nextRole === role) return;
-    setLoginRole(nextRole);
-    setTouchedFields((current) => ({ ...current, role: true }));
-    setErrors((current) => ({
-      ...current,
-      role: '',
-      email: touchedFields.email || current.email
-        ? validateLoginField('email', form.email, nextRole)
-        : ''
-    }));
-    setSuccessMessage('');
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.clearTimeout(timerRef.current);
-    const nextErrors = validateLogin(form, role);
-    setTouchedFields({ role: true, email: true, password: true });
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
+    const newErrors = {};
 
-    setIsLoading(true);
-    setSuccessMessage('');
-    timerRef.current = window.setTimeout(() => {
+    if (!role) {
+      newErrors.role = 'Escolha Produtor ou Instituição para continuar.';
+    }
+    if (!email.trim()) {
+      newErrors.email = 'Informe o e-mail usado na Plouty.';
+    }
+    if (!password) {
+      newErrors.password = 'Informe sua senha.';
+    } else if (password.length < 8) {
+      newErrors.password = 'Use pelo menos 8 caracteres.';
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
       startDemoSession(role);
-      setForm((current) => ({ ...current, password: '' }));
-      setSuccessMessage('Acesso demonstrativo validado. Abrindo seu espaço na Plouty…');
-      navigate(getReturnDestination(location), { replace: true });
-      timerRef.current = null;
-    }, 650);
+      navigate('/inicio');
+    }
   };
 
   return (
@@ -170,7 +77,7 @@ export default function Entrar() {
               aria-label="Assistir Pitch Vídeo no YouTube"
             >
               <i className="bi bi-play-circle-fill text-danger" aria-hidden="true" style={{ fontSize: '1.25rem' }} />
-              <span>Assistir Pitch Vídeo - Sprint 5</span>
+              <span>Assistir Pitch Vídeo</span>
             </a>
           </div>
         </section>
@@ -184,13 +91,7 @@ export default function Entrar() {
 
           <fieldset
             className={`login-role-fieldset ${errors.role ? 'has-error' : ''}`}
-            disabled={isLoading}
             aria-invalid={Boolean(errors.role)}
-            aria-describedby={
-              errors.role
-                ? 'login-role-error login-role-destination'
-                : 'login-role-destination'
-            }
           >
             <legend>Quero entrar como</legend>
             <div className="login-role-switch">
@@ -201,7 +102,6 @@ export default function Entrar() {
                   value="producer"
                   checked={role === 'producer'}
                   onChange={() => handleRoleChange('producer')}
-                  aria-describedby="login-role-destination"
                 />
                 <span className="login-role-icon d-inline-flex align-items-center justify-content-center">
                   <i className="bi bi-person-workspace" aria-hidden="true" />
@@ -219,7 +119,6 @@ export default function Entrar() {
                   value="buyer"
                   checked={role === 'buyer'}
                   onChange={() => handleRoleChange('buyer')}
-                  aria-describedby="login-role-destination"
                 />
                 <span className="login-role-icon d-inline-flex align-items-center justify-content-center">
                   <i className="bi bi-building" aria-hidden="true" />
@@ -246,20 +145,19 @@ export default function Entrar() {
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <div className="login-field">
               <label htmlFor="login-email">E-mail</label>
-              <div className={`login-input ${errors.email ? 'has-error' : touchedFields.email && form.email ? 'is-valid' : ''}`}>
+              <div className={`login-input ${errors.email ? 'has-error' : email ? 'is-valid' : ''}`}>
                 <i className="bi bi-envelope" aria-hidden="true" />
                 <input
                   id="login-email"
                   name="email"
                   type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
+                  }}
                   placeholder={roleContent?.emailExample || 'Escolha um perfil acima'}
                   autoComplete="email"
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? 'login-email-error' : undefined}
-                  disabled={isLoading}
                 />
               </div>
               {errors.email && (
@@ -271,28 +169,25 @@ export default function Entrar() {
 
             <div className="login-field">
               <label htmlFor="login-password">Senha</label>
-              <div className={`login-input ${errors.password ? 'has-error' : touchedFields.password && form.password ? 'is-valid' : ''}`}>
+              <div className={`login-input ${errors.password ? 'has-error' : password ? 'is-valid' : ''}`}>
                 <i className="bi bi-lock" aria-hidden="true" />
                 <input
                   id="login-password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  value={form.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors((prev) => ({ ...prev, password: '' }));
+                  }}
                   placeholder="Mínimo de 8 caracteres"
                   autoComplete="current-password"
-                  aria-invalid={Boolean(errors.password)}
-                  aria-describedby={errors.password ? 'login-password-error' : undefined}
-                  disabled={isLoading}
                 />
                 <button
                   className="d-inline-flex align-items-center justify-content-center"
                   type="button"
-                  onClick={() => setShowPassword((visible) => !visible)}
+                  onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                  aria-pressed={showPassword}
-                  disabled={isLoading}
                 >
                   <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} aria-hidden="true" />
                 </button>
@@ -307,36 +202,16 @@ export default function Entrar() {
             <button
               className="btn btn-primary login-submit d-flex align-items-center justify-content-between w-100"
               type="submit"
-              disabled={isLoading || Boolean(successMessage)}
             >
-              {successMessage ? (
-                <>
-                  <span className="button-spinner" aria-hidden="true" /> Abrindo a Plouty…
-                </>
-              ) : isLoading ? (
-                <>
-                  <span className="button-spinner" aria-hidden="true" /> Validando acesso…
-                </>
-              ) : (
-                <>
-                  <span>Entrar na demonstração</span>
-                  <i className="bi bi-arrow-right" aria-hidden="true" />
-                </>
-              )}
+              <span>Entrar na demonstração</span>
+              <i className="bi bi-arrow-right" aria-hidden="true" />
             </button>
-            <div className="login-status" aria-live="polite">
-              {successMessage && (
-                <p className="login-success">
-                  <i className="bi bi-check-circle-fill" aria-hidden="true" /> {successMessage}
-                </p>
-              )}
-            </div>
           </form>
 
           <div className="login-demo-disclaimer d-flex gap-2">
             <i className="bi bi-info-circle" aria-hidden="true" />
             <p>
-              <strong>Acesso demonstrativo</strong>Não existe autenticação no backend. O perfil
+              <strong>Acesso demonstrativo: </strong>Não existe autenticação no backend. O perfil
               escolhido fica apenas nesta aba; a senha não é armazenada.
             </p>
           </div>
