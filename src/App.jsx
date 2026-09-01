@@ -19,10 +19,24 @@ const PRODUCT_PATHS = ['/inicio', '/explorar', '/contato'];
 
 function getEntryDestination(search) {
   const candidate = new URLSearchParams(search).get('retorno');
-  if (!candidate || !candidate.startsWith('/') || candidate.startsWith('//')) return '/inicio';
-  const parsed = new URL(candidate, 'https://plouty.local');
-  if (!PRODUCT_PATHS.includes(parsed.pathname)) return '/inicio';
-  return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  if (
+    !candidate ||
+    typeof candidate !== 'string' ||
+    !candidate.startsWith('/') ||
+    candidate.startsWith('//') ||
+    candidate.includes('\\')
+  ) {
+    return '/inicio';
+  }
+  try {
+    const parsed = new URL(candidate, 'https://plouty.local');
+    if (parsed.origin !== 'https://plouty.local' || !PRODUCT_PATHS.includes(parsed.pathname)) {
+      return '/inicio';
+    }
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
+    return '/inicio';
+  }
 }
 
 function ProtectedRoute({ children }) {

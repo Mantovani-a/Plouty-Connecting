@@ -43,14 +43,23 @@ function validateLogin(form, role) {
 }
 
 function normalizeInternalDestination(candidate) {
-  if (typeof candidate !== 'string' || !candidate.startsWith('/') || candidate.startsWith('//')) {
+  if (
+    typeof candidate !== 'string' ||
+    !candidate.startsWith('/') ||
+    candidate.startsWith('//') ||
+    candidate.includes('\\')
+  ) {
     return null;
   }
-  const parsed = new URL(candidate, 'https://plouty.local');
-  if (!INTERNAL_PATHS.includes(parsed.pathname)) {
+  try {
+    const parsed = new URL(candidate, 'https://plouty.local');
+    if (parsed.origin !== 'https://plouty.local' || !INTERNAL_PATHS.includes(parsed.pathname)) {
+      return null;
+    }
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  } catch {
     return null;
   }
-  return `${parsed.pathname}${parsed.search}${parsed.hash}`;
 }
 
 function getReturnDestination(location) {
