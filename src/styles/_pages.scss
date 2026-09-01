@@ -127,8 +127,27 @@
 }
 
 .local-post-label { @extend %badge-base; background: var(--surface-muted); color: var(--text-soft); }
-.social-media-frame { display: grid; position: relative; width: 100%; overflow: hidden; background: var(--surface-accent); aspect-ratio: 16 / 9; }
-.social-media-placeholder { display: grid; place-content: center; gap: 7px; padding: 24px; color: var(--text-soft); text-align: center; justify-items: center; }
+.social-media-frame {
+  display: grid;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface-accent);
+  border-block: 1px solid var(--border);
+  aspect-ratio: 16 / 9;
+}
+.social-media-placeholder {
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: var(--text-muted);
+  text-align: center;
+  justify-items: center;
+  span i { font-size: 1.75rem; color: var(--action); opacity: 0.85; }
+  strong { color: var(--text); font-size: 0.84rem; font-weight: 700; }
+  small { color: var(--text-soft); font-size: 0.72rem; }
+}
 
 .social-feed-sidebar {
   @include custom-scrollbar(7px, transparent, color-mix(in srgb, var(--action) 45%, var(--border)), color-mix(in srgb, var(--action) 68%, var(--border)));
@@ -200,7 +219,7 @@
   grid-template-columns: 1fr 1fr;
   margin-top: 14px;
   > div { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
-  strong { font-size: 1.25rem; line-height: 1.1; }
+  strong { color: var(--forest-900); font-size: 1.25rem; line-height: 1.1; }
   span { color: var(--text-soft); font-size: 0.65rem; line-height: 1.2; }
 }
 
@@ -218,6 +237,7 @@
   align-items: center;
   padding: 9px 0;
   border-top: 1px solid var(--border);
+  > span { color: var(--action); font-size: 0.78rem; font-weight: 760; }
   strong { color: var(--text); font-size: 0.78rem; }
   small { color: var(--text-soft); font-size: 0.65rem; }
 }

@@ -80,9 +80,16 @@ $z-indexes: (
 
 %card-base {
   background: var(--surface);
+  color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+}
+
+.card {
+  background-color: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
 }
 
 %input-base {
@@ -164,29 +171,38 @@ $z-indexes: (
   --header-height: 72px;
   --content-width: 1320px;
   --transition: 160ms ease;
+
+  /* Bootstrap Bridge */
+  --bs-body-bg: var(--canvas);
+  --bs-body-color: var(--text);
+  --bs-card-bg: var(--surface);
+  --bs-card-color: var(--text);
+  --bs-border-color: var(--border);
+  --bs-tertiary-bg: var(--surface-muted);
+  --bs-secondary-color: var(--text-muted);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #0e1511;
-  --canvas-subtle: #141d17;
-  --surface: #18221b;
-  --surface-raised: #1d2921;
-  --surface-muted: #202c24;
-  --surface-accent: #213528;
-  --text: #f1f3ed;
-  --text-muted: #b4beb6;
-  --text-soft: #929f96;
-  --forest-950: #e7efe8;
-  --forest-900: #d9e9dc;
-  --forest-800: #bcd5c2;
-  --forest-700: #8fbd99;
-  --structure-bg: #102219;
+  --canvas: #0b120e;
+  --canvas-subtle: #101913;
+  --surface: #17241c;
+  --surface-raised: #1e2e24;
+  --surface-muted: #213328;
+  --surface-accent: #1c2d22;
+  --text: #f1f4ee;
+  --text-muted: #b6c2b8;
+  --text-soft: #9db1a2;
+  --forest-950: #e7f0e8;
+  --forest-900: #d4e7d8;
+  --forest-800: #bad6c1;
+  --forest-700: #8ec098;
+  --structure-bg: #0e1d15;
   --structure-text: #f1f4ef;
   --structure-muted: #b5c2b8;
   --action: #73b583;
   --action-hover: #89c697;
-  --action-soft: #233c2b;
+  --action-soft: #1e3827;
   --action-contrast: #0d1d12;
   --earth: #dcad72;
   --earth-soft: #3d3021;
@@ -196,12 +212,21 @@ $z-indexes: (
   --danger-soft: #422721;
   --info: #8fc3d8;
   --info-soft: #223945;
-  --border: #334038;
-  --border-strong: #4c5a51;
+  --border: #2c3f33;
+  --border-strong: #435b4c;
   --focus: #82cf92;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
-  --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.32);
-  --shadow-overlay: 0 28px 72px rgba(0, 0, 0, 0.58);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.45);
+  --shadow-overlay: 0 28px 72px rgba(0, 0, 0, 0.65);
+
+  /* Bootstrap Bridge */
+  --bs-body-bg: var(--canvas);
+  --bs-body-color: var(--text);
+  --bs-card-bg: var(--surface);
+  --bs-card-color: var(--text);
+  --bs-border-color: var(--border);
+  --bs-tertiary-bg: var(--surface-muted);
+  --bs-secondary-color: var(--text-muted);
 }
 
 /* 5. Base & Acessibilidade */
@@ -226,7 +251,7 @@ h1, h2, h3, h4, h5 {
 }
 h1 { font-size: clamp(2rem, 4vw, 3.25rem); }
 h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
-::selection { color: var(--action-contrast); background: var(--action); }
+::selection { color: var(--text); background: color-mix(in srgb, var(--action) 35%, transparent); }
 
 .skip-link {
   position: fixed;

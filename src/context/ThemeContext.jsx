@@ -16,6 +16,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-bs-theme', theme);
     try {
       localStorage.setItem('theme', theme);
     } catch (e) {
