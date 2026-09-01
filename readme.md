@@ -49,8 +49,8 @@ O protótipo atual concentra-se na apresentação dessa experiência, utilizando
 ## 🧰 Tecnologias utilizadas
 
 - **React 18**;
-- **Vite 5**;
-- **React Router 6**;
+- **Vite 6**;
+- **React Router 7**;
 - **Bootstrap 5**;
 - **Bootstrap Icons**;
 - **Context API** para tema e sessão demonstrativa;
