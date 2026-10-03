@@ -32,7 +32,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     const term = searchTerm.trim();
-    const target = '/explorar';
+    const target = location.pathname.startsWith('/demandas') ? '/demandas' : '/explorar';
     navigate(term ? `${target}?search=${encodeURIComponent(term)}` : target);
     setMobileSearchOpen(false);
   };
@@ -104,7 +104,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
             <input
               id="busca-global"
               type="search"
-              placeholder="Buscar produtor, produto ou demanda"
+              placeholder="Buscar produtor ou demanda..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />

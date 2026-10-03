@@ -113,11 +113,12 @@
 .header-search {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 50%;
-  width: min(420px, 35vw);
-  min-width: 280px;
-  transform: translateX(-50%);
+  position: relative;
+  width: 100%;
+  min-width: 180px;
+  max-width: 280px;
+  margin-left: auto;
+
   &-submit {
     @extend %button-icon-base;
     position: absolute;
@@ -130,12 +131,13 @@
   }
   input {
     @extend %input-base;
-    height: 42px;
-    padding: 0 14px 0 42px;
-    border-radius: 22px;
+    width: 100%;
+    height: 40px;
+    padding: 0 14px 0 40px;
+    border-radius: 20px;
     background: var(--surface-muted);
     font-size: 0.82rem;
-    &:focus { border-color: var(--border-strong); background: var(--surface); }
+    &:focus { border-color: var(--action); background: var(--surface); box-shadow: 0 0 0 3px var(--action-soft); }
     &::placeholder { color: var(--text-soft); }
   }
   @include media-down('md') {
@@ -144,6 +146,7 @@
     top: calc(100% + 1px);
     left: 0;
     right: 0;
+    max-width: none;
     transform: none;
     padding: 10px 14px;
     background: var(--surface);
@@ -221,7 +224,7 @@
 .mobile-bottom-nav {
   @include tablet {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     position: fixed;
     left: 0;
     right: 0;

@@ -1,11 +1,13 @@
 export const PRODUCER_NAV_ITEMS = [
   { to: '/inicio', label: 'Início', icon: 'bi-house-door', end: true },
+  { to: '/demandas', label: 'Demandas', icon: 'bi-box-seam', end: false },
   { to: '/explorar', label: 'Explorar', icon: 'bi-compass', end: false },
   { to: '/contato', label: 'Contato', icon: 'bi-headset', end: false }
 ];
 
 export const BUYER_NAV_ITEMS = [
   { to: '/inicio', label: 'Início', icon: 'bi-house-door', end: true },
+  { to: '/demandas', label: 'Demandas', icon: 'bi-box-seam', end: false },
   { to: '/explorar', label: 'Produtores', icon: 'bi-people', end: false },
   { to: '/contato', label: 'Contato', icon: 'bi-headset', end: false }
 ];

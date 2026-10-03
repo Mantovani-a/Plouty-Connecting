@@ -10,12 +10,13 @@ import MessagePanel from './components/layout/MessagePanel';
 import { buyerConversations, getUnreadConversationCount, producerConversations } from './data/messagesData';
 
 import SocialHome from './pages/SocialHome';
+import Demandas from './pages/Demandas';
 import Explorar from './pages/Explorar';
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import Entrar from './pages/Entrar';
 
-const PRODUCT_PATHS = ['/inicio', '/explorar', '/contato'];
+const PRODUCT_PATHS = ['/inicio', '/demandas', '/explorar', '/contato'];
 
 function getEntryDestination(search) {
   const candidate = new URLSearchParams(search).get('retorno');
@@ -105,6 +106,7 @@ function AppContent() {
         <Route path="/" element={<PublicEntryRoute />} />
         <Route path="/entrar" element={<PublicEntryRoute />} />
         <Route path="/inicio" element={<ProtectedRoute><SocialHome /></ProtectedRoute>} />
+        <Route path="/demandas" element={<ProtectedRoute><Demandas onOpenMessages={openMessages} /></ProtectedRoute>} />
         <Route path="/explorar" element={<ProtectedRoute><Explorar onOpenMessages={openMessages} /></ProtectedRoute>} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/contato" element={<Contato />} />

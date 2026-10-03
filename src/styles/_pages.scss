@@ -98,11 +98,14 @@
   }
   &-metrics { min-height: 42px; padding: 8px clamp(14px, 2.5vw, 20px); color: var(--text-soft); font-size: 0.65rem; }
   &-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
     padding: 6px clamp(10px, 1.5vw, 12px);
     border-top: 1px solid var(--border);
     button {
       min-height: 38px;
-      padding: 0 16px;
+      padding: 0 8px;
       border: 0;
       border-radius: var(--radius-sm);
       background: transparent;
@@ -113,8 +116,120 @@
       transition: all var(--transition);
       &:hover, &.is-active { color: var(--action); background: var(--action-soft); }
     }
+    @include media-down(560px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
+
+.social-comments {
+  padding: 16px clamp(14px, 2.5vw, 20px) 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+.social-comment-list {
+  display: grid;
+  gap: 12px;
+}
+.social-comment {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  align-items: flex-start;
+}
+.social-comment-avatar {
+  @include flex-center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+.social-comment-body {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  strong {
+    color: var(--text);
+    font-size: 0.78rem;
+  }
+  p {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+}
+.social-comment-form {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  textarea.form-control {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border-strong);
+    font-size: 0.8rem;
+    resize: vertical;
+    &:focus {
+      border-color: var(--action);
+      box-shadow: 0 0 0 3px var(--action-soft);
+    }
+  }
+}
+
+.remove-social-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition);
+  &:hover {
+    background: rgba(220, 53, 69, 0.9);
+    transform: scale(1.08);
+  }
+}
+
+.demand-card {
+  @extend %card-base;
+  overflow: hidden;
+  margin-bottom: clamp(14px, 2vw, 18px);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--action);
+  transition: transform var(--transition), box-shadow var(--transition);
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.demand-avatar-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--action-soft);
+  color: var(--action);
+  font-size: 1.25rem;
+}
+
+.demand-creator {
+  @extend %card-base;
+  border-top: 3px solid var(--forest-600);
+}
+
+.ods-target-pill {
+  font-size: 0.72rem;
+  letter-spacing: -0.01em;
+}
+
 
 .social-author-avatar { @include flex-center; width: 44px; height: 44px; font-size: 0.74rem; font-weight: 800; }
 .social-author-copy {

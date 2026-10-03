@@ -32,15 +32,18 @@ O protótipo atual concentra-se na apresentação dessa experiência, utilizando
 
 - entrada demonstrativa com escolha entre **Produtor** e **Instituição**;
 - sessão local mantida durante a aba atual do navegador;
-- feed social com três publicações demonstrativas e estáveis;
-- curtidas locais nas publicações;
+- feed social interativo com criação de publicações em tempo real e persistência local;
+- upload e pré-visualização de fotografias no compositor de postagens;
+- sistema de comentários interativos com respostas dinâmicas em cada publicação;
+- ações de curtir, republicar e compartilhar com contadores atualizados em tempo real;
+- central de demandas ODS 2 integrada com criação de solicitações de compra institucional;
+- manifestação de interesse e abertura direta de negociação via dock de mensagens;
 - resumo do usuário, assuntos em pauta e sugestões de conexão;
 - catálogo de produtores e cooperativas;
 - busca por nome, produto, localização ou descrição;
 - filtros por tipo de produção, região e avaliação mínima;
 - cards comerciais com reputação, entregas, disponibilidade e verificações;
-- painel responsivo de mensagens com conversas demonstrativas;
-- envio de mensagens mantido somente durante a sessão da interface;
+- painel responsivo de mensagens com conversas demonstrativas e direcionadas;
 - formulário de contato com validação local;
 - temas claro e escuro;
 - navegação responsiva para desktop, tablet e celular;
@@ -61,6 +64,7 @@ O protótipo atual concentra-se na apresentação dessa experiência, utilizando
 - **`/`** — entrada pública da demonstração;
 - **`/entrar`** — formulário de acesso e seleção do perfil demonstrativo;
 - **`/inicio`** — feed social da rede Plouty, protegido pela sessão local;
+- **`/demandas`** — central de demandas e cotações da agricultura familiar (ODS 2), protegida pela sessão local;
 - **`/explorar`** — catálogo de produtores e cooperativas, protegido pela sessão local;
 - **`/sobre`** — apresentação institucional da Plouty e de sua relação com a ODS 2;
 - **`/contato`** — canal demonstrativo de contato e suporte.
@@ -120,15 +124,12 @@ Plouty-Connecting/
 
 Este repositório representa um **protótipo de interface**. Atualmente:
 
-- não existe backend, banco de dados ou autenticação real;
-- o perfil selecionado é armazenado em `sessionStorage` apenas para a demonstração;
-- as conversas vêm de mocks fixos e novas mensagens permanecem somente em memória;
-- o formulário de contato valida os dados, mas não os envia para um servidor;
-- o campo de criação de publicação fornece feedback visual, mas ainda não adiciona um novo post ao feed;
-- o upload de imagens ainda não está disponível;
-- curtidas, perfis salvos e solicitações de conexão não possuem persistência remota;
-- comentários, republicações e compartilhamentos não estão ativos na interface atual;
-- os dados de reputação, entregas, perfis e instituições são fictícios e estáveis.
+- não existe backend ou banco de dados persistente em nuvem;
+- os dados inseridos (publicações, fotos locais, comentários e demandas) são gerenciados no estado e no `localStorage` do navegador;
+- o perfil selecionado é armazenado em `sessionStorage` para fins de demonstração acadêmica;
+- as conversas e novas mensagens permanecem em memória durante a sessão;
+- o formulário de contato valida os dados localmente;
+- os dados de reputação, entregas, perfis e instituições são fictícios e demonstrativos.
 
 ## 🗺️ Funcionalidades planejadas para fases futuras
 
