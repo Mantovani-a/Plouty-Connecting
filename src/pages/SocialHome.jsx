@@ -74,7 +74,7 @@ export default function SocialHome() {
               </NavLink>
 
               <a
-                href="https://www.youtube.com/watch?v=_lUoH_IZhv4"
+                href="https://www.youtube.com/watch?v=AOllpt6I7u4"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-secondary btn-compact d-inline-flex align-items-center gap-2"

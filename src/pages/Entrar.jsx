@@ -77,7 +77,7 @@ export default function Entrar() {
           </p>
           <div className="login-intro-actions pt-2">
             <a
-              href="https://www.youtube.com/watch?v=_lUoH_IZhv4"
+              href="https://www.youtube.com/watch?v=AOllpt6I7u4"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-secondary d-inline-flex align-items-center gap-2"
