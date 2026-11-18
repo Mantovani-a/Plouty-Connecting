@@ -1,23 +1,32 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import FeedEmptyState from '../components/social/FeedEmptyState';
 import PostComposer from '../components/social/PostComposer';
 import SocialPost from '../components/social/SocialPost';
 import SocialSidebar from '../components/social/SocialSidebar';
 import Toast from '../components/common/Toast';
 import { useWorkspace } from '../context/WorkspaceContext';
-import { socialFeedPosts } from '../data/socialFeedData';
-import { getStorageItem, setStorageItem } from '../utils/storage';
-
-const LOCAL_SOCIAL_POSTS_KEY = 'plouty.demo.social-posts.v1';
+import { useSocial } from '../context/SocialContext';
+import { useNetwork } from '../context/NetworkContext';
+import { useProfiles } from '../context/ProfilesContext';
+import { readAllDemands } from '../utils/demandSearch';
+import { useCommerce } from '../context/CommerceContext';
 
 export default function SocialHome() {
   const { profile, isProducer } = useWorkspace();
-  const [localPosts, setLocalPosts] = useState(() => getStorageItem(LOCAL_SOCIAL_POSTS_KEY, []));
+  const { posts, createPost } = useSocial();
+  const { connectionsFor } = useNetwork();
+  const { getProfileById } = useProfiles();
+  const { demands } = useCommerce();
+  const [filter, setFilter] = useState('recentes');
   const [feedback, setFeedback] = useState('');
   const feedbackTimerRef = useRef(null);
 
-  const posts = useMemo(() => [...localPosts, ...socialFeedPosts], [localPosts]);
+  const connectedIds = connectionsFor(profile.id);
+  const visiblePosts = posts.filter((post) => filter === 'conexoes'
+    ? post.authorId === profile.id || connectedIds.includes(post.authorId)
+    : filter === 'oportunidades' ? getProfileById(post.authorId)?.kind === 'buyer' : true);
+  const opportunities = filter === 'oportunidades' ? readAllDemands(demands, getProfileById).filter((demand) => demand.status === 'open').slice(0, 3) : [];
 
   useEffect(() => () => window.clearTimeout(feedbackTimerRef.current), []);
 
@@ -28,30 +37,8 @@ export default function SocialHome() {
   };
 
   const handlePublishPost = ({ text, image }) => {
-    const newPost = {
-      id: `local-post-${Date.now()}`,
-      author: {
-        initials: profile.initials || 'VC',
-        name: profile.name || 'Você',
-        role: profile.role || (isProducer ? 'Produtor Rural' : 'Instituição Compradora'),
-        type: isProducer ? 'producer' : 'institution',
-        avatar: profile.avatar,
-        verified: true
-      },
-      publishedAt: 'Publicado agora mesmo',
-      text,
-      postImage: image,
-      reactionCount: 0,
-      commentCount: 0,
-      repostCount: 0,
-      comments: [],
-      isLocal: true
-    };
-
-    const nextPosts = [newPost, ...localPosts];
-    setLocalPosts(nextPosts);
-    setStorageItem(LOCAL_SOCIAL_POSTS_KEY, nextPosts);
-    showFeedback('Publicação registrada e mantida na rede!');
+    const { saved } = createPost(profile.id, text, image);
+    showFeedback(saved ? 'Publicação registrada e mantida neste navegador!' : 'Publicação visível nesta sessão; não foi possível salvá-la no navegador.');
   };
 
   return (
@@ -92,9 +79,23 @@ export default function SocialHome() {
             onFeedback={showFeedback}
           />
 
+          <div className="feed-filters" role="group" aria-label="Filtrar publicações">
+            {[['recentes', 'Recentes'], ['conexoes', 'Conexões'], ['oportunidades', 'Oportunidades']].map(([value, label]) => (
+              <button key={value} type="button" className={filter === value ? 'is-active' : ''}
+                aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</button>
+            ))}
+          </div>
+
+          {filter === 'oportunidades' && <section className="feed-opportunities card" aria-label="Demandas em destaque">
+            <h2>Demandas em destaque</h2>
+            {opportunities.map((demand) => <Link key={demand.id} to={`/demandas#demand-${demand.id}`}>
+              <strong>{demand.org}</strong><span>{demand.products.join(' · ')}</span><i className="bi bi-arrow-right" aria-hidden="true" />
+            </Link>)}
+          </section>}
+
           <section className="social-feed-list" aria-label="Publicações da rede Plouty">
-            {posts.length ? (
-              posts.map((post) => (
+            {visiblePosts.length ? (
+              visiblePosts.map((post) => (
                 <SocialPost
                   key={post.id}
                   post={post}
@@ -103,7 +104,7 @@ export default function SocialHome() {
                 />
               ))
             ) : (
-              <FeedEmptyState />
+              filter === 'recentes' ? <FeedEmptyState /> : <div className="network-empty card"><i className="bi bi-journal-text" aria-hidden="true" /><p>Nenhuma publicação encontrada neste filtro.</p></div>
             )}
           </section>
         </div>

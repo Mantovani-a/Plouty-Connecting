@@ -1,43 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import FeedMedia from './FeedMedia';
 import Avatar from '../common/Avatar';
+import { useProfiles } from '../../context/ProfilesContext';
+import { useSocial } from '../../context/SocialContext';
 
 const countLabel = (value, singular, plural) => `${value} ${value === 1 ? singular : plural}`;
+const formatDate = (value) => {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  }).format(date);
+};
 
 export default function SocialPost({ post, currentProfile, onFeedback }) {
-  const [liked, setLiked] = useState(false);
-  const [reposted, setReposted] = useState(false);
+  const { getProfileById } = useProfiles();
+  const { data, editPost, deletePost, toggleLike: saveLike, toggleRepost: saveRepost, addComment, recordShare } = useSocial();
+  const author = getProfileById(post.authorId) || currentProfile;
+  const liked = (data.likes[post.id] || []).includes(currentProfile?.id);
+  const reposted = (data.reposts[post.id] || []).includes(currentProfile?.id);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [commentDraft, setCommentDraft] = useState('');
-  const [localComments, setLocalComments] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editDraft, setEditDraft] = useState(post.text || '');
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const lockRef = useRef(false);
-  const timerRef = useRef(null);
   const commentInputRef = useRef(null);
 
-  const reactionCount = (post.reactionCount || 0) + (liked ? 1 : 0);
-  const repostCount = (post.repostCount || 0) + (reposted ? 1 : 0);
-  const allComments = [...(post.comments || []), ...localComments];
-  const commentCount = (post.commentCount || (post.comments?.length || 0)) + localComments.length;
-
-  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+  const reactionCount = (post.reactionCount || 0) + (data.likes[post.id] || []).length;
+  const repostCount = (post.repostCount || 0) + (data.reposts[post.id] || []).length;
+  const allComments = [...(post.comments || []), ...(data.comments[post.id] || [])];
+  const commentCount = (post.commentCount || (post.comments?.length || 0)) + (data.comments[post.id] || []).length;
+  const ownPost = post.authorId === currentProfile?.id;
+  const media = post.postImage?.src ? post.postImage : post.image?.src ? post.image : post.mediaPlaceholder;
 
   const toggleLike = () => {
-    if (lockRef.current) return;
-    lockRef.current = true;
-    const nextLiked = !liked;
-    setLiked(nextLiked);
-    onFeedback?.(nextLiked ? 'Publicação curtida!' : 'Curtida removida.');
-    timerRef.current = window.setTimeout(() => {
-      lockRef.current = false;
-    }, 400);
+    saveLike(post.id, currentProfile.id);
+    onFeedback?.(liked ? 'Curtida removida.' : 'Publicação curtida!');
   };
 
   const toggleRepost = () => {
-    const nextReposted = !reposted;
-    setReposted(nextReposted);
-    onFeedback?.(nextReposted ? 'Publicação republicada no seu perfil demonstrativo!' : 'Republicação desfeita.');
+    saveRepost(post.id, currentProfile.id);
+    onFeedback?.(reposted ? 'Republicação desfeita.' : 'Republicação registrada.');
   };
 
   const toggleComments = () => {
@@ -53,16 +58,7 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
     const trimmed = commentDraft.trim();
     if (!trimmed) return;
 
-    const newComment = {
-      id: `comment-${post.id}-${Date.now()}`,
-      initials: currentProfile?.initials || 'VC',
-      name: currentProfile?.name || 'Você',
-      avatar: currentProfile?.avatar,
-      text: trimmed,
-      time: 'agora mesmo'
-    };
-
-    setLocalComments((prev) => [...prev, newComment]);
+    addComment(post.id, currentProfile.id, trimmed);
     setCommentDraft('');
     onFeedback?.('Comentário publicado nesta discussão!');
   };
@@ -72,7 +68,7 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
     setIsSharing(true);
     const postUrl = `${window.location.origin}/inicio#post-${post.id}`;
     const shareData = {
-      title: `Publicação de ${post.author.name} na Plouty`,
+      title: `Publicação de ${author.name} na Plouty`,
       text: post.text,
       url: postUrl
     };
@@ -80,9 +76,11 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
     try {
       if (navigator.share) {
         await navigator.share(shareData);
+        recordShare(post.id, currentProfile.id);
         onFeedback?.('Compartilhamento concluído!');
       } else {
         await navigator.clipboard.writeText(`${shareData.title}\n\n${shareData.text}\n${postUrl}`);
+        recordShare(post.id, currentProfile.id);
         onFeedback?.('Link da publicação copiado para a área de transferência!');
       }
     } catch (err) {
@@ -94,32 +92,58 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
     }
   };
 
+  const submitEdit = (event) => {
+    event.preventDefault();
+    const result = editPost(post.id, currentProfile.id, editDraft);
+    if (result.changed) { setEditing(false); onFeedback?.('Publicação atualizada.'); }
+  };
+
+  const removePost = () => {
+    deletePost(post.id, currentProfile.id);
+    onFeedback?.('Publicação excluída.');
+  };
+
   return (
     <article id={`post-${post.id}`} className="social-post card d-block" aria-labelledby={`post-author-${post.id}`}>
       <header className="social-post-header">
-        <Avatar
-          className={`social-author-avatar is-${post.author.type}`}
-          src={post.author.avatar}
-          initials={post.author.initials}
-          alt={`Foto de ${post.author.name}`}
-        />
+        <Link to={`/perfil/${author.id}`} className="social-author-link" aria-label={`Ver perfil de ${author.name}`}>
+          <Avatar
+            className={`social-author-avatar is-${author.kind}`}
+            src={author.avatar}
+            initials={author.initials}
+            alt=""
+          />
+        </Link>
         <div className="social-author-copy">
           <div className="d-flex align-items-center gap-2">
-            <h2 id={`post-author-${post.id}`}>{post.author.name}</h2>
-            {post.author.verified && <i className="bi bi-patch-check-fill" aria-label="Identidade verificada" />}
+            <Link to={`/perfil/${author.id}`} className="social-author-link"><h2 id={`post-author-${post.id}`}>{author.name}</h2></Link>
+            {author.verified && <i className="bi bi-patch-check-fill" aria-label="Identidade demonstrativa verificada" />}
           </div>
-          <p className="mb-0 text-muted">{post.author.role}</p>
-          <time>{post.publishedAt}</time>
+          <p className="mb-0 text-muted">{author.role}</p>
+          <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
         </div>
         {post.isLocal && (
           <span className="local-post-label">
             <i className="bi bi-device-ssd" aria-hidden="true" /> Local
           </span>
         )}
+        {ownPost && <div className="social-post-owner-actions">
+          <button type="button" onClick={() => { setEditDraft(post.text || ''); setEditing(true); setConfirmDelete(false); }}>Editar</button>
+          <button type="button" onClick={() => { setConfirmDelete(true); setEditing(false); }}>Excluir</button>
+        </div>}
       </header>
 
-      {post.text && <p className="social-post-text">{post.text}</p>}
-      <FeedMedia media={post.postImage || post.image} />
+      {editing ? <form className="social-post-edit" onSubmit={submitEdit}>
+        <label htmlFor={`edit-${post.id}`}>Editar publicação</label>
+        <textarea id={`edit-${post.id}`} value={editDraft} maxLength="1000" rows="4" onChange={(event) => setEditDraft(event.target.value)} />
+        <div><button type="submit" className="btn btn-primary btn-sm" disabled={!editDraft.trim() && !post.postImage?.src}>Salvar</button>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(false)}>Cancelar</button></div>
+      </form> : post.text && <p className="social-post-text">{post.text}</p>}
+      {confirmDelete && <div className="social-post-delete" role="group" aria-label="Confirmar exclusão da publicação">
+        <span>Excluir esta publicação?</span><button type="button" onClick={removePost}>Confirmar exclusão</button>
+        <button type="button" onClick={() => setConfirmDelete(false)}>Manter publicação</button>
+      </div>}
+      {media && <FeedMedia media={media} />}
 
       <div className="social-post-metrics d-flex align-items-center flex-wrap gap-2 gap-sm-3" aria-label={`${countLabel(reactionCount, 'curtida', 'curtidas')}, ${countLabel(commentCount, 'comentário', 'comentários')} e ${countLabel(repostCount, 'republicação', 'republicações')}`}>
         <span className="d-inline-flex align-items-center gap-1 me-auto">
@@ -147,7 +171,7 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
 
         <button
           type="button"
-          className={`d-inline-flex align-items-center justify-content-center gap-1 gap-sm-2 ${commentsOpen ? 'is-active text-primary' : ''}`}
+          className={`d-inline-flex align-items-center justify-content-center gap-1 gap-sm-2 ${commentsOpen ? 'is-active text-brand-success' : ''}`}
           onClick={toggleComments}
           aria-expanded={commentsOpen}
         >
@@ -177,26 +201,24 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
       </div>
 
       {commentsOpen && (
-        <section className="social-comments" aria-label={`Comentários da publicação de ${post.author.name}`}>
+        <section className="social-comments" aria-label={`Comentários da publicação de ${author.name}`}>
           <div className="social-comment-list mb-3">
             {allComments.length > 0 ? (
-              allComments.map((comment) => (
-                <article key={comment.id} className="social-comment">
-                  <Avatar
-                    className="social-comment-avatar"
-                    src={comment.avatar}
-                    initials={comment.initials}
-                    alt={`Foto de ${comment.name}`}
-                  />
+              allComments.map((comment) => {
+                const commenter = getProfileById(comment.authorId) || currentProfile;
+                return <article key={comment.id} className="social-comment">
+                  <Link to={`/perfil/${commenter.id}`} className="social-author-link" aria-label={`Ver perfil de ${commenter.name}`}>
+                    <Avatar className="social-comment-avatar" src={commenter.avatar} initials={commenter.initials} alt="" />
+                  </Link>
                   <div className="social-comment-body">
                     <div className="d-flex align-items-center justify-content-between gap-2">
-                      <strong className="text-brand-dark">{comment.name}</strong>
+                      <Link to={`/perfil/${commenter.id}`} className="social-author-link"><strong className="text-brand-dark">{commenter.name}</strong></Link>
                       <time className="text-muted small">{comment.time}</time>
                     </div>
                     <p className="mb-0 mt-1">{comment.text}</p>
                   </div>
-                </article>
-              ))
+                </article>;
+              })
             ) : (
               <p className="text-muted small mb-0 py-2 text-center">Seja o primeiro a comentar nesta publicação!</p>
             )}
@@ -208,7 +230,7 @@ export default function SocialPost({ post, currentProfile, onFeedback }) {
                 className="profile-avatar flex-shrink-0"
                 src={currentProfile?.avatar}
                 initials={currentProfile?.initials || 'VC'}
-                alt={`Foto de ${currentProfile?.name || 'Você'}`}
+                alt={`Avatar de ${currentProfile?.name || 'Você'}`}
               />
               <div className="flex-grow-1">
                 <textarea

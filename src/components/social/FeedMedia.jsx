@@ -14,7 +14,7 @@ export default function FeedMedia({ media, onRemove, className = '' }) {
         <div className="social-media-placeholder" role="img" aria-label={media?.alt || 'Imagem demonstrativa ainda não adicionada'}>
           <span><i className="bi bi-image" aria-hidden="true" /></span>
           <strong>Imagem demonstrativa</strong>
-          <small>{loadFailed ? `${media?.label || 'Fotografia local'} · arquivo ainda não adicionado` : (media?.label || 'Espaço preparado para uma fotografia local')}</small>
+          <small>{loadFailed || media?.label ? `${media?.label || 'Fotografia local'} · arquivo ainda não adicionado` : 'Espaço preparado para uma fotografia local'}</small>
         </div>
       )}
       {onRemove && (

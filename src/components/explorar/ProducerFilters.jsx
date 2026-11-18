@@ -4,6 +4,10 @@ import { useDialogFocus } from '../../hooks/useDialogFocus';
 export default function ProducerFilters({
   tipo,
   setTipo,
+  categoria,
+  setCategoria,
+  produto,
+  setProduto,
   regiao,
   setRegiao,
   reputacaoMin,
@@ -15,7 +19,7 @@ export default function ProducerFilters({
   const closeRef = useRef(null);
   const closeFilters = useCallback(() => setIsOpenMobile(false), []);
   useDialogFocus(isOpenMobile, closeFilters, filtersRef, closeRef);
-  const activeFilters = tipo !== 'Todos' || regiao !== 'Todas as regiões' || reputacaoMin > 0;
+  const activeFilters = tipo !== 'Todos' || categoria !== 'Todos' || produto || regiao !== 'Todas as regiões' || reputacaoMin > 0;
 
   return (
     <>
@@ -26,7 +30,7 @@ export default function ProducerFilters({
         aria-expanded={isOpenMobile}
         aria-controls="producer-filter-fields"
       >
-        <i className="bi bi-sliders" /> {isOpenMobile ? 'Ocultar filtros' : 'Filtrar produtores'}
+        <i className="bi bi-sliders" /> {isOpenMobile ? 'Ocultar filtros' : 'Filtrar perfis'}
       </button>
 
       {isOpenMobile && (
@@ -41,13 +45,13 @@ export default function ProducerFilters({
       <aside
         ref={filtersRef}
         className={`producer-filters filters-panel card d-block ${isOpenMobile ? 'is-open' : ''}`}
-        aria-label="Filtros de produtores"
+        aria-label="Filtros de perfis"
         role={isOpenMobile ? 'dialog' : undefined}
         aria-modal={isOpenMobile ? 'true' : undefined}
       >
         <div className="filters-title d-flex justify-content-between align-items-start gap-2">
           <div>
-            <span className="eyebrow d-inline-flex align-items-center gap-2">Busca de fornecedores</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Descoberta profissional</span>
             <h2>Filtros</h2>
           </div>
           <button
@@ -62,12 +66,18 @@ export default function ProducerFilters({
         </div>
 
         <div id="producer-filter-fields" className="filter-fields">
+          <div className="filter-group"><label htmlFor="profile-category">Categoria</label>
+            <select id="profile-category" value={categoria} onChange={(event) => { setCategoria(event.target.value); if (event.target.value === 'buyer') setTipo('Todos'); }}>
+              <option value="Todos">Todos os perfis</option><option value="producer">Produtores</option>
+              <option value="cooperative">Cooperativas</option><option value="buyer">Compradores institucionais</option>
+            </select></div>
           <div className="filter-group">
             <label htmlFor="producer-type">Tipo de produção</label>
             <select
               id="producer-type"
               value={tipo}
               onChange={(event) => setTipo(event.target.value)}
+              disabled={categoria === 'buyer'}
             >
               <option value="Todos">Todos</option>
               <option value="verduras-frutas">Hortifruti</option>
@@ -75,6 +85,9 @@ export default function ProducerFilters({
               <option value="produtos-organicos">Produtos orgânicos</option>
             </select>
           </div>
+
+          <div className="filter-group"><label htmlFor="profile-product">Produto</label>
+            <input id="profile-product" type="search" value={produto} onChange={(event) => setProduto(event.target.value)} placeholder="Ex.: mandioca" /></div>
 
           <div className="filter-group">
             <label htmlFor="producer-region">Região</label>

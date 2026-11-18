@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { workspaceProfiles } from '../data/dashboardData';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useProfiles } from './ProfilesContext';
 
 const WorkspaceContext = createContext(null);
 const DEMO_SESSION_KEY = 'plouty.demo-session.v1';
@@ -31,14 +31,27 @@ function readStoredSession() {
 
 export function WorkspaceProvider({ children }) {
   const [session, setSession] = useState(readStoredSession);
+  const { getProfileById } = useProfiles();
 
-  const startDemoSession = useCallback((nextRole) => {
+  useEffect(() => {
+    const sync = (event) => { if (event.key === DEMO_SESSION_KEY) setSession(readStoredSession()); };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, []);
+
+  const startDemoSession = useCallback((nextRole, nextProfileId) => {
     if (!VALID_ROLES.has(nextRole)) {
       throw new Error('Perfil demonstrativo inválido.');
+    }
+    const selectedId = nextProfileId || (nextRole === 'producer' ? 'joao-carlos' : 'escola-caminhos');
+    const selectedProfile = getProfileById(selectedId);
+    if (!selectedProfile || (nextRole === 'buyer' ? selectedProfile.kind !== 'buyer' : selectedProfile.kind === 'buyer')) {
+      throw new Error('Usuário demonstrativo incompatível com o tipo de acesso.');
     }
 
     const nextSession = {
       role: nextRole,
+      profileId: selectedId,
       startedAt: new Date().toISOString()
     };
 
@@ -49,7 +62,7 @@ export function WorkspaceProvider({ children }) {
     }
     setSession(nextSession);
     return nextSession;
-  }, []);
+  }, [getProfileById]);
 
   const endDemoSession = useCallback(() => {
     try {
@@ -61,15 +74,21 @@ export function WorkspaceProvider({ children }) {
   }, []);
 
   const role = session?.role ?? null;
+  const baseProfile = role ? getProfileById(session.profileId || (role === 'producer' ? 'joao-carlos' : 'escola-caminhos')) : null;
+  const validProfile = baseProfile && (role === 'buyer' ? baseProfile.kind === 'buyer' : baseProfile.kind !== 'buyer') ? baseProfile : null;
   const value = useMemo(() => ({
     session,
-    hasSession: Boolean(session),
+    hasSession: Boolean(session && validProfile),
     role,
     isProducer: role === 'producer',
-    profile: role ? workspaceProfiles[role] : null,
+    profile: validProfile ? {
+      ...validProfile,
+      reputation: validProfile.reputation.toFixed(1).replace('.', ','),
+      responseRate: `${validProfile.responseRate}%`
+    } : null,
     startDemoSession,
     endDemoSession
-  }), [endDemoSession, role, session, startDemoSession]);
+  }), [endDemoSession, role, session, startDemoSession, validProfile]);
   return <WorkspaceContext.Provider value={value}>{children}</WorkspaceContext.Provider>;
 }
 

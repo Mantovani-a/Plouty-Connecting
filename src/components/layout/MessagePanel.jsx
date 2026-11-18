@@ -1,28 +1,54 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { getUnreadConversationCount } from '../../data/messagesData';
+import { useProfiles } from '../../context/ProfilesContext';
+import { useWorkspace } from '../../context/WorkspaceContext';
+import { useCommerce } from '../../context/CommerceContext';
 import Avatar from '../common/Avatar';
 
-export default function MessagePanel({ conversations, isOpen, onOpen, onClose, targetBusinessKey }) {
+export default function MessagePanel({ conversations, isOpen, onOpen, onClose, targetBusinessKey, targetDemandId, targetProposalId }) {
+  const { getProfileById } = useProfiles();
+  const { profile: actor } = useWorkspace();
+  const { messages, readAt, sendMessage, markRead } = useCommerce();
   const [selectedId, setSelectedId] = useState(null);
+  const [selectedContext, setSelectedContext] = useState({});
   const [draft, setDraft] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [localMessages, setLocalMessages] = useState({});
+  const [startedProfiles, setStartedProfiles] = useState([]);
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const launcherRef = useRef(null);
   const openedFromLauncherRef = useRef(false);
   const threadRef = useRef(null);
-  const localIdRef = useRef(1);
   const isModal = useMediaQuery('(max-width: 1180px)');
-  const unreadCount = getUnreadConversationCount(conversations);
-  const selectedConversation = conversations.find((conversation) => conversation.id === selectedId) || null;
+  const dynamicContacts = [...new Set(messages.flatMap((message) => message.senderId === actor.id ? [message.recipientId]
+    : message.recipientId === actor.id ? [message.senderId] : []))];
+  const dynamicUnread = dynamicContacts.filter((id) => messages.some((message) => message.senderId === id
+    && message.recipientId === actor.id && message.createdAt > (readAt[`${actor.id}|${id}`] || ''))).length;
+  const unreadCount = getUnreadConversationCount(conversations) + dynamicUnread;
+  const allConversations = useMemo(() => [...new Set([...conversations.map((item) => item.profileId), ...dynamicContacts, ...startedProfiles])]
+    .map((profileId) => {
+      const profile = getProfileById(profileId);
+      const seed = conversations.find((item) => item.profileId === profileId);
+      const latest = messages.filter((item) => item.senderId === actor.id && item.recipientId === profileId
+        || item.senderId === profileId && item.recipientId === actor.id).at(-1);
+      return profile ? { id: profileId, profileId, name: profile.name, initials: profile.initials, avatar: profile.avatar,
+        role: profile.role, verified: profile.verified, lastMessage: latest?.body || seed?.lastMessage || 'Nova conversa demonstrativa',
+        time: latest ? new Date(latest.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : seed?.time || 'Agora',
+        unread: seed?.unread || (latest?.senderId === profileId && latest.createdAt > (readAt[`${actor.id}|${profileId}`] || '')),
+        messages: seed?.messages || [] } : null;
+    }).filter(Boolean), [actor.id, conversations, dynamicContacts.join('|'), getProfileById, messages, readAt, startedProfiles]);
+  const selectedConversation = allConversations.find((conversation) => conversation.profileId === selectedId) || null;
   const threadMessages = useMemo(() => (
     selectedConversation
-      ? [...selectedConversation.messages, ...(localMessages[selectedConversation.id] || [])]
+      ? [...selectedConversation.messages, ...messages.filter((message) => message.senderId === actor.id && message.recipientId === selectedId
+        || message.senderId === selectedId && message.recipientId === actor.id).map((message) => ({ ...message,
+        sender: message.senderId === actor.id ? 'me' : 'contact',
+        time: new Date(message.createdAt).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }), localOnly: true }))]
       : []
-  ), [localMessages, selectedConversation]);
+  ), [actor.id, messages, selectedConversation, selectedId]);
 
   useDialogFocus(isOpen && isModal, onClose, panelRef, closeRef);
 
@@ -57,10 +83,20 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
       return;
     }
     if (targetBusinessKey) {
-      const related = conversations.find((conversation) => conversation.businessKey === targetBusinessKey);
-      setSelectedId(related?.id || null);
+      if (targetBusinessKey !== actor.id && getProfileById(targetBusinessKey)) {
+        setStartedProfiles((current) => current.includes(targetBusinessKey) ? current : [...current, targetBusinessKey]);
+        setSelectedId(targetBusinessKey);
+        setSelectedContext({ demandId: targetDemandId, proposalId: targetProposalId });
+      } else {
+        setSelectedId(null);
+      }
     }
-  }, [conversations, isOpen, targetBusinessKey]);
+  }, [actor.id, getProfileById, isOpen, targetBusinessKey, targetDemandId, targetProposalId]);
+
+  useEffect(() => {
+    if (isOpen && selectedId && messages.some((message) => message.senderId === selectedId && message.recipientId === actor.id
+      && message.createdAt > (readAt[`${actor.id}|${selectedId}`] || ''))) markRead(actor.id, selectedId);
+  }, [actor.id, isOpen, markRead, messages, readAt, selectedId]);
 
   useEffect(() => {
     if (selectedConversation && threadRef.current) {
@@ -70,6 +106,7 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
 
   const handleSelectConversation = (conversationId) => {
     setSelectedId(conversationId);
+    setSelectedContext({});
     setDraft('');
     setFeedback('');
   };
@@ -78,19 +115,9 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
     event.preventDefault();
     const body = draft.trim();
     if (!body || !selectedConversation) return;
-    const localMessage = {
-      id: `local-${selectedConversation.id}-${localIdRef.current++}`,
-      sender: 'me',
-      body,
-      time: 'agora',
-      localOnly: true
-    };
-    setLocalMessages((current) => ({
-      ...current,
-      [selectedConversation.id]: [...(current[selectedConversation.id] || []), localMessage]
-    }));
+    sendMessage(actor.id, selectedConversation.profileId, body, selectedContext);
     setDraft('');
-    setFeedback('Mensagem adicionada nesta sessão. Ela não foi enviada nem salva em servidor.');
+    setFeedback('Mensagem salva neste navegador e disponível para o outro perfil demonstrativo.');
   };
 
   if (!isOpen) {
@@ -132,7 +159,9 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
           <span className="message-launcher-icon d-inline-flex align-items-center justify-content-center flex-shrink-0" aria-hidden="true"><i className="bi bi-chat-left-text" /></span>
         )}
         <div className="d-flex flex-column gap-1">
-          <h2 id="message-panel-title" className="text-truncate">{selectedConversation ? selectedConversation.name : 'Mensagens'}</h2>
+          <h2 id="message-panel-title" className="text-truncate">
+            {selectedConversation ? <Link to={`/perfil/${selectedConversation.profileId}`} onClick={onClose} className="profile-inline-link">{selectedConversation.name}</Link> : 'Mensagens'}
+          </h2>
           {selectedConversation && <span className="text-truncate">{selectedConversation.role}</span>}
         </div>
         <button ref={closeRef} type="button" className="icon-button message-dock-close" onClick={onClose} aria-label={isModal ? 'Fechar mensagens' : 'Recolher mensagens'}>
@@ -146,43 +175,42 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
             <i className="bi bi-info-circle" aria-hidden="true" />
             <span className="d-flex flex-column gap-1"><strong>Experiência demonstrativa</strong> Estas conversas são dados fictícios e estáveis do protótipo.</span>
           </div>
-          {!conversations.length && (
+          {!allConversations.length && (
             <div className="message-empty-state text-center p-4">
               <i className="bi bi-chat-square-dots" aria-hidden="true" />
               <strong>Nenhuma conversa por aqui</strong>
               <p className="text-muted mb-0">Quando uma negociação iniciar, o contato relacionado aparecerá nesta lista.</p>
             </div>
           )}
-          {conversations.map((conversation) => (
-            <button
-              key={conversation.id}
-              type="button"
-              className={`conversation-item w-100 ${conversation.unread ? 'is-unread' : ''}`}
-              onClick={() => handleSelectConversation(conversation.id)}
-              aria-label={`Abrir conversa com ${conversation.name}${conversation.unread ? `, ${conversation.unread} não lidas` : ''}`}
-            >
-              <Avatar
-                className="conversation-avatar"
-                src={conversation.avatar}
-                initials={conversation.initials}
-                alt={`Foto de ${conversation.name}`}
-              />
+          {allConversations.map((conversation) => (
+            <div key={conversation.id} className={`conversation-item w-100 ${conversation.unread ? 'is-unread' : ''}`}>
+              <Link to={`/perfil/${conversation.profileId}`} onClick={onClose} className="profile-avatar-link" aria-label={`Ver perfil de ${conversation.name}`}>
+                <Avatar className="conversation-avatar" src={conversation.avatar} initials={conversation.initials} alt="" />
+              </Link>
               <span className="conversation-preview d-flex flex-column gap-1">
-                <span className="d-flex align-items-center gap-1"><strong className="text-truncate">{conversation.name}</strong>{conversation.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}</span>
-                <small className="text-muted text-truncate">{conversation.lastMessage}</small>
+                <span className="d-flex align-items-center gap-1"><Link to={`/perfil/${conversation.profileId}`} onClick={onClose} className="profile-inline-link"><strong className="text-truncate">{conversation.name}</strong></Link>{conversation.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}</span>
+                <button type="button" className="conversation-preview-action text-muted text-truncate" onClick={() => handleSelectConversation(conversation.id)}>
+                  {conversation.lastMessage}
+                </button>
               </span>
-              <span className="conversation-meta d-flex flex-column align-items-end gap-1"><time>{conversation.time}</time>{conversation.unread > 0 && <i aria-label="Mensagem não lida" />}</span>
-            </button>
+              <button type="button" className="conversation-open-action" onClick={() => handleSelectConversation(conversation.id)} aria-label={`Abrir conversa com ${conversation.name}`}>
+                <time>{conversation.time}</time><i className="bi bi-chat-left-text" aria-hidden="true" />
+              </button>
+            </div>
           ))}
         </div>
       ) : (
         <div className="message-thread-view d-flex flex-column flex-grow-1">
           <div ref={threadRef} className="message-thread flex-grow-1" aria-label={`Conversa com ${selectedConversation.name}`}>
-            <div className="thread-context d-flex align-items-center gap-2"><i className="bi bi-shield-check" aria-hidden="true" /><span>Conversa demonstrativa sobre oportunidades, contratos e entregas.</span></div>
+            <div className="thread-context d-flex align-items-center gap-2"><i className="bi bi-shield-check" aria-hidden="true" /><span>Conversa demonstrativa sobre oportunidades, propostas e entregas.</span></div>
+            {selectedContext.demandId && <div className="thread-context"><Link to={`/demandas#demand-${selectedContext.demandId}`} onClick={onClose}>Ver demanda relacionada</Link>
+              {selectedContext.proposalId && <> · <Link to={`/negociacoes#proposal-${selectedContext.proposalId}`} onClick={onClose}>Ver proposta</Link></>}</div>}
             {threadMessages.map((message) => (
               <div key={message.id} className={`thread-message d-flex flex-column gap-1 is-${message.sender}`}>
                 <p>{message.body}</p>
-                <span>{message.time}{message.localOnly ? ' · somente nesta sessão' : ''}</span>
+                <span>{message.time}{message.localOnly ? ' · demonstração local' : ''}</span>
+                {message.demandId && <Link to={`/demandas#demand-${message.demandId}`} onClick={onClose}>Demanda relacionada</Link>}
+                {message.proposalId && <Link to={`/negociacoes#proposal-${message.proposalId}`} onClick={onClose}>Proposta relacionada</Link>}
               </div>
             ))}
           </div>
@@ -196,11 +224,11 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
                 placeholder="Escreva uma mensagem"
                 autoComplete="off"
               />
-              <button type="submit" className="message-send-button d-inline-flex align-items-center justify-content-center" disabled={!draft.trim()} aria-label="Adicionar mensagem nesta sessão">
+              <button type="submit" className="message-send-button d-inline-flex align-items-center justify-content-center" disabled={!draft.trim()} aria-label="Enviar mensagem demonstrativa">
                 <i className="bi bi-send" aria-hidden="true" />
               </button>
             </div>
-            <p className="message-send-feedback" role="status" aria-live="polite">{feedback || 'O envio funciona somente nesta sessão demonstrativa.'}</p>
+            <p className="message-send-feedback" role="status" aria-live="polite">{feedback || 'Mensagens demonstrativas são salvas apenas neste navegador.'}</p>
           </form>
         </div>
       )}

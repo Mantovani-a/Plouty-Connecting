@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '../common/Avatar';
-import { socialSuggestions, socialTopics } from '../../data/socialSidebarData';
+import { socialSuggestionIds, socialTopics } from '../../data/socialSidebarData';
+import { useProfiles } from '../../context/ProfilesContext';
+import ConnectionAction from '../network/ConnectionAction';
 
-function ProfileCover({ src, alt }) {
-  const [loadFailed, setLoadFailed] = useState(false);
-  const hasImage = Boolean(src) && !loadFailed;
-
-  useEffect(() => setLoadFailed(false), [src]);
-
-  return (
-    <div className={`social-profile-cover ${hasImage ? 'has-photo' : 'is-placeholder'}`}>
-      {hasImage
-        ? <img className="w-100 h-100 object-fit-cover" src={src} alt={alt} onError={() => setLoadFailed(true)} />
-        : <div role="img" aria-label={alt}><span aria-hidden="true" /></div>}
-    </div>
-  );
+function ProfileCover() {
+  return <div className="social-profile-cover is-placeholder" aria-hidden="true"><div><span /></div></div>;
 }
 
 function UserSummaryCard({ profile }) {
   return (
     <section className="social-side-card social-user-summary card d-block" aria-labelledby="social-user-summary-title">
-      <ProfileCover src={profile.coverImage} alt={`Capa demonstrativa de ${profile.name}`} />
+      <ProfileCover />
       <div className="social-user-summary-body">
-        <Avatar className="social-user-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
+        <Link to={`/perfil/${profile.id}`} className="profile-avatar-link" aria-label={`Ver perfil de ${profile.name}`}>
+          <Avatar className="social-user-avatar" src={profile.avatar} initials={profile.initials} alt="" />
+        </Link>
         <div className="social-user-identity d-flex flex-column">
           <div className="d-flex align-items-center gap-2">
-            <h2 id="social-user-summary-title">{profile.name}</h2>
+            <h2 id="social-user-summary-title"><Link to={`/perfil/${profile.id}`} className="profile-inline-link">{profile.name}</Link></h2>
             {profile.verified && <i className="bi bi-patch-check-fill" aria-label="Perfil verificado" />}
           </div>
           <p className="mb-0 text-muted">{profile.role}</p>
@@ -64,14 +58,6 @@ function TopicsCard() {
 }
 
 function SuggestionsCard({ suggestions, onFeedback }) {
-  const [sentRequests, setSentRequests] = useState({});
-
-  const sendRequest = (suggestion) => {
-    if (sentRequests[suggestion.id]) return;
-    setSentRequests((current) => ({ ...current, [suggestion.id]: true }));
-    onFeedback(`Solicitação demonstrativa enviada para ${suggestion.name}.`);
-  };
-
   return (
     <section className="social-side-card social-suggestions card d-block" aria-labelledby="social-suggestions-title">
       <div className="social-side-card-heading">
@@ -79,26 +65,21 @@ function SuggestionsCard({ suggestions, onFeedback }) {
         <h2 id="social-suggestions-title">Pessoas e instituições que talvez conheça</h2>
       </div>
       <ul>
-        {suggestions.slice(0, 3).map((suggestion) => {
-          const requestSent = Boolean(sentRequests[suggestion.id]);
-          return (
+        {suggestions.slice(0, 3).map((suggestion) => (
             <li key={suggestion.id}>
-              <Avatar className="social-suggestion-avatar" src={suggestion.avatar} initials={suggestion.initials} alt={`Foto de ${suggestion.name}`} />
-              <div className="d-flex flex-column"><strong className="text-truncate">{suggestion.name}</strong><span>{suggestion.type}</span><small>{suggestion.detail}</small></div>
-              <button type="button" className={`d-inline-flex align-items-center justify-content-center gap-1 ${requestSent ? 'is-sent' : ''}`} onClick={() => sendRequest(suggestion)} disabled={requestSent}>
-                <i className={`bi ${requestSent ? 'bi-check2' : 'bi-person-plus'}`} aria-hidden="true" />
-                {requestSent ? 'Solicitação enviada' : 'Conectar'}
-              </button>
+              <Link to={`/perfil/${suggestion.id}`} className="profile-avatar-link" aria-label={`Ver perfil de ${suggestion.name}`}><Avatar className="social-suggestion-avatar" src={suggestion.avatar} initials={suggestion.initials} alt="" /></Link>
+              <div className="d-flex flex-column"><strong className="text-truncate"><Link to={`/perfil/${suggestion.id}`} className="profile-inline-link">{suggestion.name}</Link></strong><span>{suggestion.role}</span><small>{suggestion.location}</small></div>
+              <ConnectionAction targetId={suggestion.id} compact showSecondary={false} onFeedback={onFeedback} />
             </li>
-          );
-        })}
+        ))}
       </ul>
     </section>
   );
 }
 
 export default function SocialSidebar({ profile, isProducer, onFeedback }) {
-  const suggestions = socialSuggestions[isProducer ? 'producer' : 'buyer'];
+  const { getProfileById } = useProfiles();
+  const suggestions = socialSuggestionIds[isProducer ? 'producer' : 'buyer'].map(getProfileById).filter(Boolean);
 
   return (
     <aside className="social-feed-sidebar" aria-label="Resumo e descobertas da rede">

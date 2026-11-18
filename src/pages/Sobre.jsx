@@ -21,7 +21,7 @@ export default function Sobre() {
             <span className="eyebrow d-inline-flex align-items-center gap-2">Da lavoura para quem alimenta pessoas</span>
             <h1>Mais renda no campo. Mais alimento fresco perto de casa.</h1>
             <p>
-              A Plouty aproxima pequenos produtores e compradores institucionais com oportunidades claras, reputação verificável e negociação direta.
+              A Plouty aproxima pequenos produtores e compradores institucionais com oportunidades claras, indicadores demonstrativos de reputação e negociação direta.
             </p>
             <div className="hero-actions d-flex gap-2">
               <button className="btn btn-primary" type="button" onClick={showHowItWorks}>

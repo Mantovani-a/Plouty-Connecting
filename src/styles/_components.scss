@@ -7,6 +7,19 @@
 /* 1. Rótulos, Badges e Textos Auxiliares */
 .eyebrow { color: var(--action); font-size: 0.76rem; font-weight: 780; letter-spacing: 0.09em; text-transform: uppercase; }
 .text-muted { color: var(--text-muted) !important; }
+.text-secondary, .text-secondary-emphasis { color: var(--text-muted) !important; }
+.text-brand-dark { color: var(--forest-900) !important; }
+.text-brand-success, .text-success, .text-success-emphasis { color: var(--action) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-warning, .text-warning-emphasis { color: var(--amber) !important; }
+.text-info-emphasis { color: var(--info) !important; }
+.bg-success-subtle { background-color: var(--action-soft) !important; }
+.bg-danger-subtle { background-color: var(--danger-soft) !important; }
+.bg-warning-subtle { background-color: var(--amber-soft) !important; }
+.bg-info-subtle { background-color: var(--info-soft) !important; }
+.bg-secondary-subtle { background-color: var(--surface-muted) !important; }
+.border-success-subtle, .border-danger-subtle, .border-warning-subtle, .border-info-subtle { border-color: var(--border-strong) !important; }
+.demand-product-badge { background: var(--surface-muted); color: var(--text); border: 1px solid var(--border); }
 .error-message { margin-top: 4px; color: var(--danger); font-size: 0.73rem; font-weight: 620; line-height: 1.35; }
 .char-counter { color: var(--text-soft); font-size: 0.7rem; }
 
@@ -46,6 +59,29 @@
     &:hover { color: var(--action); background: var(--surface-muted); }
   }
   &-compact { min-height: 38px; padding: 8px 15px; }
+}
+
+.btn-outline-success {
+  border-color: var(--action);
+  --bs-btn-color: var(--action);
+  --bs-btn-border-color: var(--action);
+  --bs-btn-hover-color: var(--action-contrast);
+  --bs-btn-hover-bg: var(--action);
+  --bs-btn-hover-border-color: var(--action);
+  --bs-btn-active-color: var(--action-contrast);
+  --bs-btn-active-bg: var(--action-hover);
+  --bs-btn-active-border-color: var(--action-hover);
+}
+.btn-outline-secondary {
+  border-color: var(--border-strong);
+  --bs-btn-color: var(--text-muted);
+  --bs-btn-border-color: var(--border-strong);
+  --bs-btn-hover-color: var(--text);
+  --bs-btn-hover-bg: var(--surface-muted);
+  --bs-btn-hover-border-color: var(--border-strong);
+  --bs-btn-active-color: var(--text);
+  --bs-btn-active-bg: var(--surface-muted);
+  --bs-btn-active-border-color: var(--border-strong);
 }
 
 .icon-button {
@@ -119,7 +155,6 @@
   border-radius: 3px;
   background: var(--surface-muted);
   > span { display: block; height: 100%; width: var(--progress, 0%); border-radius: inherit; background: var(--action); transition: width 300ms ease; }
-  &.p-82 > span { width: 82%; }
 }
 
 .empty-state {

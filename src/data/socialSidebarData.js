@@ -4,57 +4,7 @@ export const socialTopics = [
   { id: 'logistica-entregas', label: 'Logística e entregas', recentPosts: 9 }
 ];
 
-export const socialSuggestions = {
-  producer: [
-    {
-      id: 'escola-sol-nascente',
-      initials: 'ES',
-      name: 'Escola Municipal Sol Nascente',
-      type: 'Instituição de ensino',
-      detail: 'Vila Velha, ES',
-      avatar: '/images/social/avatars/escola-sol-nascente.png'
-    },
-    {
-      id: 'hospital-regional-guarapari',
-      initials: 'HR',
-      name: 'Hospital Regional de Guarapari',
-      type: 'Instituição de saúde',
-      detail: 'Guarapari, ES',
-      avatar: '/images/social/avatars/hospital-regional-guarapari.png'
-    },
-    {
-      id: 'restaurante-sabor-serra',
-      initials: 'RS',
-      name: 'Restaurante Sabor da Serra',
-      type: 'Restaurante',
-      detail: 'Domingos Martins, ES',
-      avatar: '/images/social/avatars/restaurante-sabor-serra.png'
-    }
-  ],
-  buyer: [
-    {
-      id: 'joao-carlos',
-      initials: 'JC',
-      name: 'João Carlos Silva',
-      type: 'Produtor familiar',
-      detail: 'Guarapari, ES',
-      avatar: '/images/social/avatars/joao-carlos.png'
-    },
-    {
-      id: 'maria-dos-santos',
-      initials: 'MS',
-      name: 'Maria dos Santos',
-      type: 'Produtora de frutas',
-      detail: 'Presidente Prudente, SP',
-      avatar: '/images/social/avatars/maria-dos-santos.png'
-    },
-    {
-      id: 'cooperativa-verde',
-      initials: 'CV',
-      name: 'Cooperativa Verde',
-      type: 'Cooperativa agrícola',
-      detail: 'Londrina, PR',
-      avatar: '/images/social/avatars/cooperativa-verde.png'
-    }
-  ]
+export const socialSuggestionIds = {
+  producer: ['escola-sol-nascente', 'hospital-regional', 'restaurante-serra'],
+  buyer: ['joao-carlos', 'maria-santos', 'cooperativa-verde']
 };

@@ -230,7 +230,7 @@ $z-indexes: (
 }
 
 /* 5. Base & Acessibilidade */
-html { min-width: 320px; scroll-behavior: smooth; scrollbar-gutter: stable; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body {
   min-height: 100vh;
   background: var(--canvas);

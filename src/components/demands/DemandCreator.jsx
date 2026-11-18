@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 
-export default function DemandCreator({ currentProfile, onAddDemand, onFeedback }) {
-  const [expanded, setExpanded] = useState(false);
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Demanda Emergencial');
-  const [urgency, setUrgency] = useState('Alta');
-  const [productsInput, setProductsInput] = useState('');
-  const [location, setLocation] = useState('Região Metropolitana - ES');
-  const [deadline, setDeadline] = useState('Entrega para os próximos 5 dias');
+export default function DemandCreator({ currentProfile, onAddDemand, onFeedback, demand = null, onSave, onCancel }) {
+  const [expanded, setExpanded] = useState(Boolean(demand));
+  const [description, setDescription] = useState(demand?.description || '');
+  const [category, setCategory] = useState(demand?.category || 'Demanda Emergencial');
+  const [urgency, setUrgency] = useState(demand?.urgency || 'Alta');
+  const [productsInput, setProductsInput] = useState(demand?.products?.join(', ') || '');
+  const [location, setLocation] = useState(demand?.location || currentProfile?.location || '');
+  const [deadline, setDeadline] = useState(demand?.deadline || 'Entrega para os próximos 5 dias');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!description.trim()) {
-      onFeedback?.('Descreva o que a sua instituição necessita.');
+    if (!description.trim() || !productsInput.trim() || !deadline.trim()) {
+      onFeedback?.('Preencha descrição, produtos e prazo da demanda.');
       return;
     }
 
@@ -21,28 +21,23 @@ export default function DemandCreator({ currentProfile, onAddDemand, onFeedback 
       .map((p) => p.trim())
       .filter(Boolean);
 
-    const newDemand = {
-      id: `demanda-local-${Date.now()}`,
-      org: currentProfile?.name || 'Minha Instituição',
-      businessKey: 'minha-instituicao',
-      institutionType: currentProfile?.role || 'Instituição Compradora',
+    const values = {
       icon: 'bi-building-fill',
-      location: location.trim() || 'Brasil',
-      timeAgo: 'Agora mesmo',
+      location: location.trim() || currentProfile?.location || 'Brasil',
       category,
       urgency,
       description: description.trim(),
-      products: parsedProducts.length > 0 ? parsedProducts : ['Alimentos da Agricultura Familiar'],
-      deadline: deadline.trim() || 'A combinar',
-      odsGoal: 'ODS 2 — Fome Zero e Fortalecimento dos Produtores Locais',
-      isLocal: true
+      products: parsedProducts,
+      deadline: deadline.trim(),
+      odsGoal: demand?.odsGoal || 'ODS 2 — Fome Zero e Fortalecimento dos Produtores Locais'
     };
 
-    onAddDemand(newDemand);
+    const result = demand ? onSave?.(values) : onAddDemand?.(values);
+    if (!result?.changed) { onFeedback?.('Não foi possível salvar esta demanda.'); return; }
     setDescription('');
     setProductsInput('');
     setExpanded(false);
-    onFeedback?.('Nova demanda publicada com sucesso e visível na rede!');
+    onFeedback?.(demand ? 'Demanda atualizada.' : 'Nova demanda publicada e visível na rede!');
   };
 
   return (
@@ -54,11 +49,11 @@ export default function DemandCreator({ currentProfile, onAddDemand, onFeedback 
               <i className="bi bi-cart-plus-fill" aria-hidden="true" />
             </span>
             <div>
-              <h2 className="fs-6 fw-bold mb-0 text-brand-dark">Publicar Demanda de Compra Institucional</h2>
+              <h2 className="fs-6 fw-bold mb-0 text-brand-dark">{demand ? 'Editar demanda' : 'Publicar Demanda de Compra Institucional'}</h2>
               <small className="text-muted">Conecte sua instituição a produtores locais da agricultura familiar (ODS 2).</small>
             </div>
           </div>
-          {!expanded && (
+          {!expanded && !demand && (
             <button
               type="button"
               className="btn btn-outline-success btn-sm"
@@ -169,21 +164,21 @@ export default function DemandCreator({ currentProfile, onAddDemand, onFeedback 
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-sm"
-                onClick={() => setExpanded(false)}
+                onClick={() => { setExpanded(false); onCancel?.(); }}
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 className="btn btn-primary btn-sm px-3"
-                disabled={!description.trim()}
+                disabled={!description.trim() || !productsInput.trim() || !deadline.trim()}
               >
                 <i className="bi bi-check2-circle me-1" />
-                Publicar Demanda ODS 2
+                {demand ? 'Salvar alterações' : 'Publicar Demanda ODS 2'}
               </button>
             </div>
           </form>
-        ) : (
+        ) : !demand && (
           <p className="text-muted small mb-0">
             Clique em <strong>Nova Demanda</strong> para solicitar cotações e propostas a produtores e cooperativas da sua região.
           </p>

@@ -1,0 +1,43 @@
+@use 'base' as *;
+
+.commerce-form { display: grid; gap: 13px; margin-top: 18px; padding: 16px; border: 1px solid var(--action); border-radius: var(--radius-md); background: var(--surface-muted); }
+.commerce-form h3 { margin: 0; color: var(--forest-950); font-size: 1rem; }
+.commerce-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.commerce-fields label { display: grid; gap: 5px; color: var(--text); font-size: .76rem; font-weight: 750; }
+.commerce-fields label:last-child { grid-column: 1 / -1; }
+.commerce-fields input, .commerce-fields textarea { width: 100%; padding: 9px 10px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: inherit; font-size: .82rem; font-weight: 400; }
+.commerce-fields textarea { resize: vertical; }
+.commerce-form > div:last-child { display: flex; flex-wrap: wrap; gap: 8px; }
+.commerce-confirm { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text); font-size: .76rem; }
+.commerce-confirm span { flex-basis: 100%; }
+.commerce-confirm button { padding: 6px 9px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: inherit; cursor: pointer; }
+.commerce-confirm button:first-of-type { border-color: var(--danger); color: var(--danger); }
+.demand-card .demand-creator { margin-top: 16px; }
+
+.negotiations-page { background: var(--canvas); }
+.negotiations-shell { max-width: 1080px; }
+.negotiations-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 20px 0 26px; }
+.negotiations-summary span { display: flex; flex-direction: column; min-width: 105px; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); color: var(--text-muted); font-size: .72rem; }
+.negotiations-summary strong { color: var(--forest-950); font-size: 1.25rem; }
+.negotiations-summary .btn { margin-left: auto; }
+.negotiations-section { display: grid; gap: 13px; margin: 25px 0; }
+.negotiations-section h2 { margin: 0; color: var(--forest-950); font-size: 1.18rem; }
+.proposal-card { padding: 19px; border-radius: var(--radius-lg); scroll-margin-top: calc(var(--header-height) + 15px); }
+.proposal-card-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+.proposal-card-heading time { color: var(--text-soft); font-size: .7rem; }
+.proposal-status { padding: 4px 9px; border-radius: 999px; background: var(--surface-muted); color: var(--text-muted); font-size: .7rem; font-weight: 800; }
+.proposal-status.is-pending { background: var(--action-soft); color: var(--action); }
+.proposal-status.is-accepted { background: var(--action-soft); color: var(--forest-900); }
+.proposal-status.is-declined { background: color-mix(in srgb, var(--danger) 13%, var(--surface)); color: var(--danger); }
+.proposal-card h3 { margin: 0 0 3px; color: var(--forest-950); font-size: 1rem; }
+.proposal-card > p { margin: 0 0 12px; color: var(--text-muted); font-size: .76rem; }
+.proposal-demand { display: grid; gap: 3px; padding: 10px 0; border-block: 1px solid var(--border); font-size: .76rem; }
+.proposal-demand strong { color: var(--text); }
+.proposal-demand a { color: var(--action); line-height: 1.5; }
+.proposal-card dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }
+.proposal-card dt { color: var(--text-soft); font-size: .68rem; font-weight: 500; }
+.proposal-card dd { margin: 3px 0 0; color: var(--text); font-size: .82rem; font-weight: 750; }
+.proposal-notes { padding: 9px; border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text-muted); font-size: .76rem; }
+.proposal-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.thread-message a, .thread-context a { color: var(--action); font-size: .68rem; }
+@include media-down(540px) { .commerce-fields { grid-template-columns: 1fr; } .commerce-fields label:last-child { grid-column: 1; } .proposal-card dl { grid-template-columns: 1fr; } .negotiations-summary .btn { margin-left: 0; width: 100%; } }

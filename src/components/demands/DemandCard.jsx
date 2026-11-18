@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useWorkspace } from '../../context/WorkspaceContext';
+import { useCommerce } from '../../context/CommerceContext';
+import DemandCreator from './DemandCreator';
 
 export default function DemandCard({ demand, onOpenMessages, onFeedback }) {
-  const [interessado, setInteressado] = useState(false);
-
-  const toggleInteresse = () => {
-    const nextState = !interessado;
-    setInteressado(nextState);
-    if (onFeedback) {
-      onFeedback(
-        nextState
-          ? `Interesse registrado na demanda de ${demand.org}!`
-          : 'Interesse removido desta demanda.'
-      );
-    }
-  };
+  const { profile } = useWorkspace();
+  const { proposals, editDemand, closeDemand, sendProposal } = useCommerce();
+  const [editing, setEditing] = useState(false);
+  const [confirmClose, setConfirmClose] = useState(false);
+  const [proposalOpen, setProposalOpen] = useState(false);
+  const [offer, setOffer] = useState({ price: '', quantity: '', deadline: '', notes: '' });
+  const ownDemand = profile.id === demand.profileId;
+  const canPropose = profile.kind !== 'buyer' && !ownDemand && demand.status === 'open';
+  const existingProposal = proposals.find((item) => item.demandId === demand.id && item.producerId === profile.id);
 
   const handleOpenChat = () => {
     if (onOpenMessages) {
-      onOpenMessages(demand.businessKey || demand.org);
+      onOpenMessages(demand.profileId, { demandId: demand.id, proposalId: existingProposal?.id });
     }
     if (onFeedback) {
       onFeedback(`Canal de negociação aberto com ${demand.org}!`);
     }
+  };
+
+  const handleProposal = (event) => {
+    event.preventDefault();
+    const result = sendProposal(profile.id, demand.id, offer);
+    if (result.changed) { setProposalOpen(false); onFeedback?.('Proposta enviada ao comprador.'); }
+    else onFeedback?.('Confira os dados da proposta antes de enviar.');
   };
 
   const getUrgencyBadge = (urgency) => {
@@ -36,19 +43,19 @@ export default function DemandCard({ demand, onOpenMessages, onFeedback }) {
   };
 
   return (
-    <article className="card demand-card mb-3 shadow-sm border-suave" aria-labelledby={`demand-title-${demand.id}`}>
+    <article id={`demand-${demand.id}`} className="card demand-card mb-3 shadow-sm border-suave" aria-labelledby={`demand-title-${demand.id}`}>
       <div className="card-body p-3 p-sm-4">
         {/* Top Header */}
         <div className="d-flex align-items-start gap-3 mb-3">
-          <div className="demand-avatar-badge flex-shrink-0 d-flex align-items-center justify-content-center">
+          {demand.profileId ? <Link to={`/perfil/${demand.profileId}`} className="demand-avatar-badge flex-shrink-0 d-flex align-items-center justify-content-center" aria-label={`Ver perfil de ${demand.org}`}>
             <i className={`bi ${demand.icon || 'bi-mortarboard-fill'}`} aria-hidden="true" />
-          </div>
+          </Link> : <div className="demand-avatar-badge flex-shrink-0 d-flex align-items-center justify-content-center"><i className={`bi ${demand.icon || 'bi-mortarboard-fill'}`} aria-hidden="true" /></div>}
 
           <div className="flex-grow-1 min-w-0">
             <div className="d-flex align-items-center justify-content-between flex-wrap gap-2">
               <div>
                 <h2 id={`demand-title-${demand.id}`} className="fs-6 fw-bold mb-0 text-brand-dark d-flex align-items-center gap-2">
-                  <span>{demand.org}</span>
+                  {demand.profileId ? <Link to={`/perfil/${demand.profileId}`} className="profile-inline-link">{demand.org}</Link> : <span>{demand.org}</span>}
                   <i className="bi bi-patch-check-fill text-brand-success" title="Instituição verificada" aria-label="Verificada" />
                 </h2>
                 <span className="small text-muted">{demand.institutionType || 'Instituição compradora'}</span>
@@ -57,6 +64,7 @@ export default function DemandCard({ demand, onOpenMessages, onFeedback }) {
                 <span className={`badge px-2 py-1 ${getUrgencyBadge(demand.urgency)}`}>
                   {demand.urgency === 'Alta' ? 'Urgente' : demand.category}
                 </span>
+                {demand.status === 'closed' && <span className="badge bg-secondary-subtle text-secondary-emphasis border">Encerrada</span>}
               </div>
             </div>
 
@@ -87,7 +95,7 @@ export default function DemandCard({ demand, onOpenMessages, onFeedback }) {
             <span className="small fw-bold text-muted d-block mb-1">Produtos e volumes solicitados:</span>
             <div className="d-flex flex-wrap gap-2">
               {demand.products.map((item, idx) => (
-                <span key={idx} className="badge bg-light text-dark border d-inline-flex align-items-center gap-1 py-1 px-2">
+                <span key={idx} className="badge demand-product-badge d-inline-flex align-items-center gap-1 py-1 px-2">
                   <i className="bi bi-box-seam text-brand-success" aria-hidden="true" />
                   <span>{item}</span>
                 </span>
@@ -99,40 +107,42 @@ export default function DemandCard({ demand, onOpenMessages, onFeedback }) {
         {/* Deadline */}
         {demand.deadline && (
           <div className="small text-muted mb-3 d-flex align-items-center gap-2">
-            <i className="bi bi-calendar-check text-primary" aria-hidden="true" />
+            <i className="bi bi-calendar-check text-brand-success" aria-hidden="true" />
             <span>Prazo: <strong>{demand.deadline}</strong></span>
           </div>
         )}
 
         {/* Actions */}
-        <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 pt-3 border-top">
-          <div className="d-flex gap-2 flex-wrap">
-            <button
-              type="button"
-              className={`btn btn-sm d-inline-flex align-items-center gap-1 ${
-                interessado ? 'btn-success' : 'btn-outline-success'
-              }`}
-              onClick={toggleInteresse}
-            >
-              <i className={`bi ${interessado ? 'bi-check-circle-fill' : 'bi-hand-thumbs-up'}`} aria-hidden="true" />
-              <span>{interessado ? 'Interesse Registrado' : 'Tenho Interesse'}</span>
-            </button>
-
-            <button
-              type="button"
-              className="btn btn-primary btn-sm d-inline-flex align-items-center gap-1"
-              onClick={handleOpenChat}
-            >
-              <i className="bi bi-chat-left-dots" aria-hidden="true" />
-              <span>Negociar / Enviar Proposta</span>
-            </button>
-          </div>
-
-          <span className="text-muted small">
-            <i className="bi bi-shield-check me-1 text-success" />
-            Conexão Direta
-          </span>
+        <div className="demand-actions d-flex flex-wrap align-items-center gap-2 pt-3 border-top">
+          {ownDemand && demand.status === 'open' && <>
+            <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(true)}>Editar demanda</button>
+            <button type="button" className="btn btn-outline-secondary btn-sm" onClick={() => setConfirmClose(true)}>Encerrar demanda</button>
+          </>}
+          {canPropose && (existingProposal
+            ? <Link to={`/negociacoes#proposal-${existingProposal.id}`} className="btn btn-secondary btn-sm">Ver proposta · {existingProposal.status === 'pending' ? 'Em análise' : existingProposal.status === 'accepted' ? 'Aceita' : existingProposal.status === 'declined' ? 'Recusada' : 'Encerrada'}</Link>
+            : <button type="button" className="btn btn-primary btn-sm" onClick={() => setProposalOpen(true)}>Enviar proposta</button>)}
+          {!ownDemand && <button type="button" className="btn btn-secondary btn-sm" onClick={handleOpenChat}>Enviar mensagem</button>}
+          {ownDemand && <Link to="/negociacoes" className="btn btn-secondary btn-sm">Ver propostas recebidas</Link>}
         </div>
+        {confirmClose && <div className="commerce-confirm" role="group" aria-label="Confirmar encerramento da demanda">
+          <span>Encerrar esta demanda? Propostas pendentes também serão encerradas.</span>
+          <button type="button" onClick={() => { closeDemand(profile.id, demand.id); setConfirmClose(false); onFeedback?.('Demanda encerrada.'); }}>Confirmar encerramento</button>
+          <button type="button" onClick={() => setConfirmClose(false)}>Manter aberta</button>
+        </div>}
+        {editing && <DemandCreator key={demand.id} currentProfile={profile} demand={demand}
+          onSave={(values) => { const result = editDemand(profile.id, demand.id, values); if (result.changed) setEditing(false); return result; }}
+          onCancel={() => setEditing(false)} onFeedback={onFeedback} />}
+        {proposalOpen && <form className="commerce-form" onSubmit={handleProposal}>
+          <h3>Proposta para {demand.org}</h3>
+          <div className="commerce-fields">
+            <label>Preço total (R$)<input type="number" min="0.01" step="0.01" required value={offer.price} onChange={(event) => setOffer({ ...offer, price: event.target.value })} /></label>
+            <label>Quantidade e unidade<input type="text" required maxLength="120" value={offer.quantity} onChange={(event) => setOffer({ ...offer, quantity: event.target.value })} placeholder="Ex.: 120 unidades de alface" /></label>
+            <label>Prazo de entrega<input type="text" required maxLength="120" value={offer.deadline} onChange={(event) => setOffer({ ...offer, deadline: event.target.value })} placeholder="Ex.: toda terça-feira" /></label>
+            <label>Observações<textarea rows="3" maxLength="500" value={offer.notes} onChange={(event) => setOffer({ ...offer, notes: event.target.value })} /></label>
+          </div>
+          <div><button type="submit" className="btn btn-primary btn-sm">Enviar proposta</button>
+            <button type="button" className="btn btn-secondary btn-sm" onClick={() => setProposalOpen(false)}>Cancelar</button></div>
+        </form>}
       </div>
     </article>
   );

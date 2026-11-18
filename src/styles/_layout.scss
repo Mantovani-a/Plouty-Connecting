@@ -62,7 +62,7 @@
   i { display: inline-grid; place-items: center; flex: 0 0 18px; width: 18px; height: 18px; font-size: 0.94rem; }
   &.active { box-shadow: inset 0 -2px 0 var(--action); }
   @include media-down('xxl') { padding: 8px 10px; font-size: 0.83rem; gap: 6px; }
-  @include media-down('xl') { justify-content: center; width: 42px; padding-inline: 0; span { display: none; } }
+  @include media-down(1360px) { justify-content: center; width: 42px; padding-inline: 0; span { display: none; } }
 }
 
 .site-header-public .public-navigation.is-open {
@@ -224,7 +224,7 @@
 .mobile-bottom-nav {
   @include tablet {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     position: fixed;
     left: 0;
     right: 0;
@@ -245,7 +245,7 @@
   border: 0;
   background: transparent;
   color: var(--text-soft);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 680;
   i { font-size: 1.22rem; }
   &.active {

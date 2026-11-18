@@ -13,3 +13,18 @@
 
 // 4. Estilos de Páginas: Feed Social, Autenticação, Sobre e Contato
 @use 'pages';
+
+// 5. Perfis profissionais
+@use 'profile';
+
+// 6. Rede profissional e estados de conexão
+@use 'network';
+
+// 7. Feed e descoberta de usuários
+@use 'discovery';
+
+// 8. Demandas, propostas e negociações
+@use 'commerce';
+
+// 9. Notificações, configurações e visualização mobile
+@use 'activity';

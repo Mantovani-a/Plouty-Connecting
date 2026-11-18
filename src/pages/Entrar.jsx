@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useWorkspace } from '../context/WorkspaceContext';
+import { useProfiles } from '../context/ProfilesContext';
 
 const ROLE_CONTENT = {
   producer: {
@@ -9,7 +10,7 @@ const ROLE_CONTENT = {
   },
   buyer: {
     emailExample: 'compras@instituicao.com.br',
-    destination: 'Você entrará no espaço institucional, com demandas, fornecedores e contratos.'
+    destination: 'Você entrará no espaço institucional, com demandas, fornecedores e propostas.'
   }
 };
 
@@ -17,15 +18,19 @@ export default function Entrar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState(null);
+  const [selectedProfileId, setSelectedProfileId] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
   const { startDemoSession } = useWorkspace();
+  const { profiles } = useProfiles();
 
   const roleContent = role ? ROLE_CONTENT[role] : null;
 
   const handleRoleChange = (selectedRole) => {
     setRole(selectedRole);
+    setSelectedProfileId(selectedRole === 'producer' ? 'joao-carlos' : 'escola-caminhos');
     if (errors.role) {
       setErrors((prev) => ({ ...prev, role: '' }));
     }
@@ -57,8 +62,12 @@ export default function Entrar() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      startDemoSession(role);
-      navigate('/inicio');
+      startDemoSession(role, selectedProfileId);
+      const requested = new URLSearchParams(location.search).get('retorno');
+      const destination = requested && /^\/(inicio|demandas|explorar|minha-rede|negociacoes|notificacoes|configuracoes|buscar|contato|perfil\/[a-z0-9-]+)([?#].*)?$/.test(requested)
+        ? requested
+        : '/inicio';
+      navigate(destination, { replace: true });
     }
   };
 
@@ -73,7 +82,7 @@ export default function Entrar() {
           </h1>
           <p>
             Na Plouty, produtores rurais e instituições constroem relações de confiança, encontram
-            oportunidades e conduzem propostas, negociações e contratos em um só ambiente.
+            oportunidades e conduzem demandas, propostas e conversas em um só ambiente.
           </p>
           <div className="login-intro-actions pt-2">
             <a
@@ -114,7 +123,7 @@ export default function Entrar() {
                   <i className="bi bi-person-workspace" aria-hidden="true" />
                 </span>
                 <span className="d-flex flex-column">
-                  <strong>Produtor</strong>
+                  <strong>Produtor ou cooperativa</strong>
                   <small>Ofertar e negociar produção</small>
                 </span>
                 <i className="bi bi-check-circle-fill role-selection-check" aria-hidden="true" />
@@ -148,6 +157,18 @@ export default function Entrar() {
               </p>
             )}
           </fieldset>
+
+          {role && (
+            <div className="login-field">
+              <label htmlFor="login-profile">Perfil demonstrativo</label>
+              <select id="login-profile" className="form-select" value={selectedProfileId}
+                onChange={(event) => setSelectedProfileId(event.target.value)}>
+                {profiles.filter((profile) => role === 'buyer' ? profile.kind === 'buyer' : profile.kind !== 'buyer')
+                  .map((profile) => <option key={profile.id} value={profile.id}>{profile.name} · {profile.kind === 'cooperative' ? 'Cooperativa' : profile.kind === 'buyer' ? 'Comprador' : 'Produtor'}</option>)}
+              </select>
+              <small className="text-muted">Troque de perfil para acompanhar a mesma negociação pelo outro lado.</small>
+            </div>
+          )}
 
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <div className="login-field">
@@ -277,7 +298,7 @@ export default function Entrar() {
             <li>
               <i className="bi bi-briefcase" aria-hidden="true" />
               <span className="d-flex flex-column gap-1">
-                <strong>Negócios acompanhados</strong>Oportunidades, propostas e contratos organizados em cada etapa.
+                <strong>Negócios acompanhados</strong>Oportunidades, demandas e propostas organizadas em cada etapa.
               </span>
             </li>
           </ul>

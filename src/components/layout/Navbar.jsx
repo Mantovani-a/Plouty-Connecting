@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { BUYER_NAV_ITEMS, PRODUCER_NAV_ITEMS, PUBLIC_NAV_ITEMS } from '../../data/navigationData';
@@ -18,21 +18,44 @@ function Brand({ compact = false }) {
   );
 }
 
-export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessages, messagesOpen = false, unreadMessages = 0 }) {
+export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessages, messagesOpen = false, unreadMessages = 0, unreadNotifications = 0 }) {
   const { theme, toggleTheme } = useTheme();
   const { hasSession, isProducer, profile } = useWorkspace();
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [publicMenuOpen, setPublicMenuOpen] = useState(false);
+  const isPreviewFrame = window.self !== window.top && Boolean(window.frameElement?.closest('.mobile-preview-device'));
+  const fullscreenDocument = isPreviewFrame ? window.parent.document : document;
+  const fullscreenTarget = isPreviewFrame ? fullscreenDocument.querySelector('.mobile-preview-stage') : document.documentElement;
+  const [fullscreen, setFullscreen] = useState(Boolean(fullscreenDocument.fullscreenElement || document.fullscreenElement));
   const navigate = useNavigate();
   const location = useLocation();
   const navigationItems = isProducer ? PRODUCER_NAV_ITEMS : BUYER_NAV_ITEMS;
   const isEntryPage = location.pathname === '/' || location.pathname === '/entrar';
+  const fullscreenSupported = Boolean(fullscreenDocument.fullscreenEnabled && fullscreenTarget?.requestFullscreen);
+
+  useEffect(() => {
+    const sync = () => setFullscreen(Boolean(fullscreenDocument.fullscreenElement || document.fullscreenElement));
+    document.addEventListener('fullscreenchange', sync);
+    if (fullscreenDocument !== document) fullscreenDocument.addEventListener('fullscreenchange', sync);
+    return () => {
+      document.removeEventListener('fullscreenchange', sync);
+      if (fullscreenDocument !== document) fullscreenDocument.removeEventListener('fullscreenchange', sync);
+    };
+  }, [fullscreenDocument]);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else if (fullscreenDocument.fullscreenElement) await fullscreenDocument.exitFullscreen();
+      else await fullscreenTarget.requestFullscreen();
+    } catch { /* Navegadores podem recusar tela cheia mesmo quando a API existe. */ }
+  };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     const term = searchTerm.trim();
-    const target = location.pathname.startsWith('/demandas') ? '/demandas' : '/explorar';
+    const target = '/buscar';
     navigate(term ? `${target}?search=${encodeURIComponent(term)}` : target);
     setMobileSearchOpen(false);
   };
@@ -97,14 +120,14 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
 
         <div className="d-flex align-items-center gap-2 gap-sm-3 ms-auto">
           <form className={`header-search ${mobileSearchOpen ? 'is-open' : ''}`} role="search" onSubmit={handleSearchSubmit}>
-            <label className="visually-hidden" htmlFor="busca-global">Buscar produtores ou demandas</label>
+            <label className="visually-hidden" htmlFor="busca-global">Buscar usuários, produtos ou demandas</label>
             <button type="submit" className="header-search-submit" aria-label="Buscar">
               <i className="bi bi-search" aria-hidden="true" />
             </button>
             <input
               id="busca-global"
               type="search"
-              placeholder="Buscar produtor ou demanda..."
+              placeholder="Buscar usuários, produtos ou demandas..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
@@ -118,6 +141,14 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
               <i className="bi bi-chat-left-text" aria-hidden="true" />
               {unreadMessages > 0 && <span className="notification-dot" aria-hidden="true" />}
             </button>
+            <NavLink to="/notificacoes" className="icon-button notification-trigger position-relative d-inline-grid" aria-label={`Notificações${unreadNotifications ? `, ${unreadNotifications} ${unreadNotifications === 1 ? 'não lida' : 'não lidas'}` : ''}`} title="Notificações">
+              <i className="bi bi-bell" aria-hidden="true" />
+              {unreadNotifications > 0 && <span className="header-unread-badge" aria-hidden="true">{Math.min(unreadNotifications, 99)}</span>}
+            </NavLink>
+            {fullscreenSupported && <button type="button" className="icon-button mobile-fullscreen-trigger d-inline-grid d-lg-none" onClick={toggleFullscreen}
+              aria-label={fullscreen ? 'Sair da tela cheia' : 'Entrar em tela cheia'} title={fullscreen ? 'Sair da tela cheia' : 'Tela cheia'}>
+              <i className={`bi ${fullscreen ? 'bi-fullscreen-exit' : 'bi-fullscreen'}`} aria-hidden="true" />
+            </button>}
             <button className="icon-button" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}>
               <i className={`bi ${theme === 'dark' ? 'bi-sun' : 'bi-moon-stars'}`} aria-hidden="true" />
             </button>
@@ -125,7 +156,7 @@ export default function Navbar({ variant = 'product', onOpenProfile, onOpenMessa
               <Avatar className="profile-avatar" src={profile?.avatar} initials={profile?.initials || 'PL'} alt="" />
               <span className="profile-button-copy d-none d-lg-flex flex-column text-start">
                 <strong className="text-truncate">{profile?.shortName || 'Perfil'}</strong>
-                <small>{isProducer ? 'Produtor' : 'Comprador'}</small>
+                <small>{profile?.kind === 'cooperative' ? 'Cooperativa' : isProducer ? 'Produtor' : 'Comprador'}</small>
               </span>
               <i className="bi bi-chevron-down d-none d-lg-inline-block" aria-hidden="true" />
             </button>

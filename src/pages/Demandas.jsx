@@ -4,17 +4,17 @@ import DemandCreator from '../components/demands/DemandCreator';
 import DemandCard from '../components/demands/DemandCard';
 import Toast from '../components/common/Toast';
 import { useWorkspace } from '../context/WorkspaceContext';
-import { initialDemands } from '../data/demandsData';
-import { getStorageItem, setStorageItem } from '../utils/storage';
-
-const LOCAL_DEMANDS_KEY = 'plouty.demo.demands.v1';
+import { useProfiles } from '../context/ProfilesContext';
+import { useCommerce } from '../context/CommerceContext';
+import { readAllDemands, normalizeSearch } from '../utils/demandSearch';
 
 export default function Demandas({ onOpenMessages }) {
   const { profile } = useWorkspace();
+  const { getProfileById } = useProfiles();
+  const { demands, createDemand } = useCommerce();
   const [searchParams, setSearchParams] = useSearchParams();
   const querySearch = searchParams.get('search') || '';
 
-  const [localDemands, setLocalDemands] = useState(() => getStorageItem(LOCAL_DEMANDS_KEY, []));
   const [categoryFilter, setCategoryFilter] = useState('Todas');
   const [urgencyFilter, setUrgencyFilter] = useState('Todas');
   const [searchTerm, setSearchTerm] = useState(querySearch);
@@ -25,7 +25,12 @@ export default function Demandas({ onOpenMessages }) {
     setSearchTerm(querySearch);
   }, [querySearch]);
 
-  const allDemands = useMemo(() => [...localDemands, ...initialDemands], [localDemands]);
+  const allDemands = useMemo(() => readAllDemands(demands, getProfileById).map((demand) => {
+    const owner = getProfileById(demand.profileId);
+    return owner ? {
+      ...demand, institutionType: owner.role, businessKey: owner.id
+    } : demand;
+  }), [demands, getProfileById]);
 
   useEffect(() => () => window.clearTimeout(feedbackTimerRef.current), []);
 
@@ -36,9 +41,7 @@ export default function Demandas({ onOpenMessages }) {
   };
 
   const handleAddDemand = (newDemand) => {
-    const nextDemands = [newDemand, ...localDemands];
-    setLocalDemands(nextDemands);
-    setStorageItem(LOCAL_DEMANDS_KEY, nextDemands);
+    return createDemand(profile.id, newDemand);
   };
 
   const handleSearchChange = (value) => {
@@ -52,9 +55,9 @@ export default function Demandas({ onOpenMessages }) {
   };
 
   const filteredDemands = useMemo(() => {
-    const activeSearch = searchTerm.toLowerCase().trim();
+    const activeSearch = normalizeSearch(searchTerm);
     return allDemands.filter((demand) => {
-      const searchHaystack = `${demand.org} ${demand.description} ${demand.location} ${(demand.products || []).join(' ')}`.toLowerCase();
+      const searchHaystack = normalizeSearch(`${demand.org} ${demand.description} ${demand.location} ${(demand.products || []).join(' ')}`);
       const matchesSearch = !activeSearch || searchHaystack.includes(activeSearch);
       const matchesCategory = categoryFilter === 'Todas' || demand.category === categoryFilter;
       const matchesUrgency = urgencyFilter === 'Todas' || demand.urgency === urgencyFilter;
@@ -86,17 +89,17 @@ export default function Demandas({ onOpenMessages }) {
           <div className="d-flex align-items-center gap-2 flex-wrap">
             <span className="badge bg-success-subtle text-success-emphasis border border-success-subtle p-2">
               <i className="bi bi-check-all me-1" />
-              {allDemands.length} demandas ativas
+              {allDemands.filter((demand) => demand.status === 'open').length} demandas ativas
             </span>
           </div>
         </section>
 
         {/* Creator Component */}
-        <DemandCreator
+        {profile.kind === 'buyer' && <DemandCreator
           currentProfile={profile}
           onAddDemand={handleAddDemand}
           onFeedback={showFeedback}
-        />
+        />}
 
         {/* Filter and Search Bar */}
         <div className="card mb-4 shadow-sm border-suave">

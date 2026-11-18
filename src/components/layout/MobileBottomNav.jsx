@@ -12,9 +12,17 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
         <i className="bi bi-box-seam" aria-hidden="true" />
         <span>Demandas</span>
       </NavLink>
+      <NavLink to="/negociacoes" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
+        <i className="bi bi-file-earmark-text" aria-hidden="true" />
+        <span>Propostas</span>
+      </NavLink>
       <NavLink to="/explorar" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
         <i className="bi bi-compass" aria-hidden="true" />
         <span>Explorar</span>
+      </NavLink>
+      <NavLink to="/minha-rede" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
+        <i className="bi bi-people" aria-hidden="true" />
+        <span>Rede</span>
       </NavLink>
       <button
         type="button"
@@ -31,10 +39,6 @@ export default function MobileBottomNav({ onOpenMessages, messagesOpen = false, 
           </span>
         )}
       </button>
-      <NavLink to="/contato" className={({ isActive }) => `mobile-nav-item d-flex flex-column align-items-center justify-content-center gap-1 ${isActive ? 'active' : ''}`}>
-        <i className="bi bi-headset" aria-hidden="true" />
-        <span>Contato</span>
-      </NavLink>
     </nav>
   );
 }

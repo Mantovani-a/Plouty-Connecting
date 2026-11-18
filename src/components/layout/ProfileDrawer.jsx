@@ -6,7 +6,7 @@ import { useDialogFocus } from '../../hooks/useDialogFocus';
 export default function ProfileDrawer({ isOpen, onClose }) {
   const closeButtonRef = useRef(null);
   const drawerRef = useRef(null);
-  const { isProducer } = useWorkspace();
+  const { isProducer, profile } = useWorkspace();
   useDialogFocus(isOpen, onClose, drawerRef, closeButtonRef);
 
   if (!isOpen) return null;
@@ -17,7 +17,7 @@ export default function ProfileDrawer({ isOpen, onClose }) {
       <aside ref={drawerRef} className="side-drawer profile-drawer" role="dialog" aria-modal="true" aria-labelledby="profile-drawer-title">
         <div className="drawer-header d-flex justify-content-between align-items-center gap-3 pb-3">
           <div>
-            <span className="eyebrow d-inline-flex align-items-center gap-2">Conta de {isProducer ? 'produtor' : 'comprador'}</span>
+            <span className="eyebrow d-inline-flex align-items-center gap-2">Conta de {profile?.kind === 'cooperative' ? 'cooperativa' : isProducer ? 'produtor' : 'comprador'}</span>
             <h2 id="profile-drawer-title">Meu perfil</h2>
           </div>
           <button ref={closeButtonRef} type="button" className="icon-button" onClick={onClose} aria-label="Fechar perfil">

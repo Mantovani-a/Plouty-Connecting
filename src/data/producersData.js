@@ -5,7 +5,6 @@ export const initialProducers = [
     id: 1,
     isMock: true,
     name: 'João Carlos Silva',
-    avatar: '/images/social/avatars/joao-carlos.png',
     role: 'Produtor • Verduras orgânicas',
     location: 'Sete Lagoas - MG',
     region: 'Sudeste',
@@ -26,7 +25,7 @@ export const initialProducers = [
       author: 'Nutrição Escolar de Sete Lagoas',
       rating: 5,
       date: '2026-08-07',
-      timeAgo: 'há 6 dias',
+      timeAgo: 'agosto de 2026',
       comment: 'Folhas bem selecionadas, entrega pontual e comunicação clara durante todo o pedido.'
     },
     availability: {
@@ -46,7 +45,6 @@ export const initialProducers = [
     id: 2,
     isMock: true,
     name: 'Maria dos Santos',
-    avatar: '/images/social/avatars/maria-dos-santos.png',
     role: 'Produtora • Frutas da estação',
     location: 'Presidente Prudente - SP',
     region: 'Sudeste',
@@ -67,7 +65,7 @@ export const initialProducers = [
       author: 'Restaurante Popular Oeste',
       rating: 4.8,
       date: '2026-07-29',
-      timeAgo: 'há 2 semanas',
+      timeAgo: 'julho de 2026',
       comment: 'As frutas chegaram maduras no ponto certo e bem acomodadas para o transporte.'
     },
     availability: {
@@ -75,7 +73,7 @@ export const initialProducers = [
       label: 'Agenda limitada esta semana',
       summary: 'Até 900 kg de frutas por mês',
       products: ['Melancia', 'Melão-amarelo', 'Banana'],
-      nextHarvest: 'Novo lote de melancia a partir de 20 de agosto'
+      nextHarvest: 'Novos lotes conforme calendário de safra'
     },
     description: 'Produção familiar de frutas sazonais com manejo responsável e seleção por maturação, voltada a refeitórios e compras institucionais.',
     tags: ['Melancia', 'Produção familiar', 'Sazonal'],
@@ -87,7 +85,6 @@ export const initialProducers = [
     id: 3,
     isMock: true,
     name: 'Cooperativa Verde',
-    avatar: '/images/social/avatars/cooperativa-verde.png',
     role: 'Cooperativa • Hortifruti diversificado',
     location: 'Londrina - PR',
     region: 'Sul',
@@ -108,7 +105,7 @@ export const initialProducers = [
       author: 'Secretaria Municipal de Educação',
       rating: 4.7,
       date: '2026-08-04',
-      timeAgo: 'há 9 dias',
+      timeAgo: 'agosto de 2026',
       comment: 'Boa capacidade de reposição e padrão consistente, inclusive nos pedidos de maior volume.'
     },
     availability: {
@@ -148,15 +145,15 @@ export const initialProducers = [
       author: 'Hospital Universitário de Santa Maria',
       rating: 5,
       date: '2026-08-01',
-      timeAgo: 'há 12 dias',
+      timeAgo: 'agosto de 2026',
       comment: 'Grãos uniformes, documentação organizada e entrega conforme o cronograma combinado.'
     },
     availability: {
       status: 'available',
       label: 'Estoque disponível',
-      summary: '4,8 toneladas disponíveis para agosto',
+      summary: 'Estoque sujeito à confirmação para cada pedido',
       products: ['Arroz integral', 'Feijão-preto', 'Feijão-carioca'],
-      nextHarvest: 'Próxima colheita prevista para novembro'
+      nextHarvest: 'Calendário de colheita sob consulta'
     },
     description: 'Arroz e feijão da colheita recente, armazenados com controle de umidade e disponíveis em embalagens adequadas a cozinhas institucionais.',
     tags: ['Arroz', 'Feijão', 'Laudo de qualidade'],
@@ -188,7 +185,7 @@ export const initialProducers = [
       author: 'Cantina Sabor do Cerrado',
       rating: 4.5,
       date: '2026-07-24',
-      timeAgo: 'há 3 semanas',
+      timeAgo: 'julho de 2026',
       comment: 'Bom atendimento e produto fresco. O horário de chegada poderia ser confirmado com mais antecedência.'
     },
     availability: {
@@ -196,7 +193,7 @@ export const initialProducers = [
       label: 'Disponível para pedidos locais',
       summary: 'Até 450 kg por quinzena',
       products: ['Banana-prata', 'Mamão-formosa'],
-      nextHarvest: 'Mamão disponível a partir de 17 de agosto'
+      nextHarvest: 'Mamão conforme calendário de colheita'
     },
     description: 'Produção de banana e mamão para comércios e cozinhas da região, ampliando agora a capacidade de atender contratos recorrentes.',
     tags: ['Banana', 'Mamão', 'Produção local'],
@@ -228,15 +225,15 @@ export const initialProducers = [
       author: 'Escola Comunitária Caminhos',
       rating: 4.2,
       date: '2026-07-18',
-      timeAgo: 'há 4 semanas',
+      timeAgo: 'julho de 2026',
       comment: 'Hortaliças de boa qualidade. A família avisou com transparência sobre um atraso causado pela estrada.'
     },
     availability: {
       status: 'paused',
-      label: 'Novos pedidos a partir de setembro',
+      label: 'Novos pedidos sob consulta',
       summary: 'Produção atual comprometida com contratos em andamento',
       products: ['Tomate', 'Cebola', 'Coentro'],
-      nextHarvest: 'Nova disponibilidade prevista para 2 de setembro'
+      nextHarvest: 'Nova disponibilidade informada após confirmação'
     },
     description: 'Hortaliças cultivadas pela família com manejo agroecológico. O sítio atende pequenos lotes e combina rotas com produtores vizinhos.',
     tags: ['Tomate', 'Cebola', 'Agroecologia'],

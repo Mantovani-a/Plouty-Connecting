@@ -7,6 +7,10 @@ export default function ProfileSummary({ onNavigate }) {
   const { endDemoSession, isProducer, profile } = useWorkspace();
 
   if (!profile) return null;
+  const completionFields = [profile.name, profile.role, profile.location, profile.description,
+    profile.about, profile.products?.length, profile.contactEmail || profile.contactPhone,
+    ...(isProducer ? [profile.capacity] : [])];
+  const completion = Math.round(completionFields.filter(Boolean).length / completionFields.length * 100);
 
   return (
     <div className="profile-summary">
@@ -15,7 +19,7 @@ export default function ProfileSummary({ onNavigate }) {
           className="profile-avatar profile-avatar-large"
           src={profile.avatar}
           initials={profile.initials}
-          alt={`Foto de ${profile.name}`}
+          alt={`Avatar de ${profile.name}`}
         />
         <div>
           <h3>{profile.name}</h3>
@@ -47,11 +51,26 @@ export default function ProfileSummary({ onNavigate }) {
       </dl>
 
       <nav className="profile-menu d-flex flex-column gap-1 mt-3" aria-label="Opções do perfil">
+        <NavLink to={`/perfil/${profile.id}`} onClick={onNavigate} className="d-flex align-items-center gap-2">
+          <i className="bi bi-person-vcard" aria-hidden="true" /> Meu perfil
+        </NavLink>
         <NavLink to="/inicio" end onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-house-door" aria-hidden="true" /> Início
         </NavLink>
         <NavLink to="/explorar" onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-compass" aria-hidden="true" /> Explorar
+        </NavLink>
+        <NavLink to="/minha-rede" onClick={onNavigate} className="d-flex align-items-center gap-2">
+          <i className="bi bi-people" aria-hidden="true" /> Minha Rede
+        </NavLink>
+        <NavLink to="/negociacoes" onClick={onNavigate} className="d-flex align-items-center gap-2">
+          <i className="bi bi-file-earmark-text" aria-hidden="true" /> Negociações
+        </NavLink>
+        <NavLink to="/notificacoes" onClick={onNavigate} className="d-flex align-items-center gap-2">
+          <i className="bi bi-bell" aria-hidden="true" /> Notificações
+        </NavLink>
+        <NavLink to="/configuracoes" onClick={onNavigate} className="d-flex align-items-center gap-2">
+          <i className="bi bi-gear" aria-hidden="true" /> Configurações
         </NavLink>
         <NavLink to="/contato" onClick={onNavigate} className="d-flex align-items-center gap-2">
           <i className="bi bi-headset" aria-hidden="true" /> Fale com a Plouty
@@ -61,20 +80,20 @@ export default function ProfileSummary({ onNavigate }) {
       <div className="profile-readiness">
         <div className="d-flex justify-content-between">
           <strong>Perfil comercial</strong>
-          <span>82%</span>
+          <span>{completion}%</span>
         </div>
-        <div className="progress-track p-82" aria-label="Perfil comercial 82% completo">
-          <span />
+        <div className="progress-track" aria-label={`Perfil comercial ${completion}% completo`}>
+          <span style={{ width: `${completion}%` }} />
         </div>
         <small>
-          {isProducer
-            ? 'Adicione sua área de entrega para receber oportunidades mais próximas.'
-            : 'Adicione os critérios de compra para comparar produtores com mais precisão.'}
+          {profile.contactEmail || profile.contactPhone
+            ? 'Informações principais cadastradas nesta demonstração.'
+            : 'Adicione e-mail ou telefone de contato no seu perfil.'}
         </small>
       </div>
 
-      <a
-        href="/entrar"
+      <NavLink
+        to="/entrar"
         onClick={() => {
           endDemoSession();
           onNavigate?.();
@@ -82,7 +101,7 @@ export default function ProfileSummary({ onNavigate }) {
         className="text-link profile-exit d-inline-flex align-items-center gap-2 mt-3"
       >
         <i className="bi bi-box-arrow-right" aria-hidden="true" /> Sair da demonstração
-      </a>
+      </NavLink>
     </div>
   );
 }

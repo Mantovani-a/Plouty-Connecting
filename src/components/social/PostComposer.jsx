@@ -89,7 +89,7 @@ export default function PostComposer({ profile, onPublish, onFeedback }) {
   return (
     <form className={`social-composer card d-block ${expanded ? 'is-expanded' : ''}`} onSubmit={handleSubmit} noValidate>
       <div className="social-composer-head">
-        <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt={`Foto de ${profile.name}`} />
+        <Avatar className="profile-avatar" src={profile.avatar} initials={profile.initials} alt={`Avatar de ${profile.name}`} />
         <div className="d-flex flex-column">
           <label htmlFor="social-post-text">Compartilhe uma experiência, entrega ou conquista</label>
           <small className="text-muted">Conte algo relevante para produtores, instituições e comunidades.</small>
