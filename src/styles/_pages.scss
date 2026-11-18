@@ -413,6 +413,14 @@
   transform: translateY(12px);
   transition: opacity var(--transition), transform var(--transition);
   &.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  > i { color: var(--action); font-size: 1.05rem; }
+  > button {
+    @extend %button-icon-base;
+    width: 30px;
+    height: 30px;
+    color: var(--text-muted);
+    &:hover { color: var(--text); background: var(--surface-muted); }
+  }
 }
 
 /* --------------------------------------------------------------------------

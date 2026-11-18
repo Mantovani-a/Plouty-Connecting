@@ -51,7 +51,16 @@ export default function Negociacoes({ onOpenMessages }) {
       <p>Acompanhe propostas vinculadas às demandas e converse diretamente com a outra parte.</p></header>
     <div className="negotiations-summary"><span><strong>{received.length}</strong> recebidas</span><span><strong>{sent.length}</strong> enviadas</span>
       <Link to="/demandas" className="btn btn-primary">Explorar demandas</Link></div>
-    <section className="negotiations-section" aria-labelledby="received-title"><h2 id="received-title">Propostas recebidas</h2>{render(received, true)}</section>
-    <section className="negotiations-section" aria-labelledby="sent-title"><h2 id="sent-title">Propostas enviadas</h2>{render(sent, false)}</section>
+    {profile.kind === 'buyer' ? (
+      <>
+        <section className="negotiations-section" aria-labelledby="received-title"><h2 id="received-title">Propostas recebidas</h2>{render(received, true)}</section>
+        <section className="negotiations-section" aria-labelledby="sent-title"><h2 id="sent-title">Propostas enviadas</h2>{render(sent, false)}</section>
+      </>
+    ) : (
+      <>
+        <section className="negotiations-section" aria-labelledby="sent-title"><h2 id="sent-title">Propostas enviadas</h2>{render(sent, false)}</section>
+        <section className="negotiations-section" aria-labelledby="received-title"><h2 id="received-title">Propostas recebidas</h2>{render(received, true)}</section>
+      </>
+    )}
   </div><Toast message={feedback} onClose={() => setFeedback('')} /></main>;
 }

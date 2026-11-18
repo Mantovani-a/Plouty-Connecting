@@ -25,21 +25,22 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
   const isModal = useMediaQuery('(max-width: 1180px)');
   const dynamicContacts = [...new Set(messages.flatMap((message) => message.senderId === actor.id ? [message.recipientId]
     : message.recipientId === actor.id ? [message.senderId] : []))];
-  const dynamicUnread = dynamicContacts.filter((id) => messages.some((message) => message.senderId === id
-    && message.recipientId === actor.id && message.createdAt > (readAt[`${actor.id}|${id}`] || ''))).length;
-  const unreadCount = getUnreadConversationCount(conversations) + dynamicUnread;
   const allConversations = useMemo(() => [...new Set([...conversations.map((item) => item.profileId), ...dynamicContacts, ...startedProfiles])]
     .map((profileId) => {
       const profile = getProfileById(profileId);
       const seed = conversations.find((item) => item.profileId === profileId);
       const latest = messages.filter((item) => item.senderId === actor.id && item.recipientId === profileId
         || item.senderId === profileId && item.recipientId === actor.id).at(-1);
+      const readTimestamp = readAt[`${actor.id}|${profileId}`] || '';
+      const hasUnreadDynamic = Boolean(latest && latest.senderId === profileId && latest.createdAt > readTimestamp);
+      const hasUnreadSeed = Boolean(seed?.unread && !readTimestamp);
       return profile ? { id: profileId, profileId, name: profile.name, initials: profile.initials, avatar: profile.avatar,
         role: profile.role, verified: profile.verified, lastMessage: latest?.body || seed?.lastMessage || 'Nova conversa demonstrativa',
         time: latest ? new Date(latest.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : seed?.time || 'Agora',
-        unread: seed?.unread || (latest?.senderId === profileId && latest.createdAt > (readAt[`${actor.id}|${profileId}`] || '')),
+        unread: hasUnreadDynamic || hasUnreadSeed,
         messages: seed?.messages || [] } : null;
     }).filter(Boolean), [actor.id, conversations, dynamicContacts.join('|'), getProfileById, messages, readAt, startedProfiles]);
+  const unreadCount = allConversations.filter((conversation) => conversation.unread).length;
   const selectedConversation = allConversations.find((conversation) => conversation.profileId === selectedId) || null;
   const threadMessages = useMemo(() => (
     selectedConversation
@@ -94,9 +95,10 @@ export default function MessagePanel({ conversations, isOpen, onOpen, onClose, t
   }, [actor.id, getProfileById, isOpen, targetBusinessKey, targetDemandId, targetProposalId]);
 
   useEffect(() => {
-    if (isOpen && selectedId && messages.some((message) => message.senderId === selectedId && message.recipientId === actor.id
-      && message.createdAt > (readAt[`${actor.id}|${selectedId}`] || ''))) markRead(actor.id, selectedId);
-  }, [actor.id, isOpen, markRead, messages, readAt, selectedId]);
+    if (isOpen && selectedConversation?.unread) {
+      markRead(actor.id, selectedConversation.profileId);
+    }
+  }, [actor.id, isOpen, markRead, selectedConversation]);
 
   useEffect(() => {
     if (selectedConversation && threadRef.current) {

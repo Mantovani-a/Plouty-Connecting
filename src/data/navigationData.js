@@ -12,7 +12,7 @@ export const BUYER_NAV_ITEMS = [
   { to: '/demandas', label: 'Demandas', icon: 'bi-box-seam', end: false },
   { to: '/negociacoes', label: 'Negociações', icon: 'bi-file-earmark-text', end: false },
   { to: '/minha-rede', label: 'Minha Rede', icon: 'bi-people', end: false },
-  { to: '/explorar', label: 'Produtores', icon: 'bi-people', end: false },
+  { to: '/explorar', label: 'Produtores', icon: 'bi-compass', end: false },
   { to: '/contato', label: 'Contato', icon: 'bi-headset', end: false }
 ];
 

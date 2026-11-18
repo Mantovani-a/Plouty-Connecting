@@ -92,9 +92,22 @@ function AppContent() {
 
   const conversations = profile?.id === 'joao-carlos' ? producerConversations
     : profile?.id === 'escola-caminhos' ? buyerConversations : [];
-  const dynamicUnread = profile ? new Set(messages.filter((message) => message.recipientId === profile.id
-    && message.createdAt > (readAt[`${profile.id}|${message.senderId}`] || '')).map((message) => message.senderId)).size : 0;
-  const unreadMessages = getUnreadConversationCount(conversations) + dynamicUnread;
+  const unreadSenderIds = new Set(
+    conversations
+      .filter((conv) => conv.unread && !readAt[`${profile?.id}|${conv.profileId}`])
+      .map((conv) => conv.profileId)
+  );
+  if (profile) {
+    messages.forEach((message) => {
+      if (
+        message.recipientId === profile.id
+        && message.createdAt > (readAt[`${profile.id}|${message.senderId}`] || '')
+      ) {
+        unreadSenderIds.add(message.senderId);
+      }
+    });
+  }
+  const unreadMessages = unreadSenderIds.size;
   const unreadNotifications = profile ? notificationsFor(profile.id).filter((item) => !item.readAt).length : 0;
   const openMessages = useCallback((targetProfileId = null, context = {}) => {
     setActivePanel({ type: 'messages', targetProfileId, ...context });
